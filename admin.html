@@ -1,0 +1,898 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0065)http://aqua61.healthkartqa.com/admin/store/StoreFefoConfig.action -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Enable/Disable FEFO - Store wise | HealthKart.com</title>
+<!--[if lte IE 6]><script src="/plugins/system/J2top/fixed.js" type="text/javascript"></script><![endif]-->
+<link href="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/new.css" rel="stylesheet" type="text/css">
+<link href="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/style.css" rel="stylesheet" type="text/css">
+<!--[if IE 8]>
+    <link href="/css/ie8.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie7.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+    <link href="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/fluid.css" rel="stylesheet" type="text/css">
+    <link href="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/admin.css" rel="stylesheet" type="text/css">
+    <link href="multiselect/jquery.multiselect.css" rel="stylesheet" type="text/css">
+
+
+    <!-- <script type="text/javascript" src="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/jquery-1.6.2.min.js.download"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript" src="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/jquery.hkCommonPlugins.js.download"></script> -->
+    <script type="text/javascript" src="multiselect/jquery.multiselect.js"></script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    function filterList(){
+            $('.storeFefoRow').each(function(){
+                $(this).css("display", "none");
+                //Store name search filter
+                if($(".storeSearchField").val() != ''){
+                    var searchText = $(".storeSearchField").val();
+                    var storeName = $(".storeName", this).html();
+                    if(storeName.indexOf(searchText)>=0) {
+                        $(this).css("display", "block");
+                    }
+                }
+                //Enable disable option filter
+                if($("#fefoSelect").val() != ''){
+                    if($("#fefoSelect").val() == '1'){
+                        if($(".storeSearchField").val() == ''){
+                            if($("input[type='checkbox']", this).hasClass("fefoEnabled")){
+                                $(this).css("display", "block");
+                            }
+                        }else{
+                            if($("input[type='checkbox']", this).hasClass("fefoDisabled") && $(this).is(':visible')){
+                                 $(this).css("display", "none");
+                            }
+                        }
+                    }else{
+                        if($(".storeSearchField").val() == ''){
+                           if($("input[type='checkbox']", this).hasClass("fefoDisabled")){
+                              $(this).css("display", "block");
+                           }
+                        }else{
+                           if($("input[type='checkbox']", this).hasClass("fefoEnabled") && $(this).is(':visible')){
+                              $(this).css("display", "none");
+                           }
+                        }
+                    }
+                }else{
+                    if($(".storeSearchField").val() == ''){
+                        $(this).css("display", "block");
+                    }
+                }
+            });
+    }
+    function resetFilter(){
+        $(".storeSearchField").val('');
+        $("#fefoSelect option[value='']").attr('selected', true);
+        $('.storeFefoRow').css("display", "block");
+    }
+  </script>
+    <style type="text/css">
+        input[type='submit'].searchBtn, input[type='button'].resetBtn{
+          padding: 9px 33px;
+          border-radius: 20px;
+          /* background: #01bfa5; */
+          text-transform: uppercase;
+          font-size: 15px;
+          display: inline-block;
+          color: #fff;
+          font-weight: 600;
+          border: none;
+        }
+        input[type='text'].input_field {
+          font-size: 14px;
+          padding: 2px;
+          height: 18px;
+          box-sizing: border-box;
+        }
+        .search_btn {
+          width: 270px;
+          float: left;
+          margin: 20px 0 0 0;
+        }
+        .input_area {
+          float: left;
+          padding: 0 15px;
+          width: 29.4%;
+          padding-bottom: 10px !important;
+        }
+        .labe_div label {
+          display: inline-block;
+          max-width: 100%;
+          margin-bottom: 5px;
+          font-size: 14px;
+          font-weight: 600;
+          color: #35484f;
+        }
+        .input_field {
+          width: 100% !important;
+          border: 2px solid #d6dee1;
+          border-radius: 3px;
+          min-height: 38px;
+          padding: 0 10px;
+          background: #F2F7FB;
+          font-size: 14px;
+        }
+        .input_fields {
+          width: 100%;
+          float: left;
+          margin-bottom: 32px;
+        }
+        .main_heading {
+          width: 100%;
+          float: left;
+          margin: 10px 0 25px;
+          position: relative;
+        }
+        .main_heading h2 {
+          color: #35484f;
+          font-weight: 400;
+          font-size: 19px;
+        }
+        .main_heading:after {
+          position: absolute;
+          content: "";
+          width: 91%;
+          background: #edeef0;
+          right: 0;
+          height: 1px;
+          top: 14px;
+        }
+        .row{
+          margin: 0 -15px;
+        }
+        .row:after{
+          display: table;
+          content: " ";
+          clear: both;
+        }
+
+        /*tabs*/
+        ul.tabs{
+          margin: 0px;
+          padding: 0px;
+          list-style: none;
+          border-bottom: 1px solid #ccc;
+        }
+        ul.tabs li{
+          background: none;
+          color: #222;
+          /*display: inline-block;*/
+          float: left;
+          /*padding: 10px 15px;*/
+          cursor: pointer;
+          /*border-bottom: 1px solid #ccc;*/
+          margin-bottom: -1px;
+          border-bottom-color: transparent;
+        }
+
+        ul.tabs li > div{
+          padding: 10px 15px;
+        }
+
+        ul.tabs li.current{
+          /*background: #ededed;*/
+          color: #222;
+          border-top: 2px solid orange;
+        }
+
+        ul.tabs li.current > div {
+          border: 1px solid #ccc;
+          border-bottom-color: transparent;
+          background: #fff;
+        }
+
+        .tab-content{
+          display: none;
+          padding: 15px;
+        }
+
+        .tab-content.current{
+          display: inherit;
+        }
+        /*tabs*/
+
+        /*multicheckbox*/
+        .ms-options-wrap {
+          max-width: 300px;
+          min-width: 150px;
+        }
+
+        /*.ms-options-wrap button {
+          overflow-x: auto;
+        }*/
+
+        .ms-options-wrap .ms-options .ms-search input[type='text'] {
+          font-size: 14px;
+          height: auto;
+          max-width: 100%;
+        }
+
+        .ms-options-wrap .ms-options .ms-search input[type='text']:focus {
+          box-shadow: none;
+        }
+
+        .ms-options-wrap .ms-options ul li {
+          margin-bottom: 0;
+        }
+
+        .ms-options-wrap > .ms-options > ul label {
+          text-align: left;
+          font-size: inherit;
+          line-height: initial;
+          vertical-align: initial;
+        }
+
+        .ms-options-wrap > .ms-options {
+          left: initial;
+          width: auto;
+        }
+        /*multi cehckbox*/
+
+        .d-inline-block {
+          display: inline-block !important;
+        }
+
+
+
+
+
+        .w-100 {
+          width: 100%;
+        }
+
+        .pl-0,
+        .px-0 {
+          padding-left: 0;
+        }
+
+        .d-flex {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+        }
+
+        .font-weight-bold {
+          font-weight: 700;
+        }
+
+        .mb-0 {
+          margin-bottom: 0;
+        }
+
+        .mr-4 {
+          margin-right: 1.5rem;
+        }
+
+        .mb-4 {
+          margin-bottom: 1.5rem;
+        }
+
+        .mt-4 {
+          margin-top: 1.5rem;
+        }
+
+        .text-right {
+          text-align: right;
+        }
+
+        .justify-content-end {
+          -webkit-box-pack: end;
+          -ms-flex-pack: end;
+          justify-content: flex-end;
+        }
+
+        .fosz14 {
+          font-size: 14px !important;
+        }
+
+        .pl-0 {
+          padding-left: 0;
+        }
+
+        .p-4 {
+          padding: 1.5rem;
+        }
+
+        .bg-grey  {
+          background: #eee;
+        }
+
+        .btn-secondary {
+          background: #f27506 !important;
+        }
+
+        .mb-1 {
+          margin-bottom: 0.25rem;
+        }
+
+        .mb-2 {
+          margin-bottom: 0.5rem;
+        }
+
+        .text-center {
+          text-align: center;
+        }
+
+        .fosz12 {
+          font-size: 12px;
+        }
+
+        .d-block {
+          display: block;
+        }
+
+        .btn-green {
+          background: #01bfa5 !important;
+        }
+
+        /*close icon*/
+        .close {
+          position: absolute;
+          right: 32px;
+          top: 32px;
+          width: 16px;
+          height: 16px;
+          opacity: 0.3;
+        }
+        .close:hover {
+          opacity: 1;
+        }
+        .close:before, .close:after {
+          position: absolute;
+          left: 15px;
+          content: ' ';
+          height: 16px;
+          width: 2px;
+          background-color: #333;
+        }
+        .close:before {
+          transform: rotate(45deg);
+        }
+        .close:after {
+          transform: rotate(-45deg);
+        }
+
+        /*modal*/
+        .modal {
+            position: absolute;
+            z-index: 10000; /* 1 */
+            top: 0;
+            left: 0;
+            visibility: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal.is-visible {
+            visibility: visible;
+        }
+
+        .modal-overlay {
+          position: fixed;
+          z-index: 10;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: hsla(0, 0%, 0%, 0.5);
+          visibility: hidden;
+          opacity: 0;
+          transition: visibility 0s linear 0.3s, opacity 0.3s;
+        }
+
+        .modal.is-visible .modal-overlay {
+          opacity: 1;
+          visibility: visible;
+          transition-delay: 0s;
+        }
+
+        .modal-wrapper {
+          position: absolute;
+          z-index: 9999;
+          top: 6em;
+          left: 50%;
+          width: 50em;
+          margin-left: -25em;
+          background-color: #fff;
+          box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
+          border-radius: 4px;
+        }
+
+        .modal-transition {
+          transition: all 0.3s 0.12s;
+          transform: translateY(-10%);
+          opacity: 0;
+        }
+
+        .modal.is-visible .modal-transition {
+          transform: translateY(0);
+          opacity: 1;
+        }
+
+        .modal-header,
+        .modal-content {
+          padding: 1em;
+        }
+
+        .modal-header {
+          position: relative;
+          background-color: #fff;
+          /*box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.06);*/
+          border-bottom: 1px solid #e8e8e8;
+        }
+
+        .modal-footer {
+          padding: 0 1em;
+          border-top: 1px solid #e8e8e8;
+        }
+
+        .modal-close {
+          position: absolute;
+          top: 8px;
+          right: 0;
+          padding: 10px;
+          color: #aaa;
+          background: none;
+          border: 0;
+        }
+
+        .modal-close:hover {
+          color: #777;
+        }
+
+        .modal-heading {
+          font-size: 1.125em;
+          margin: 0;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        .modal-content > *:first-child {
+          margin-top: 0;
+        }
+
+        .modal-content > *:last-child {
+          margin-bottom: 0;
+        }
+
+
+
+      </style>
+  </head>
+  <body id="">
+  <div class="container_12">
+    <div class="grid_12">
+   <div class="menuBar adminMenuBar grid_12" style="width:100%; margin:0px; height: 100px;">
+           <div class="prom yellow help" style="height:20px">
+                    <div class="grid_4">
+                            <form method="post" action="http://aqua61.healthkartqa.com/admin/warehouse/SelectWH.action" style="height: 20px; font-size: 12px;" id="selectWHForm">
+                                Select a WH:
+                                <select name="setWarehouse">
+                                            <option value="4056" selected="selected">PUN Ludhiana</option>
+                                        <option value="4022">BLR Indira Nagar</option>
+                                        <option value="4051">BLR JP Nagar</option>
+                                        <option value="4071">CHD Sec-35C (Bright)</option>
+                                        <option value="4063">DEL Dwarka Sec-10 (Bright)</option>
+                                        <option value="4052">DEL GK2 (Bright)</option>
+                                        <option value="4059">DEL Green Park</option>
+                                        <option value="4053">DEL Karkardooma (Bright)</option>
+                                        <option value="4027">DEL Model Town</option>
+                                        <option value="4029">DEL Shalimar Bagh</option>
+                                        <option value="510">FDB Sec 16</option>
+                                        <option value="4131">GGN Galleria (Bright)</option>
+                                        <option value="4024">GGN Good Earth</option>
+                                        <option value="4065">GGN PVK (Bright)</option>
+                                        <option value="4049">GZB RDC Raj Nagar</option>
+                                        <option value="601">HK Aqua WH 3.0</option>
+                                        <option value="4054">HK Aqua WH 4.0</option>
+                                        <option value="4048">HYD Himayat Nagar</option>
+                                        <option value="4061">JAI Malviya Nagar</option>
+                                        <option value="4033">MUM Bandra</option>
+                                        <option value="4034">MUM Mahavir Nagar</option>
+                                        <option value="4067">MUM Mulund</option>
+                                        <option value="4069">MUM Seawoods</option>
+                                        <option value="4057">PNE Kalyani Nagar</option>
+                                        <option value="4056" selected="selected">PUN Ludhiana</option>
+                                        <option value="710">UP Noida Sec 18</option>
+                                </select>
+                                    <input name="redirectUrl" id="hiddenURL" type="hidden" value="http://aqua61.healthkartqa.com/admin/store/StoreFefoConfig.action">
+                                    <script>
+                                        var currentURL = window.location.href;
+                                        document.getElementById("hiddenURL").setAttribute("value",currentURL);
+                                    </script>
+                                <input name="bindUserWithWarehouse" style="height: 25px;font-size: 12px;margin-bottom: 0px;margin-top: 0px;" type="submit" value="Save">
+                            <div style="display: none;"><input type="hidden" name="_sourcePage" value="oZ5quXwLoY73XBbNrQDx52e3VRRAveVx9ijswDSgnP8i1K2IF0VdRfGEmM3V95dm"><input type="hidden" name="__fp" value="n0PU4Av7NMJ28e2vWixA_qMEDW3xewEL"></div></form>
+                    </div>
+               <div align="center" class="grid_8 " style="height:20px; font-size:16px; color:red; font-weight:bold;">
+                PUN Ludhiana
+
+            <span style="float:right;">
+                Hi Vikas
+                <a href="http://aqua61.healthkartqa.com/core/auth/Logout.action?redirectUrl=%2Fcore%2Fauth%2FLogin.action">LOG OUT</a>
+                </span>
+        </div>
+                </div>
+                <div class="grid_12">
+        <ul class="lvl1">
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/pages/admin/adminHome.jsp">Admin Home</a>
+            </li>
+                <li class="lvl1 menuItem trimPadding" title="">
+                    <a href="http://aqua61.healthkartqa.com/admin/queue/ActionAwaitingQueue.action" class="invert">Action Q</a></li>
+                <li class="lvl1 menuItem trimPadding" title="">
+                    <a href="http://aqua61.healthkartqa.com/admin/queue/PackingAwaitingQueue.action" class="invert">Packing Queue</a></li>
+                <li class="lvl1 menuItem trimPadding" title="">
+                    <a href="http://aqua61.healthkartqa.com/admin/queue/ChooseOrdersForPrintPick.action" class="invert">Print/Pick</a></li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchOrder.action" class="invert">Search BO</a></li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchShippingOrder.action" class="invert">Search SO</a></li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/admin/user/SearchUser.action" class="invert">Search Users</a></li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/pages/admin/courier/courierAdminHome.jsp">OPS</a>
+            </li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/pages/admin/categoryAdminHome.jsp">Category</a>
+            </li>
+            <li class="lvl1 menuItem trimPadding" title="">
+                <a href="http://aqua61.healthkartqa.com/pages/admin/warehouseAdmin.jsp">Warehouse</a>
+            </li>
+                <li class="lvl1 menuItem trimPadding" title="">
+                    <a href="http://aqua61.healthkartqa.com/pages/hk/hkOrderDetails.jsp">HK.com Orders</a>
+                </li>
+                    <li class="lvl1 menuItem trimPadding" title="">
+                        <a href="http://aqua61.healthkartqa.com/pages/pos/posAdminHome.jsp">Store Manager</a></li>
+            <div class="floatfix"></div>
+        </ul>
+        </div>
+    </div>
+    <div class="right">
+    </div>
+    <script type="text/javascript">
+        //  $('li.lvl1').click(function() {
+        //    url = $(this).children('a').attr('href');
+        //    document.location = url;
+        //    return false;
+        //  });
+    </script>
+    </div>
+    <div class="grid_12">
+      <h1 style="font-size: 20px;margin: 10px;">
+    Enable/Disable FEFO - Store wise
+  </h1>
+        <div class="alert messages"></div>
+<div class="grid_12">
+  <div class="main_heading">
+    <h2>Search by</h2>
+  </div>
+  <div class="input_fields">
+    <div class="row">
+      <div class="input_area">
+        <div class="labe_div">
+          <label>Store Name</label>
+        </div>
+        <div class="input_div">
+          <input class="input_field storeSearchField" style="max-width: 400px !important;" type="text" id="">
+        </div>
+      </div>
+      <div class="input_area">
+        <div class="labe_div">
+          <label>FEFO Enabled Stores</label>
+        </div>
+        <div class="input_div">
+          <select class="input_field" id="fefoSelect">
+            <option value="">-- All --</option>
+            <option value="1">True</option>
+            <option value="0">False</option>
+          </select>
+        </div>
+      </div>
+      <div class="search_btn">
+        <input type="submit" class="btn_field searchBtn" style="margin-top: 0px;" name="SEARCH" value="SEARCH" onclick="filterList()">
+        <input type="button" class="btn_field resetBtn" style="margin-top: 0px;" name="RESET" value="RESET" onclick="resetFilter()">
+      </div>
+    </div>
+  </div>
+
+  <!-- content -->
+
+
+
+
+  <!-- tabs -->
+  <ul class="tabs clearfix">
+      <li class="tab-link current" data-tab="tab-1">
+        <div>Global Discounts</div>
+      </li>
+      <li class="tab-link" data-tab="tab-2">
+        <div>Brand Discounts</div>
+      </li>
+      <li class="tab-link" data-tab="tab-3">
+        <div>Variant Discounts</div>
+      </li>
+      <li class="tab-link" data-tab="tab-4">
+        <div>Custom Discounts</div>
+      </li>
+    </ul>
+
+    <div id="tab-1" class="tab-content current">
+      <h5 class="mb-4">Global Discount</h5>
+      <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
+
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th width="50%">Expiry Month Range | Discount(%)</th>
+            <th width="30%">Discount Type</th>
+            <th width="20%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+              <p>7 - max months | 70%</p>
+            </td>
+            <td> Global Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit Range</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tab-2" class="tab-content">
+      <h5 class="mb-4">Brand Discount</h5>
+
+      <div class="d-inline-block p-4 bg-grey">
+        <div class="d-flex">
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Brand Type</label>
+            </div>
+            <select name="brand-type[]" multiple id="brand-type" class="input_field" >
+              <option value="1">Private Label</option>
+              <option value="2">Non Private Label</option>
+              <option value="3">Private Label</option>
+              <option value="4">Non Private Label</option>
+              <option value="5">Private Label</option>
+              <option value="6">Non Private Label</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="labe_div">
+              <label>Brand Name</label>
+            </div>
+            <select name="brand-name[]" multiple id="brand-name" class="input_field" >
+              <option value="1">HealthKart</option>
+              <option value="2">HealthViva</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="d-flex justify-content-end">
+        <input type="button" value="Clear Filter" class="fosz14">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary">
+      </div>
+      <table class="w-100">
+        <thead>
+          <tr>
+            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%">Sr.No.</th>
+            <th width="10%">Brand Type</th>
+            <th width="10%">Brand</th>
+            <th width="30%">Expiry Month Range | Discount(%)</th>
+            <th width="25%">Discount Type</th>
+            <th width="15%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>2</td>
+            <td>PL</td>
+            <td>MuscleBlaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>3</td>
+            <td>PL</td>
+            <td>MuscleBlaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div id="tab-3" class="tab-content">
+
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, assumenda, quas. Harum ipsum in eos, ipsa a sit, quis dolores at, quos assumenda explicabo. Aperiam officia, quis sunt sed non.
+
+    </div>
+    <div id="tab-4" class="tab-content">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum accusantium, iste, pariatur dolorem ipsum temporibus. Non, nesciunt asperiores sit, maxime rerum consequuntur voluptas quidem vitae itaque, sequi, perspiciatis quis modi?
+    </div>
+  <!-- /tabs -->
+
+  <!-- modal -->
+
+
+
+
+  <div class="modal">
+      <div class="modal-overlay modal-toggle"></div>
+      <div class="modal-wrapper modal-transition">
+        <div class="modal-header">
+          <!-- <button class="modal-close modal-toggle fosz14">
+            X
+          </button> -->
+          <i class="close modal-close modal-toggle fosz14"></i>
+
+          <h2 class="modal-heading">View/Edit Expiry Range</h2>
+        </div>
+
+        <div class="modal-body">
+          <div class="modal-content">
+            <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
+            <div class="fosz14 mb-2">
+              <label for="" class="font-weight-bold">Variant ID:</label>
+              <span>lorem</span>
+            </div>
+
+            <div class="fosz14 mb-2">
+              <label for="" class="font-weight-bold">Variant Name:</label>
+              <span>lorem</span>
+            </div>
+
+             <div class="fosz14 mb-2">
+              <label for="" class="font-weight-bold">Store Name:</label>
+              <span>lorem</span>
+            </div>
+
+            <!-- table -->
+            <table class="w-100">
+              <thead>
+                <tr>
+                  <th class="text-center">Expiry day Range From</th>
+                  <th></th>
+                  <th>Expiry Day Range To</th>
+                  <th>Discount (%)</th>
+                  <th class="text-center">HK.COM Offer Applied</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td class="text-center">0</td>
+                  <td>-</td>
+                  <td><input type="text" class="input_field"></td>
+                  <td><input type="text" class="input_field"></td>
+                  <td class="text-center"><input type="checkbox" /></td>
+                </tr>
+
+                <tr>
+                  <td class="text-center">31</td>
+                  <td>-</td>
+                  <td><input type="text" class="input_field"></td>
+                  <td><input type="text" class="input_field"></td>
+                  <td class="text-center"><input type="checkbox" /></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-right">
+              <a href="" class="">+ Add</a>
+            </div>
+      <!-- /table -->
+            <div class="mt-4">
+              <label for="" class="mb-1 d-block">Reset to Default Discounts:</label>
+              <div class="d-flex">
+                <div class="checkbox mr-4">
+                  <label class="fosz12">
+                    <input type="checkbox"> Global Discounts
+                  </label>
+                </div>
+
+                <div class="checkbox">
+                  <label class="fosz12">
+                    <input type="checkbox"> Variant Discounts
+                  </label>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="text-right">
+            <input type="submit" value="Save" class="fosz14 btn-green">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  <!-- /modal -->
+  <!-- /content -->
+</div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $('input[type="checkbox"]').click(function() {
+      $(this).parent("label").toggleClass('highlight');
+    });
+
+    $(document).ready(function(){
+      // tabs
+      $('ul.tabs li').click(function(){
+        var tab_id = $(this).attr('data-tab');
+
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+
+        $(this).addClass('current');
+        $("#"+tab_id).addClass('current');
+      });
+
+      // modal
+      // $('.modal-toggle').on('click', function(e) {
+        $('.modal-toggle').click(function(){
+        // e.preventDefault();
+        $('.modal').toggleClass('is-visible');
+      });
+
+        $('#brand-type, #brand-name').multiselect({
+            columns: 1,
+            placeholder: 'Select',
+            search: true,
+            selectAll: true
+        });
+
+    });
+
+
+  </script>
+
+  </body></html>
