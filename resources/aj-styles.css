@@ -103,6 +103,12 @@
           display: flex;
         }
 
+        .align-items-center {
+          -webkit-box-align: center !important;
+          -ms-flex-align: center !important;
+          align-items: center !important;
+        }
+
         .font-weight-bold {
           font-weight: 700;
         }
@@ -113,6 +119,10 @@
 
         .mr-4 {
           margin-right: 1.5rem;
+        }
+
+        .mr-2 {
+          margin-right: 0.25rem;
         }
 
         .mb-4 {
@@ -309,4 +319,19 @@
 
         .table tr:not(:last-child) td {
           border-bottom: 1px solid #eee;
+        }
+
+        .table td a {
+          font-size: 12px;
+          color: #007bff;
+          cursor: pointer;
+        }
+
+        .table td a:hover {
+          color: inherit;
+          background: transparent;
+        }
+
+        .table tr:hover a {
+          background: transparent;
         }
