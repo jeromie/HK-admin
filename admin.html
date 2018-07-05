@@ -15,19 +15,27 @@
     <link href="resources/admin.css" rel="stylesheet" type="text/css">
     <link href="resources/multiselect/jquery.multiselect.css" rel="stylesheet" type="text/css">
     <link href="resources/aj-styles.css" rel="stylesheet" type="text/css">
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="resources/jquery-datatables-checkboxes-1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+  
 
 
     <!-- <script type="text/javascript" src="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/jquery-1.6.2.min.js.download"></script> -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <!-- <script type="text/javascript" src="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/jquery.hkCommonPlugins.js.download"></script> -->
     <script type="text/javascript" src="resources/multiselect/jquery.multiselect.js"></script>
-
-
-
-
-
-
-
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="resources/jquery-datatables-checkboxes-1.2.11/js/dataTables.checkboxes.min.js"></script>
+    <script type="text/javascript" src="resources/admin.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style type="text/css">
+  .ui-tooltip {
+  opacity:1;
+}
+</style>
   <script type="text/javascript">
     function filterList(){
             $('.storeFefoRow').each(function(){
@@ -271,35 +279,36 @@
 
   <!-- tabs -->
   <ul class="tabs clearfix">
-      <li class="tab-link current" data-tab="tab-1">
+      <li class="tab-link current" data-tab="global-discounts" >
         <div>Global Discounts</div>
       </li>
-      <li class="tab-link" data-tab="tab-2">
+      <li class="tab-link" data-tab="brand-discounts">
         <div>Brand Discounts</div>
       </li>
-      <li class="tab-link" data-tab="tab-3">
+      <li class="tab-link" data-tab="variant-discounts">
         <div>Variant Discounts</div>
       </li>
-      <li class="tab-link" data-tab="tab-4">
+      <li class="tab-link" data-tab="custom-discounts">
         <div>Custom Discounts</div>
       </li>
     </ul>
 
-    <div id="tab-1" class="tab-content current">
+    <div id="global-discounts" class="tab-content current">
       <h5 class="mb-4">Global Discount</h5>
       <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
 
-      <table class="w-100 table">
+      <table class="w-100 table" id="global-discounts-table" style="width:100%">
         <thead>
           <tr>
             <th width="50%">Expiry Month Range | Discount(%)</th>
+            <!-- <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th> -->
             <th width="30%">Discount Type</th>
             <th width="20%">Action</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
+          <!-- <tr>
             <td>
               <p>1 - 3 months | 70%</p>
               <p>4 - 6 months | 50%</p>
@@ -307,12 +316,12 @@
             </td>
             <td> Global Discount</td>
             <td><a href="javascript:void(0);" class="modal-toggle">View/Edit Range</a></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
 
-    <div id="tab-2" class="tab-content">
+    <div id="brand-discounts" class="tab-content">
       <h5 class="mb-4">Brand Discount</h5>
 
       <div class="d-inline-block p-4 bg-grey">
@@ -321,13 +330,9 @@
             <div class="labe_div">
               <label>Brand Type</label>
             </div>
-            <select name="brand-type[]" multiple id="brand-type" class="input_field" >
-              <option value="1">Private Label</option>
-              <option value="2">Non Private Label</option>
-              <option value="3">Private Label</option>
-              <option value="4">Non Private Label</option>
-              <option value="5">Private Label</option>
-              <option value="6">Non Private Label</option>
+            <select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds" >
+              <option value="PL">Private Label</option>
+              <option value="NPL">Non Private Label</option>
             </select>
           </div>
 
@@ -335,7 +340,7 @@
             <div class="labe_div">
               <label>Brand Name</label>
             </div>
-            <select name="brand-name[]" multiple id="brand-name" class="input_field" >
+            <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds" >
               <option value="1">HealthKart</option>
               <option value="2">HealthViva</option>
             </select>
@@ -346,13 +351,13 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary">
+        <input type="button" value="Clear Filter" class="fosz14" onclick="resetFilters('brand-discounts','brand-discounts-table');">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary" onclick="applyFilters('brand-discounts-table');">
       </div>
-      <table class="w-100 table">
+      <table class="w-100 table" id="brand-discounts-table" style="width:100%">
         <thead>
           <tr>
-            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%"><input type="checkbox" name="brand-discounts_select_all" value="1" id="brand-discounts-select-all"></th>
             <th width="5%">Sr.No.</th>
             <th width="10%">Brand Type</th>
             <th width="10%">Brand</th>
@@ -405,13 +410,252 @@
       </table>
 
     </div>
-    <div id="tab-3" class="tab-content">
+    <div id="variant-discounts" class="tab-content">
 
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, assumenda, quas. Harum ipsum in eos, ipsa a sit, quis dolores at, quos assumenda explicabo. Aperiam officia, quis sunt sed non.
+       <h5 class="mb-4">Variant Discount</h5>
+
+      <div class="d-inline-block p-4 bg-grey">
+        <div class="d-flex">
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Brand Type</label>
+            </div>
+            <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type" >
+              <option value="1">Private Label</option>
+              <option value="2">Non Private Label</option>
+            </select>
+          </div>
+
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Brand Name</label>
+            </div>
+            <select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name" >
+              <option value="1">HealthKart</option>
+              <option value="2">HealthViva</option>
+            </select>
+          </div>
+          <div>
+            <div class="labe_div">
+              <label>Variant Id</label>
+            </div>
+            <select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id" >
+              <option value="HNUT1783-03">HNUT1783-03</option>
+              <option value="HNUT1783-04">HNUT1783-04</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="d-flex justify-content-end">
+        <input type="button" value="Clear Filter" class="fosz14" onclick="resetFilters('variant-discounts','variant-discounts-table');">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary" onclick="applyFilters('variant-discounts-table');">
+      </div>
+      <table class="w-100 table" id="variant-discounts-table" style="width:100%">
+        <thead>
+          <tr>
+            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%">Sr.No.</th>
+            <th width="10%">Product Variant Id</th>
+            <th width="10%">Brand Type</th>
+            <th width="10%">Brand</th>
+            <th width="10%">Product Variant Name</th>
+            <th width="30%">Expiry Month Range | Discount(%)</th>
+            <th width="25%">Discount Type</th>
+            <th width="15%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>2</td>
+             <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>3</td>
+             <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
-    <div id="tab-4" class="tab-content">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum accusantium, iste, pariatur dolorem ipsum temporibus. Non, nesciunt asperiores sit, maxime rerum consequuntur voluptas quidem vitae itaque, sequi, perspiciatis quis modi?
+    <div id="custom-discounts" class="tab-content">
+      <h5 class="mb-4">Custom Discount</h5>
+
+      <div class="d-inline-block p-4 bg-grey">
+        <div class="d-flex">
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Brand Type</label>
+            </div>
+            <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type" >
+              <option value="1">Private Label</option>
+              <option value="2">Non Private Label</option>
+            </select>
+          </div>
+
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Brand Name</label>
+            </div>
+            <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name" >
+              <option value="1">HealthKart</option>
+              <option value="2">HealthViva</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="labe_div">
+              <label>Variant Id</label>
+            </div>
+            <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id" >
+              <option value="HNUT1783-03">HNUT1783-03</option>
+              <option value="HNUT1783-04">HNUT1783-04</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-inline-block p-4 bg-grey">
+       
+        <div class="d-flex">
+          <div class="mr-4">
+            <div class="labe_div">
+              <label>Zone wise Store</label>
+            </div>
+            <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds" >
+              <option value="NORTH">NORTH</option>
+              <option value="SOUTH">SOUTH</option>
+              <option value="EAST">EAST</option>
+              <option value="WEST">WEST</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="labe_div">
+              <label>Store Name</label>
+            </div>
+            <select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds" >
+              <option value="1">DEL Rajouri Bagh</option>
+              <option value="2">DEL Rajouri Garden</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="d-flex justify-content-end">
+        <input type="button" value="Clear Filter" class="fosz14"  onclick="resetFilters('custom-discounts','custom-discounts-table');">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary"  onclick="applyFilters('custom-discounts-table');">
+      </div>
+      <table class="w-100 table" id="custom-discounts-table" style="width:100%">
+        <thead>
+          <tr>
+            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%">Sr.No.</th>
+            <th width="10%">Product Variant Id</th>
+            <th width="10%">Brand Type</th>
+            <th width="10%">Brand</th>
+            <th width="10%">Product Variant Name</th>
+            <th width="10%">Store Name</th>
+            <th width="10%">Zone</th>
+            <th width="30%">Expiry Month Range | Discount(%)</th>
+            <th width="25%">Discount Type</th>
+            <th width="15%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>2</td>
+             <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" /></td>
+            <td>3</td>
+             <td>Muscleblaze</td>
+            <td>PL</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>Muscleblaze</td>
+            <td>
+              <p>1 - 3 months | 70%</p>
+              <p>4 - 6 months | 50%</p>
+            </td>
+            <td>Brand Discount</td>
+            <td><a href="javascript:void(0);" class="modal-toggle">View/Edit range</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   <!-- /tabs -->
 
@@ -420,7 +664,7 @@
 
 
 
-  <div class="modal">
+  <div class="modal" id="rangeModalPopup">
       <div class="modal-overlay modal-toggle"></div>
       <div class="modal-wrapper modal-transition">
         <div class="modal-header">
@@ -437,21 +681,21 @@
             <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
             <div class="fosz14 mb-2">
               <label for="" class="font-weight-bold">Variant ID:</label>
-              <span>lorem</span>
+              <span class="rangeModalVariantId">lorem</span>
             </div>
 
             <div class="fosz14 mb-2">
               <label for="" class="font-weight-bold">Variant Name:</label>
-              <span>lorem</span>
+              <span class="rangeModalVariantName">lorem</span>
             </div>
 
              <div class="fosz14 mb-2">
               <label for="" class="font-weight-bold">Store Name:</label>
-              <span>lorem</span>
+              <span class="rangeModalStoreName">lorem</span>
             </div>
 
             <!-- table -->
-            <table class="w-100">
+            <table class="w-100 rangeTable" >
               <thead>
                 <tr>
                   <th class="text-center">Expiry day Range From</th>
@@ -463,7 +707,7 @@
               </thead>
 
               <tbody>
-                <tr>
+               <!--  <tr>
                   <td class="text-center">0</td>
                   <td>-</td>
                   <td><input type="text" class="input_field"></td>
@@ -477,7 +721,7 @@
                   <td><input type="text" class="input_field"></td>
                   <td><input type="text" class="input_field"></td>
                   <td class="text-center"><input type="checkbox" /></td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
             <div class="text-right">
@@ -520,6 +764,8 @@
   </div>
 
   <script type="text/javascript">
+    var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
+    var list_initialized_arr=['global-discounts'];
     $('input[type="checkbox"]').click(function() {
       $(this).parent("label").toggleClass('highlight');
     });
@@ -534,6 +780,13 @@
 
         $(this).addClass('current');
         $("#"+tab_id).addClass('current');
+
+        if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
+          var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
+          discounts.generateIPList()
+          list_initialized_arr.push(tab_id)
+        }
+        
       });
 
       // modal
@@ -543,12 +796,7 @@
         $('.modal').toggleClass('is-visible');
       });
 
-        $('#brand-type, #brand-name').multiselect({
-            columns: 1,
-            placeholder: 'Select',
-            search: true,
-            selectAll: true
-        });
+       
 
     });
 

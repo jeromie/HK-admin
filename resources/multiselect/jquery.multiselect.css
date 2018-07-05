@@ -69,17 +69,17 @@
     outline: none;
 }
 
-.ms-options-wrap > .ms-options .ms-selectall {
+.ms-options-wrap > .ms-options .ms-selectall, .ms-options-wrap > .ms-options .ms-clear {
     display: inline-block;
     font-size: .9em;
     text-transform: lowercase;
     text-decoration: none;
 }
-.ms-options-wrap > .ms-options .ms-selectall:hover {
+.ms-options-wrap > .ms-options .ms-selectall:hover,.ms-options-wrap > .ms-options .ms-clear:hover {
     text-decoration: underline;
 }
 
-.ms-options-wrap > .ms-options > .ms-selectall.global {
+.ms-options-wrap > .ms-options > .ms-selectall.global, .ms-options-wrap > .ms-options > .ms-clear.global {
     margin: 4px 5px;
 }
 
@@ -88,6 +88,7 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    clear: both;
 }
 
 .ms-options-wrap > .ms-options > ul li.ms-hidden {

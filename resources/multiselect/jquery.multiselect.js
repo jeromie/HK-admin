@@ -50,7 +50,8 @@
             selectedOptions: ' selected',      // selected suffix text
             selectAll      : 'Select all',     // select all text
             unselectAll    : 'Unselect all',   // unselect all text
-            noneSelected   : 'None Selected'   // None selected text
+            noneSelected   : 'None Selected',   // None selected text
+            clear          : 'Clear'
         },
 
         // general options
@@ -74,6 +75,8 @@
         // @NOTE: these are for future development
         minSelect: false, // minimum number of items that can be selected
         maxSelect: false, // maximum number of items that can be selected
+
+        clear: false,
     };
 
     var msCounter = 1;
@@ -338,6 +341,47 @@
             if( instance.options.selectAll ) {
                 optionsList.before('<a href="#" class="ms-selectall global">' + instance.options.texts.selectAll + '</a>');
             }
+
+             // add global select all options
+            if( instance.options.clear ) {
+                optionsList.before('<a href="#" class="ms-clear global" style="float:right;">' + instance.options.texts.clear + '</a>');
+            }
+
+            // handle clear option
+            optionsWrap.on('click', '.ms-clear', function( event ){
+                event.preventDefault();
+
+                var select = optionsWrap.parent().prev();
+
+                if( $(this).hasClass('global') ) {
+                    
+                    optionsList.find('li:not(.optgroup, .ms-hidden).selected').removeClass('selected');
+                    optionsList.find('li:not(.optgroup, .ms-hidden, .selected) input[type="checkbox"]:not(:disabled)').prop( 'checked', false );
+                    
+                }
+                else if( $(this).closest('li').hasClass('optgroup') ) {
+                    var optgroup = $(this).closest('li.optgroup');
+
+                    
+                    optgroup.find('li:not(.ms-hidden).selected').removeClass('selected');
+                    optgroup.find('li:not(.ms-hidden, .selected) input[type="checkbox"]:not(:disabled)').prop( 'checked', false );
+                    
+                }
+
+                var vals = [];
+                optionsList.find('li.selected input[type="checkbox"]').each(function(){
+                    vals.push( $(this).val() );
+                });
+                select.val( vals ).trigger('change');
+                instance.updateSelectAll   = true;
+                instance.updatePlaceholder = true;
+
+
+                instance._updateSelectAllText();
+                instance._updatePlaceholderText();
+
+
+            });
 
             // handle select all option
             optionsWrap.on('click', '.ms-selectall', function( event ){
