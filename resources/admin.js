@@ -314,7 +314,8 @@ function showRangePopup(thisObj,type){
                   '<td>-</td>'+
                   '<td><input type="text" class="input_field"  value="'+endVal+'"></td>'+
                   '<td><input type="text" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
-                  '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'
+                  '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
+                  '<td class="text-center"><span style="color: red;" class="fosz14">&#10006;</span></td>'
 		appendRow +='</tr>'
 
 	}
