@@ -29,7 +29,7 @@
     <script type="text/javascript" src="resources/multiselect/jquery.multiselect.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="resources/jquery-datatables-checkboxes-1.2.11/js/dataTables.checkboxes.min.js"></script>
-    <script type="text/javascript" src="resources/admin.js"></script>
+    
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
   .ui-tooltip {
@@ -344,8 +344,8 @@
               <label>Brand Name</label>
             </div>
             <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds" >
-              <option value="1">HealthKart</option>
-              <option value="2">HealthViva</option>
+              <!-- <option value="1">HealthKart</option>
+              <option value="2">HealthViva</option> -->
             </select>
           </div>
         </div>
@@ -774,6 +774,25 @@
   </div>
 
   <script type="text/javascript">
+    var brands_mapping={
+       "JRI": "PL",
+       "Acu Care": "PL",
+       "SCS": "PL",
+       "Rama": "NPL",
+       "Herbs WellBeing": "NPL",
+       "Merit": "NPL",
+       "NutriCheer": "NPL",
+       "Ray": "NPL",
+       "Ketocare": "NPL",
+       "RiteBite": "NPL",
+       "Green Elements": "NPL",
+       "Bodygard": "NPL",
+       "Kibosh": "NPL",
+       "Garden of Life": "NPL",
+       "Chicco Pure.Bio": "NPL",
+       "Physique and Fitness Health Club": "NPL",
+       "JSB": "NPL",
+     }
     var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
     var list_initialized_arr=['global-discounts'];
     $('input[type="checkbox"]').click(function() {
@@ -813,5 +832,5 @@
 
 
   </script>
-
+<script type="text/javascript" src="resources/admin.js"></script>
   </body></html>

@@ -380,11 +380,49 @@ $(document).ready( function () {
           }
 	})
 
+	var totalFilterOptions=[]
 	 $('.filter-brand-type').multiselect({
             columns: 1,
             placeholder: 'Select',
-            clear:true
+            clear:true,
+            onOptionClick: function( element, option ){
+		        var thisOpt = $(option);
+
+	        	console.log($(element).parent().parent().parent().parent())
+		        var options=[]
+		        if(thisOpt.prop('checked')){
+		        	if(jQuery.inArray( thisOpt.val(), totalFilterOptions ) == -1)
+		        		totalFilterOptions.push(thisOpt.val())
+		        	
+		        }
+		        else{
+		        	totalFilterOptions.splice( totalFilterOptions.indexOf(thisOpt.val()), 1 );
+		        }
+
+		        for(var i=0;i<totalFilterOptions.length;i++){
+		        		$.each( brands_mapping, function( key, value ) {
+						 
+						  if(value == totalFilterOptions[i]){
+						  	options.push({
+					            name   : key,
+					            value  : key,
+					            checked: false
+					        });
+						  }
+						});
+		        	}
+		        
+		        var tabelem=$(element).parent().parent().parent().parent()
+				tabelem.find('.filter-brand-name').multiselect('loadOptions', options );
+		    },
+		    onClear: function( element ){
+		    	totalFilterOptions=[]
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	tabelem.find('.filter-brand-name').multiselect('loadOptions', [] );
+		    }
         });
+
+
 
 	 $('.filter-brand-name,.filter-variant-id,.filter-zone,.filter-store').multiselect({
             columns: 1,
@@ -392,6 +430,7 @@ $(document).ready( function () {
             search: true,
             selectAll: true,
             clear: true
+
         });
 
 
