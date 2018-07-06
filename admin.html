@@ -18,6 +18,7 @@
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
     <link href="resources/jquery-datatables-checkboxes-1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 
   
@@ -327,7 +328,8 @@
     <div id="brand-discounts" class="tab-content">
       <h5 class="mb-4">Brand Discount</h5>
 
-      <div class="d-inline-block p-4 bg-grey">
+      <div class="d-inline-block p-4 bg-grey filter">
+        <h5 class="mb-4">Variant-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
@@ -417,7 +419,8 @@
 
        <h5 class="mb-4">Variant Discount</h5>
 
-      <div class="d-inline-block p-4 bg-grey">
+      <div class="d-inline-block p-4 bg-grey filter">
+        <h5 class="mb-4">Variant-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
@@ -523,7 +526,8 @@
     <div id="custom-discounts" class="tab-content">
       <h5 class="mb-4">Custom Discount</h5>
 
-      <div class="d-inline-block p-4 bg-grey">
+      <div class="d-inline-block p-4 bg-grey filter">
+        <h5 class="mb-4">Variant-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
@@ -557,8 +561,8 @@
         </div>
       </div>
 
-      <div class="d-inline-block p-4 bg-grey">
-       
+      <div class="d-inline-block p-4 bg-grey filter">
+        <h5 class="mb-4">Store-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
@@ -698,6 +702,7 @@
             </div>
 
             <!-- table -->
+            <div class="table-cover disabled">
             <table class="w-100 rangeTable" >
               <thead>
                 <tr>
@@ -728,6 +733,7 @@
                 </tr> -->
               </tbody>
             </table>
+            </div>
             <div class="text-right">
               <a href="" class="">+ Add</a>
             </div>
@@ -753,6 +759,39 @@
                   </label>
                 </div>
               </div>
+            </div>
+            
+            <div class="d-flex">
+              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+                <label class="fosz12 d-flex align-items-center">
+                  <input id="id_radio1" type="radio" name="name_radio1" value="value_radio1">Radio1
+                </label>
+              </div>
+
+              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+                <label class="fosz12 d-flex align-items-center">
+                  <input id="id_radio2" type="radio" name="name_radio1" value="value_radio2" >Radio2
+                </label>
+              </div>
+
+              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+                <label class="fosz12 d-flex align-items-center">
+                  <input id="id_radio3" type="radio" name="name_radio1" value="value_radio3" >Radio3
+                </label>
+              </div>
+            </div>
+
+            <div id="div1"  class="bg-grey p15 mt-2" style="display: none;">
+              <p class="pl-0">1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p>
+            </div>
+            <div id="div2" class="bg-grey p15 mt-2" style="display: none;">
+              <p class="pl-0">1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p>
+            </div>
+            <div id="div3" class="bg-grey p15 mt-2" style="display: none;">
+              <p class="pl-0">1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p>
             </div>
 
 
@@ -825,6 +864,23 @@
         // e.preventDefault();
         $('.modal').toggleClass('is-visible');
       });
+
+      $('#id_radio1').click(function () {
+          $('#div2, #div3').hide('fast');
+          $('#div1').show('fast');
+      });
+      
+      $('#id_radio2').click(function () {
+          $('#div1, #div3').hide('fast');
+          $('#div2').show('fast');
+      });
+
+      $('#id_radio3').click(function () {
+          $('#div1, #div2').hide('fast');
+          $('#div3').show('fast');
+      });
+
+
 
        
 
