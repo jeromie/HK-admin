@@ -447,10 +447,17 @@ $(document).ready( function () {
 		        
 		        var tabelem=$(element).parent().parent().parent().parent()
 		        if(totalBrandFilterOptions.length>0){
+		        	
+		        	tabelem.find('.apply-filter').removeClass('disabled')
 					tabelem.find('.apply-filter').removeAttr('disabled');
+					tabelem.find('.clear-filter').removeClass('disabled');
 					tabelem.find('.clear-filter').removeAttr('disabled');
 				}
 				else{
+					if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+						tabelem.find('.apply-filter').addClass('disabled');
+					if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+						tabelem.find('.clear-filter').addClass('disabled');
 					tabelem.find('.apply-filter').attr('disabled', 'disabled' );
 					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
 				}
@@ -458,11 +465,17 @@ $(document).ready( function () {
 		    onSelectAll   : function( element, selected ){
 		    	var tabelem=$(element).parent().parent().parent().parent()
 		    	if(selected>0){
+		    		tabelem.find('.apply-filter').removeClass('disabled')
 					tabelem.find('.apply-filter').removeAttr('disabled');
+					tabelem.find('.clear-filter').removeClass('disabled');
 					tabelem.find('.clear-filter').removeAttr('disabled');
 				}
 				else{
 					totalBrandFilterOptions=[]
+					if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+						tabelem.find('.apply-filter').addClass('disabled');
+					if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+						tabelem.find('.clear-filter').addClass('disabled');
 					tabelem.find('.apply-filter').attr('disabled', 'disabled' );
 					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
 				}
