@@ -289,7 +289,7 @@ function showRangePopup(thisObj,type){
 	}
 	//var selectedRows = $('#brand-discounts-table').DataTable().rows({ selected: true }).ids(true);
 	var row_arr=[]
-	var selectedRows = $( $('#custom-discounts-table').DataTable().$('input[type="checkbox"]').map(function () {
+	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
 	  console.log("val---"+$(this).is(":checked"))
 	  if($(this).is(":checked")){
 	  	row_arr.push($(this).val())
@@ -319,6 +319,10 @@ function showRangePopup(thisObj,type){
 
 	}
 	console.log($("#rangeModalPopup").find('.rangeTable tbody'))
+	if(row_arr.length>1)
+		$('#rangeModalPopup').find('.submitBtn').data('confirm',true)
+	else
+		$('#rangeModalPopup').find('.submitBtn').data('confirm',false)
 	$("#rangeModalPopup").find('.rangeTable tbody').html(appendRow);
 	$("#rangeModalPopup").find('.rangeModalVariantId').text(data['productVariantId'])
 	$("#rangeModalPopup").find('.rangeModalVariantName').text(data['productVariantName'])
@@ -335,6 +339,23 @@ function resetFilters(type,tableName){
 }
 function applyFilters(tableName){
 	$('#'+tableName).DataTable().ajax.reload();
+}
+
+
+function saveRangeOptions(thisObj){
+	if($(thisObj).data('confirm') == true){
+		var r = confirm("Are you sure you want to apply these settings to all selected records?");
+	    if (r == true) {
+	        txt = "You pressed OK!";
+	    } else {
+	        txt = "You pressed Cancel!";
+
+	    }
+	    console.log(txt)
+	}
+	
+   
+
 }
 
 $(document).ready( function () {
