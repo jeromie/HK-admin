@@ -43,6 +43,7 @@ var listDiscounts = function(options){
         console.log(list_vars.type);
         $('#'+list_vars.tablename).DataTable({
 		        "pageLength": 2,
+		        "bDestroy": true,
 		        "ajax": {
 		        	"url":list_vars.url,
 		        	"type":"POST",
@@ -116,7 +117,7 @@ var listDiscounts = function(options){
 					'orderable': false,
 					'className': 'dt-body-center',
 					'render': function (data, type, full, meta){
-					 return '<input type="checkbox" name="'+list_vars.type+'-id[]" value="' + $('<div/>').text(data).html() + '">';
+					 return '<input type="checkbox" name="'+list_vars.type+'-id[]" value="'+full['brand']+'">';
 					}
 		      });
     		index++;
@@ -203,6 +204,9 @@ var listDiscounts = function(options){
 	                			endPeriod=row['discounts'][i]["end"]
 	                		fullStr +='<p>'+row['discounts'][i]["start"]+' - '+endPeriod+' months | '+row['discounts'][i]["discountPercent"]+'%</p>'
 	                	}
+	                	if(row['discounts'].length>0){
+	                		renderStr +='<div rel="tooltip" title="'+fullStr+'">'
+	                	}
 	                	for(var i=0;i<row['discounts'].length;i++) {
 	                		if(i>=list_vars.monthrangelimit){
 	                			break;
@@ -212,8 +216,11 @@ var listDiscounts = function(options){
 	                			endPeriod="Max"
 	                		else
 	                			endPeriod=row['discounts'][i]["end"]
-	                		renderStr +='<p class="exp-month-range-tootltip" rel="tooltip" title="'+fullStr+'">'+row['discounts'][i]["start"]+' - '+endPeriod+' months | '+row['discounts'][i]["discountPercent"]+'%</p>'
+	                		renderStr +='<p class="exp-month-range-tootltip" >'+row['discounts'][i]["start"]+' - '+endPeriod+' months | '+row['discounts'][i]["discountPercent"]+'%</p>'
 	                		
+	                	}
+	                	if(row['discounts'].length>0){
+	                		renderStr +='</div>'
 	                	}
 	                	return renderStr
 	                }
@@ -231,7 +238,7 @@ var listDiscounts = function(options){
 	                targets: index,
 	                orderable:  false,
 	                render: function(data, type, row, meta){
-	                	var renderStr='<a href="javascript:void(0);" class="modal-toggle" data-row=\''+JSON.stringify(row)+'\' onclick="showRangePopup(this);">View/Edit Range</a>'
+	                	var renderStr='<a href="javascript:void(0);" class="modal-toggle" data-row=\''+JSON.stringify(row)+'\' onclick="showRangePopup(this,\''+list_vars.type+'\');">View/Edit Range</a>'
 	                	return renderStr
 
 	                }
@@ -254,10 +261,43 @@ var listDiscounts = function(options){
 };
 
 
-function showRangePopup(thisObj){
+function showRangePopup(thisObj,type){
 	console.log($(thisObj).data('row'))
+	console.log("type==="+type)
 	console.log("select all======")
-	console.log($('#brand-discounts-table').DataTable().$('input[type="checkbox"]').serialize());
+	if(type == "global-discounts" && $('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false){
+		$('#rangeModalPopup').find('.reset-opt-block').addClass('hidden')
+
+	}
+	else{
+		$('#rangeModalPopup .reset-opt-block').removeClass('hidden')
+		if(type == "brand-discounts"){
+			$('#rangeModalPopup').find('.reset-opt:not(.global-reset-opt):not(.hidden)').addClass('hidden')
+			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+		}
+		else if(type == "variant-discounts"){
+			$('#rangeModalPopup').find('.reset-opt:not(.hidden)').addClass('hidden')
+			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
+		}
+		else if(type == "custom-discounts"){
+			$('#rangeModalPopup').find('.reset-opt:not(.hidden)').addClass('hidden')
+			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
+			$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeClass('hidden')
+		}
+	}
+	//var selectedRows = $('#brand-discounts-table').DataTable().rows({ selected: true }).ids(true);
+	var row_arr=[]
+	var selectedRows = $( $('#custom-discounts-table').DataTable().$('input[type="checkbox"]').map(function () {
+	  console.log("val---"+$(this).is(":checked"))
+	  if($(this).is(":checked")){
+	  	row_arr.push($(this).val())
+	  }
+	  return row_arr
+	} ) );
+	console.log(selectedRows);
+	console.log(row_arr)
 	var data=$(thisObj).data('row')
 	var appendRow=''
 	for(var i=0;i<data['discounts'].length;i++){
@@ -266,9 +306,13 @@ function showRangePopup(thisObj){
 		if(data['discounts'][i]['hkOfferApplied'] == true){
 			checkedstr='checked'
 		}
+		var endVal=data['discounts'][i]['end']
+		if(endVal == null){
+			endVal='Max'
+		}
 		appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
                   '<td>-</td>'+
-                  '<td><input type="text" class="input_field"  value="'+data['discounts'][i]['end']+'"></td>'+
+                  '<td><input type="text" class="input_field"  value="'+endVal+'"></td>'+
                   '<td><input type="text" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
                   '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'
 		appendRow +='</tr>'
@@ -335,7 +379,23 @@ $(document).ready( function () {
 	   console.log("checked=="+this.checked)
 	   var rows = $('#brand-discounts-table').DataTable().rows({ 'search': 'applied' }).nodes();
 	   // Check/uncheck checkboxes for all rows in the table
-	   $('input[type="checkbox"]', rows).attr('checked', this.checked);
+	   $('input[type="checkbox"]', rows).prop('checked', this.checked);
+	});
+
+	$('#variant-discounts-select-all').on('click', function(){
+	   // Get all rows with search applied
+	   console.log("checked=="+this.checked)
+	   var rows = $('#variant-discounts-table').DataTable().rows({ 'search': 'applied' }).nodes();
+	   // Check/uncheck checkboxes for all rows in the table
+	   $('input[type="checkbox"]', rows).prop('checked', this.checked);
+	});
+
+	$('#custom-discounts-select-all').on('click', function(){
+	   // Get all rows with search applied
+	   console.log("checked=="+this.checked)
+	   var rows = $('#custom-discounts-table').DataTable().rows({ 'search': 'applied' }).nodes();
+	   // Check/uncheck checkboxes for all rows in the table
+	   $('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
 

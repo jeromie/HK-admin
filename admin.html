@@ -164,6 +164,9 @@
           clear: both;
         }
 
+        .hidden{
+          display:none;
+        }
 
 
 
@@ -456,7 +459,7 @@
       <table class="w-100 table" id="variant-discounts-table" style="width:100%">
         <thead>
           <tr>
-            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%"><input type="checkbox" name="variant-discounts_select_all" value="1" id="variant-discounts-select-all"></th>
             <th width="5%">Sr.No.</th>
             <th width="10%">Product Variant Id</th>
             <th width="10%">Brand Type</th>
@@ -589,7 +592,7 @@
       <table class="w-100 table" id="custom-discounts-table" style="width:100%">
         <thead>
           <tr>
-            <th width="5%"><input type="checkbox" /></th>
+            <th width="5%"><input type="checkbox" name="custom-discounts_select_all" value="1" id="custom-discounts-select-all"></th>
             <th width="5%">Sr.No.</th>
             <th width="10%">Product Variant Id</th>
             <th width="10%">Brand Type</th>
@@ -698,9 +701,9 @@
             <table class="w-100 rangeTable" >
               <thead>
                 <tr>
-                  <th class="text-center">Expiry day Range From</th>
+                  <th class="text-center">Expiry Month Range From</th>
                   <th></th>
-                  <th>Expiry Day Range To</th>
+                  <th>Expiry Month Range To</th>
                   <th>Discount (%)</th>
                   <th class="text-center">HK.COM Offer Applied</th>
                 </tr>
@@ -728,16 +731,22 @@
               <a href="" class="">+ Add</a>
             </div>
       <!-- /table -->
-            <div class="mt-4">
+            <div class="mt-4 reset-opt-block" >
               <label for="" class="mb-2 d-block fosz14">Reset to Default Discounts:</label>
               <div class="d-flex">
-                <div class="checkbox mr-4">
+                <div class="checkbox mr-4 global-discounts-reset-opt reset-opt" >
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Global Discounts
                   </label>
                 </div>
 
-                <div class="checkbox">
+                 <div class="checkbox mr-4 brand-discounts-reset-opt reset-opt">
+                  <label class="fosz12 d-flex align-items-center">
+                    <input type="checkbox" class="mr-2"> Brand Discounts
+                  </label>
+                </div>
+
+                <div class="checkbox variant-discounts-reset-opt reset-opt">
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Variant Discounts
                   </label>
@@ -781,11 +790,12 @@
         $(this).addClass('current');
         $("#"+tab_id).addClass('current');
 
-        if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
+        //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
           var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
           discounts.generateIPList()
-          list_initialized_arr.push(tab_id)
-        }
+         // list_initialized_arr.push(tab_id)
+        //}
+        //console.log(list_initialized_arr)
         
       });
 
