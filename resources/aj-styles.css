@@ -355,3 +355,11 @@
           justify-content: CENTER;
           font-size: 32px;
         }
+
+        .filter h5 {
+          font-size: 16px;
+        }
+
+        .filter .labe_div label {
+          font-weight: 500;
+        }
