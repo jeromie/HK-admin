@@ -125,6 +125,10 @@
           margin-right: 0.25rem;
         }
 
+        .mt-2 {
+          margin-top: 0.25rem;
+        }
+
         .mb-4 {
           margin-bottom: 1.5rem;
         }
@@ -362,4 +366,8 @@
 
         .filter .labe_div label {
           font-weight: 500;
+        }
+
+        .p15 {
+          padding: 15px;
         }
