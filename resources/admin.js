@@ -380,18 +380,100 @@ $(document).ready( function () {
           }
 	})
 
+	var totalFilterOptions=[]
 	 $('.filter-brand-type').multiselect({
             columns: 1,
             placeholder: 'Select',
-            clear:true
+            clear:true,
+            onOptionClick: function( element, option ){
+		        var thisOpt = $(option);
+
+	        	console.log($(element).parent().parent().parent().parent())
+		        var options=[]
+		        if(thisOpt.prop('checked')){
+		        	if(jQuery.inArray( thisOpt.val(), totalFilterOptions ) == -1)
+		        		totalFilterOptions.push(thisOpt.val())
+		        	
+		        }
+		        else{
+		        	totalFilterOptions.splice( totalFilterOptions.indexOf(thisOpt.val()), 1 );
+		        }
+
+		        for(var i=0;i<totalFilterOptions.length;i++){
+		        		$.each( brands_mapping, function( key, value ) {
+						 
+						  if(value == totalFilterOptions[i]){
+						  	options.push({
+					            name   : key,
+					            value  : key,
+					            checked: false
+					        });
+						  }
+						});
+		        	}
+		        
+		        var tabelem=$(element).parent().parent().parent().parent()
+				tabelem.find('.filter-brand-name').multiselect('loadOptions', options );
+		    },
+		    onClear: function( element ){
+		    	totalFilterOptions=[]
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	tabelem.find('.filter-brand-name').multiselect('loadOptions', [] );
+		    }
         });
 
+
+	 var totalBrandFilterOptions=[]
 	 $('.filter-brand-name,.filter-variant-id,.filter-zone,.filter-store').multiselect({
             columns: 1,
             placeholder: 'Select',
             search: true,
             selectAll: true,
-            clear: true
+            clear: true,
+            onOptionClick: function( element, option ){
+		        var thisOpt = $(option);
+
+	        	console.log($(element).parent().parent().parent().parent())
+		       
+		        if(thisOpt.prop('checked')){
+		        	if(jQuery.inArray( thisOpt.val(), totalFilterOptions ) == -1)
+		        		totalBrandFilterOptions.push(thisOpt.val())
+		        	
+		        }
+		        else{
+		        	totalBrandFilterOptions.splice( totalBrandFilterOptions.indexOf(thisOpt.val()), 1 );
+		        }
+
+		        
+		        var tabelem=$(element).parent().parent().parent().parent()
+		        if(totalBrandFilterOptions.length>0){
+					tabelem.find('.apply-filter').removeAttr('disabled');
+					tabelem.find('.clear-filter').removeAttr('disabled');
+				}
+				else{
+					tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+				}
+		    },
+		    onSelectAll   : function( element, selected ){
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	if(selected>0){
+					tabelem.find('.apply-filter').removeAttr('disabled');
+					tabelem.find('.clear-filter').removeAttr('disabled');
+				}
+				else{
+					totalBrandFilterOptions=[]
+					tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+				}
+		    },
+		    onClear: function( element ){
+		    	totalBrandFilterOptions=[]
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+				tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+		    }
+
         });
 
 

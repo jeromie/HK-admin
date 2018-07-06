@@ -71,7 +71,7 @@
         onOptionClick : function( element, option ){},   // fires when an option is clicked
         onControlClose: function( element ){},           // fires when the options list is closed
         onSelectAll   : function( element, selected ){}, // fires when (un)select all is clicked
-
+        onClear   : function( element){}, // fires when clear all is clicked
         // @NOTE: these are for future development
         minSelect: false, // minimum number of items that can be selected
         maxSelect: false, // maximum number of items that can be selected
@@ -376,7 +376,10 @@
                 instance.updateSelectAll   = true;
                 instance.updatePlaceholder = true;
 
-
+                // USER CALLBACK
+                if( typeof instance.options.onClear == 'function' ) {
+                    instance.options.onClear( instance.element );
+                } 
                 instance._updateSelectAllText();
                 instance._updatePlaceholderText();
 

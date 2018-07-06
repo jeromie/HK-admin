@@ -30,7 +30,7 @@
     <script type="text/javascript" src="resources/multiselect/jquery.multiselect.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="resources/jquery-datatables-checkboxes-1.2.11/js/dataTables.checkboxes.min.js"></script>
-    <script type="text/javascript" src="resources/admin.js"></script>
+    
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
   .ui-tooltip {
@@ -346,8 +346,8 @@
               <label>Brand Name</label>
             </div>
             <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds" >
-              <option value="1">HealthKart</option>
-              <option value="2">HealthViva</option>
+              <!-- <option value="1">HealthKart</option>
+              <option value="2">HealthViva</option> -->
             </select>
           </div>
         </div>
@@ -356,8 +356,8 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14" onclick="resetFilters('brand-discounts','brand-discounts-table');">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary" onclick="applyFilters('brand-discounts-table');">
+        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
       </div>
       <table class="w-100 table" id="brand-discounts-table" style="width:100%">
         <thead>
@@ -740,7 +740,7 @@
       <!-- /table -->
             <div class="mt-4 reset-opt-block" >
               <label for="" class="mb-2 d-block fosz14">Reset to Default Discounts:</label>
-              <div class="d-flex">
+<!--               <div class="d-flex">
                 <div class="checkbox mr-4 global-discounts-reset-opt reset-opt" >
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Global Discounts
@@ -759,24 +759,24 @@
                   </label>
                 </div>
               </div>
-            </div>
+            </div> -->
             
             <div class="d-flex">
               <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
                 <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio1" type="radio" name="name_radio1" value="value_radio1">Radio1
+                  <input id="id_radio1" type="radio" name="name_radio1" value="value_radio1">Global Discounts
                 </label>
               </div>
 
-              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+              <div class="radio mr-4 brand-discounts-reset-opt reset-opt" >
                 <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio2" type="radio" name="name_radio1" value="value_radio2" >Radio2
+                  <input id="id_radio2" type="radio" name="name_radio1" value="value_radio2" >Brand Discounts
                 </label>
               </div>
 
-              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+              <div class="radio mr-4 variant-discounts-reset-opt reset-opt" >
                 <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio3" type="radio" name="name_radio1" value="value_radio3" >Radio3
+                  <input id="id_radio3" type="radio" name="name_radio1" value="value_radio3" >Variant Discounts
                 </label>
               </div>
             </div>
@@ -813,6 +813,25 @@
   </div>
 
   <script type="text/javascript">
+    var brands_mapping={
+       "JRI": "PL",
+       "Acu Care": "PL",
+       "SCS": "PL",
+       "Rama": "NPL",
+       "Herbs WellBeing": "NPL",
+       "Merit": "NPL",
+       "NutriCheer": "NPL",
+       "Ray": "NPL",
+       "Ketocare": "NPL",
+       "RiteBite": "NPL",
+       "Green Elements": "NPL",
+       "Bodygard": "NPL",
+       "Kibosh": "NPL",
+       "Garden of Life": "NPL",
+       "Chicco Pure.Bio": "NPL",
+       "Physique and Fitness Health Club": "NPL",
+       "JSB": "NPL",
+     }
     var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
     var list_initialized_arr=['global-discounts'];
     $('input[type="checkbox"]').click(function() {
@@ -869,5 +888,5 @@
 
 
   </script>
-
+<script type="text/javascript" src="resources/admin.js"></script>
   </body></html>
