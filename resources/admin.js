@@ -47,17 +47,23 @@ var listDiscounts = function(options){
 		        "ajax": {
 		        	"url":list_vars.url,
 		        	"type":"POST",
+		        	//processData:false,
+		        	dataType: 'json',
+            		contentType: 'application/json',
 		        	"data": function ( d ) {
 		        		d.discountTypeId=list_vars.discountTypeId
 		        		// d = $.extend(d, list_vars.filters);
 		        		// console.log("fil==")
 		        		// console.log(d)
-		        		d.brandTypes=$('#'+list_vars.type+'-brand-type').val()
-						d.brands=$('#'+list_vars.type+'-brand-name').val()	
+		        		
+		        		console.log("val id=="+$('#'+list_vars.type+'-brand-type').val())
+		        		d.brandTypes=($('#'+list_vars.type+'-brand-type').val() == undefined || $('#'+list_vars.type+'-brand-type').val() == "")?[]:$('#'+list_vars.type+'-brand-type').val()
+						d.brands=($('#'+list_vars.type+'-brand-name').val() == undefined || $('#'+list_vars.type+'-brand-name').val() == "")?[]:$('#'+list_vars.type+'-brand-name').val()	
 						console.log("fil==")
 						console.log(d)
-						d.variantIds=$('#'+list_vars.type+'-variant-id').val()
-						d.warehouseIds=$('#'+list_vars.type+'-store').val()
+						d.variantIds=($('#'+list_vars.type+'-variant-id').val() == undefined || $('#'+list_vars.type+'-variant-id').val() == "")?[]:$('#'+list_vars.type+'-variant-id').val()
+						d.warehouseIds=($('#'+list_vars.type+'-store').val() == undefined || $('#'+list_vars.type+'-store').val() == "")?[]:$('#'+list_vars.type+'-store').val()
+						return JSON.stringify(d)
 		            }
 		        },
 		      
@@ -310,12 +316,32 @@ function showRangePopup(thisObj,type){
 		if(endVal == null){
 			endVal='Max'
 		}
-		appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
+		var removeStr=''
+		if(i != 0 && i != data['discounts'].lrngth-1)
+			removeStr='<span style="color: red;cursor:pointer;" class="fosz14">&#10006;</span>'
+
+		if(i == (data['discounts'].length-2)){
+			appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
                   '<td>-</td>'+
-                  '<td><input type="text" class="input_field"  value="'+endVal+'"></td>'+
-                  '<td><input type="text" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
+                  '<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" value="'+endVal+'"></td>'+
+                  '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
                   '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
-                  '<td class="text-center"><span style="color: red;" class="fosz14">&#10006;</span></td>'
+                  '<td class="text-center">'+removeStr+'</td>'
+		}
+		else{
+			var classStr='';
+			if(i == (data['discounts'].length-1)){
+				classStr ='class="expiry-start-limits-inp"'
+			}
+			appendRow +='<td class="text-center"><span '+classStr+'>'+data['discounts'][i]['start']+'</span></td>'+
+                  '<td>-</td>'+
+                  '<td><label >'+endVal+'</label></td>'+
+                  '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
+                  '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
+                  '<td class="text-center">'+removeStr+'</td>'
+		}
+		
+		
 		appendRow +='</tr>'
 
 	}
@@ -382,6 +408,14 @@ function getVariantFilterDetails(tabelem){
 	else
 		tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
 }
+
+
+function updateNextExpiryLimit(thisObj){
+	var val= $(thisObj).val()
+	$('.expiry-start-limits-inp').text(parseInt(val)+1)
+
+}
+
 $(document).ready( function () {
 	global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-global-discounts" , tablename : 'global-discounts-table' , type:'global-discounts' , discountTypeId:1 });
 	global_discounts.generateIPList()
