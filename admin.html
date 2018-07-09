@@ -356,8 +356,8 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
+        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('brand-discounts','brand-discounts-table');" >
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('brand-discounts-table');">
       </div>
       <table class="w-100 table" id="brand-discounts-table" style="width:100%">
         <thead>
@@ -427,8 +427,8 @@
               <label>Brand Type</label>
             </div>
             <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type" >
-              <option value="1">Private Label</option>
-              <option value="2">Non Private Label</option>
+             <option value="PL">Private Label</option>
+              <option value="NPL">Non Private Label</option>
             </select>
           </div>
 
@@ -437,8 +437,6 @@
               <label>Brand Name</label>
             </div>
             <select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name" >
-              <option value="1">HealthKart</option>
-              <option value="2">HealthViva</option>
             </select>
           </div>
           <div>
@@ -446,8 +444,6 @@
               <label>Variant Id</label>
             </div>
             <select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id" >
-              <option value="HNUT1783-03">HNUT1783-03</option>
-              <option value="HNUT1783-04">HNUT1783-04</option>
             </select>
           </div>
         </div>
@@ -456,8 +452,8 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14" onclick="resetFilters('variant-discounts','variant-discounts-table');">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary" onclick="applyFilters('variant-discounts-table');">
+        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('variant-discounts','variant-discounts-table');" disabled="disabled">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('variant-discounts-table');" disabled="disabled">
       </div>
       <table class="w-100 table" id="variant-discounts-table" style="width:100%">
         <thead>
@@ -534,8 +530,8 @@
               <label>Brand Type</label>
             </div>
             <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type" >
-              <option value="1">Private Label</option>
-              <option value="2">Non Private Label</option>
+              <option value="PL">Private Label</option>
+              <option value="NPL">Non Private Label</option>
             </select>
           </div>
 
@@ -544,8 +540,6 @@
               <label>Brand Name</label>
             </div>
             <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name" >
-              <option value="1">HealthKart</option>
-              <option value="2">HealthViva</option>
             </select>
           </div>
 
@@ -554,8 +548,6 @@
               <label>Variant Id</label>
             </div>
             <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id" >
-              <option value="HNUT1783-03">HNUT1783-03</option>
-              <option value="HNUT1783-04">HNUT1783-04</option>
             </select>
           </div>
         </div>
@@ -590,8 +582,8 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14"  onclick="resetFilters('custom-discounts','custom-discounts-table');">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary"  onclick="applyFilters('custom-discounts-table');">
+        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled"  onclick="resetFilters('custom-discounts','custom-discounts-table');" disabled="disabled">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled"  onclick="applyFilters('custom-discounts-table');" disabled="disabled">
       </div>
       <table class="w-100 table" id="custom-discounts-table" style="width:100%">
         <thead>
