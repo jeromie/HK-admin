@@ -123,7 +123,8 @@ var listDiscounts = function(options){
 					'orderable': false,
 					'className': 'dt-body-center',
 					'render': function (data, type, full, meta){
-					 return '<input type="checkbox" name="'+list_vars.type+'-id[]" value="'+full['brand']+'">';
+						var jsonObj={"brand":full['brand'],"variantId":full['productVariantId'],"warehouseId":full['warehouseId']}
+					 return '<input type="checkbox" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
 					}
 		      });
     		index++;
@@ -271,6 +272,8 @@ function showRangePopup(thisObj,type){
 	console.log($(thisObj).data('row'))
 	console.log("type==="+type)
 	console.log("select all======")
+	$("#rangeModalPopup").data("row",$(thisObj).data('row'))
+	$("#rangeModalPopup").data("type",type)
 	if(type == "global-discounts" && $('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false){
 		$('#rangeModalPopup').find('.reset-opt-block').addClass('hidden')
 
@@ -298,7 +301,11 @@ function showRangePopup(thisObj,type){
 	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
 	  console.log("val---"+$(this).is(":checked"))
 	  if($(this).is(":checked")){
-	  	row_arr.push($(this).val())
+	  	row_arr.push({
+	  		"brand":$(this).data("brand"),
+	  		"variantId":$(this).data("variant-id"),
+	  		"warehouseId":$(this).data("warehouse-id")
+	  	})
 	  }
 	  return row_arr
 	} ) );
@@ -317,29 +324,42 @@ function showRangePopup(thisObj,type){
 			endVal='Max'
 		}
 		var removeStr=''
-		if(i != 0 && i != data['discounts'].lrngth-1)
-			removeStr='<span style="color: red;cursor:pointer;" class="fosz14">&#10006;</span>'
+		if(i != 0 && i != (data['discounts'].length-1))
+			removeStr='<span style="color: red;cursor:pointer;" class="fosz14" onclick="adjustExpiryRange(this)">&#10006;</span>'
 
+		// if(i == (data['discounts'].length-2)){
+		// 	appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
+  //                 '<td>-</td>'+
+  //                 '<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" value="'+endVal+'"></td>'+
+  //                 '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
+  //                 '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
+  //                 '<td class="text-center">'+removeStr+'</td>'
+		// }
+		// else{
+		var classStr='';
+		var endClassStr='';
+		var disabledStr=''
+		if(i == (data['discounts'].length-1)){
+			classStr ='expiry-start-limits-inp'
+		}
+		
 		if(i == (data['discounts'].length-2)){
-			appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
-                  '<td>-</td>'+
-                  '<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" value="'+endVal+'"></td>'+
-                  '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
-                  '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
-                  '<td class="text-center">'+removeStr+'</td>'
+			endClassStr ='expiry-end-limits-inp'
 		}
 		else{
-			var classStr='';
-			if(i == (data['discounts'].length-1)){
-				classStr ='class="expiry-start-limits-inp"'
-			}
-			appendRow +='<td class="text-center"><span '+classStr+'>'+data['discounts'][i]['start']+'</span></td>'+
-                  '<td>-</td>'+
-                  '<td><label >'+endVal+'</label></td>'+
-                  '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
-                  '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
-                  '<td class="text-center">'+removeStr+'</td>'
+			disabledStr='disabled="disabled"'
 		}
+
+		appendRow +='<td class="text-center"><span class="'+classStr+' expiry-start-lbl">'+data['discounts'][i]['start']+'</span></td>'+
+              '<td>-</td>';
+        if(i == (data['discounts'].length-1))
+        	appendRow +='<td><label class="expiry-end-lbl">'+endVal+'</label></td>'
+       	else
+        	appendRow +='<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-lbl '+endClassStr+'" oninput="updateNextExpiryLimit(this)" value="'+endVal+'" '+disabledStr+'></td>'
+        appendRow +='<td><input type="number" min="0" class="input_field discount-percent-lbl" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
+              '<td class="text-center"><input class="hk-offer-lbl" type="checkbox" '+checkedstr+'/></td>'+
+              '<td class="text-center">'+removeStr+'</td>'
+		// }
 		
 		
 		appendRow +='</tr>'
@@ -368,18 +388,93 @@ function applyFilters(tableName){
 	$('#'+tableName).DataTable().ajax.reload();
 }
 
+function adjustExpiryRange(thisObj){
+	var parentDiv=$(thisObj).parent().parent().prev()  
+	var currDiv=$(thisObj).parent().parent().find('.expiry-end-lbl')
+	var endval=currDiv.val()
+	if(currDiv.hasClass('expiry-end-limits-inp')){
+		parentDiv.find('.expiry-end-lbl').addClass('expiry-end-limits-inp')
+		parentDiv.find('.expiry-end-lbl').removeAttr('disabled')
+	} 
+	console.log("endval=="+endval)
+	console.log(parentDiv.find('.expiry-end-lbl'))
+	parentDiv.find('.expiry-end-lbl').val(endval)
+	$(thisObj).parent().parent().remove()
+
+}
 
 function saveRangeOptions(thisObj){
+	var saveData=true
 	if($(thisObj).data('confirm') == true){
+		saveData=false
 		var r = confirm("Are you sure you want to apply these settings to all selected records?");
 	    if (r == true) {
-	        txt = "You pressed OK!";
+	        saveData=true
 	    } else {
-	        txt = "You pressed Cancel!";
+	        saveData=false
 
 	    }
-	    console.log(txt)
+	    //console.log(txt)
 	}
+	if(saveData == false)
+		return;
+	var discounts=[]
+	$(".rangeTable tbody tr").each(function() {
+		console.log($(this))
+		var discountList={}
+		if($(this).find('.hk-offer-lbl').is(':checked'))
+			discountList['hkOfferApplied']=true
+		else
+			discountList['hkOfferApplied']=false
+
+		discountList['start']=$(this).find('.expiry-start-lbl').text()
+		var endval=""
+		if($(this).find('.expiry-end-lbl').val() == "")
+			endval=null
+		else
+			endval=$(this).find('.expiry-end-lbl').val()
+		discountList['end']=endval
+		discountList['discountPercent']=$(this).find('.discount-percent-lbl').val()
+		discounts.push(discountList)
+	});
+	console.log(discounts)
+	console.log($("#rangeModalPopup").data('row'))
+	var popupData=$("#rangeModalPopup").data('row')
+	var type=$("#rangeModalPopup").data('type')
+	var data={}
+	data['discounts']=discounts
+	data['discountTypeId']=discounts_id_list[type]
+	data['rows']=[]
+	var row_arr=[]
+	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
+	  if($(this).is(":checked")){
+	  	row_arr.push({
+	  		"brand":$(this).data("brand"),
+	  		"variantId":$(this).data("variant-id"),
+	  		"warehouseId":$(this).data("warehouse-id")
+	  	})
+	  }
+	  return row_arr
+	} ) );
+	if(row_arr.length>0){
+		data['rows']=row_arr
+	}
+	else{
+		data['rows'].push({
+			"warehouseId":popupData.warehouseId,
+			"variantId":popupData.productVariantId,
+			"brand":popupData.brand
+		})
+	}
+	
+	$.ajax({
+		  url: "https://demo8727571.mockable.io/editDiscounts",
+		  method: "POST",
+			  data: data,
+		})
+	  .done(function( data ) {
+	  	$('.modal').toggleClass('is-visible');
+	  });
 	
    
 
