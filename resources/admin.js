@@ -249,7 +249,7 @@ var listDiscounts = function(options){
 	                targets: index,
 	                orderable:  false,
 	                render: function(data, type, row, meta){
-	                	var renderStr='<a href="javascript:void(0);" class="modal-toggle" data-row=\''+JSON.stringify(row)+'\' onclick="showRangePopup(this,\''+list_vars.type+'\');">View/Edit Range</a>'
+	                	var renderStr='<a href="javascript:void(0);" class="modal-toggle" data-discount-type-id="'+list_vars.discountTypeId+'" data-brand="'+row['brand']+'" data-variant-id="'+row['productVariantId']+'" data-row=\''+JSON.stringify(row)+'\' onclick="showRangePopup(this,\''+list_vars.type+'\');">View/Edit Range</a>'
 	                	return renderStr
 
 	                }
@@ -281,6 +281,9 @@ function updatedSelectAllCheckbox(type,thisObj){
 
 function showRangePopup(thisObj,type){
 	//console.log($(thisObj).data('row'))
+	$('#rangeModalPopup').find('.table-cover').removeClass('disabled')
+	$('.reset-select-radio').removeAttr('checked')
+	$('#resetDiscountsForm')[0].reset()
 	var data=$(thisObj).data('row')
 	if(data['discounts'].length>0){
 		$('.submitBtn').removeAttr('disabled')
@@ -299,8 +302,10 @@ function showRangePopup(thisObj,type){
 	
 	$("#rangeModalPopup").data("row",$(thisObj).data('row'))
 	$("#rangeModalPopup").data("type",type)
-	if(type == "global-discounts" && $('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false){
-		$('#rangeModalPopup').find('.reset-opt-block').addClass('hidden')
+	console.log("hasclass hidden=="+$('#rangeModalPopup').find('').hasClass('hidden'))
+	if(type == "global-discounts"){
+		if($('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false)
+			$('#rangeModalPopup').find('.reset-opt-block').addClass('hidden')
 
 	}
 	else{
@@ -405,6 +410,57 @@ function showRangePopup(thisObj,type){
 	$("#rangeModalPopup").find('.rangeModalVariantName').text(data['productVariantName'])
 	$("#rangeModalPopup").find('.rangeModalStoreName').text(data['storeName'])
 	$('.modal').toggleClass('is-visible');
+	generateResetBlocks(type)
+
+	
+}
+
+function generateResetBlocks(type){
+	var discounts_arr=[]
+	if(type == "brand-discounts")
+		discounts_arr=["global-discounts"]
+	else if(type == "variant-discounts")
+		discounts_arr=["global-discounts","brand-discounts"]
+	else if(type == "custom-discounts")
+		discounts_arr=["global-discounts","brand-discounts","variant-discounts"]
+	console.log(discounts_arr)
+	for(item in discounts_arr){
+		//console.log("item=="+item)
+		generateResetBlockContent(discounts_arr[item])
+	}
+
+}
+
+
+function generateResetBlockContent(type){
+	var rowdata={}
+	var discounts=[]
+	var data={}
+	if(type == "global-discounts"){
+		rowdata=$('#'+type).find('.modal-toggle[data-discount-type-id="1"]').data('row')
+		console.log(rowdata["discounts"])
+	}
+	else if(type == "brand-discounts"){
+		console.log("brand disc===")
+		console.log($("#rangeModalPopup").data("row"))
+		data=$("#rangeModalPopup").data("row")
+		rowdata=$('#'+type).find('.modal-toggle[data-brand="'+data['brand']+'"]').data('row')
+	}
+	else if(type == "variant-discounts"){
+		data=$("#rangeModalPopup").data("row")
+		rowdata=$('#'+type).find('.modal-toggle[data-variant-id="'+data['productVariantId']+'"]').data('row')
+	}
+	discounts=rowdata["discounts"]
+	var html=''
+	for(var k=0;k<discounts.length;k++){
+		var endval=discounts[k].end
+		if(endval ==null)
+			endval='Max'
+		html +='<p class="pl-0"> '+discounts[k].start+'- '+endval+' months | '+discounts[k].discountPercent+'%</p>'
+	}
+	
+	$('#'+type+'-reset-block').html(html)
+
 }
 
 
@@ -435,6 +491,7 @@ function adjustExpiryRange(thisObj){
 
 function saveRangeOptions(thisObj){
 	var saveData=true
+	console.log("set==="+$('input[name="reset_discount_radio"]:checked').val())
 	if($(thisObj).data('confirm') == true){
 		saveData=false
 		var r = confirm("Are you sure you want to apply these settings to all selected records?");
@@ -477,6 +534,10 @@ function saveRangeOptions(thisObj){
 	data['rows']=[]
 	data['resetTo']={}
 	var row_arr=[]
+	var resetDiscount=$('input[name="reset_discount_radio"]:checked').val()
+	if(resetDiscount != undefined){
+		data['resetTo']={ "discountTypeId":resetDiscount,"brand":popupData.brand,"variantId":popupData.productVariantId }
+	}
 	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
 	  if($(this).is(":checked")){
 	  	row_arr.push({
@@ -580,8 +641,11 @@ function CustomFilterValidate(tabelem){
 }
 
 $(document).ready( function () {
-	global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-global-discounts" , tablename : 'global-discounts-table' , type:'global-discounts' , discountTypeId:1 });
-	global_discounts.generateIPList()
+	for(ditem in discounts_id_list){
+		global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+ditem , tablename : ditem+'-table' , type:ditem , discountTypeId:discounts_id_list[ditem] });
+		global_discounts.generateIPList()
+	}
+	
 	
 	// var brand_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-brand-discounts" , tablename : 'brand-discounts-table' , type:'brand-discounts' , discountTypeId:2 });
 	// brand_discounts.generateIPList()

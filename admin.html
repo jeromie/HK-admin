@@ -758,37 +758,40 @@
                 </div>
               </div>
             </div> -->
-            
-            <div class="d-flex">
-              <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
-                <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio1" type="radio" name="name_radio1" value="value_radio1">Global Discounts
-                </label>
-              </div>
+            <form id="resetDiscountsForm">
+              <div class="d-flex">
+              
+                <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
+                  <label class="fosz12 d-flex align-items-center">
+                    <input id="id_radio1" data-block="global-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="1">Global Discounts
+                  </label>
+                </div>
 
-              <div class="radio mr-4 brand-discounts-reset-opt reset-opt" >
-                <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio2" type="radio" name="name_radio1" value="value_radio2" >Brand Discounts
-                </label>
-              </div>
+                <div class="radio mr-4 brand-discounts-reset-opt reset-opt" >
+                  <label class="fosz12 d-flex align-items-center">
+                    <input id="id_radio2" data-block="brand-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="2" >Brand Discounts
+                  </label>
+                </div>
 
-              <div class="radio mr-4 variant-discounts-reset-opt reset-opt" >
-                <label class="fosz12 d-flex align-items-center">
-                  <input id="id_radio3" type="radio" name="name_radio1" value="value_radio3" >Variant Discounts
-                </label>
-              </div>
-            </div>
+                <div class="radio mr-4 variant-discounts-reset-opt reset-opt" >
+                  <label class="fosz12 d-flex align-items-center">
+                    <input id="id_radio3" data-block="variant-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="3" >Variant Discounts
+                  </label>
+                </div>
 
-            <div id="div1"  class="bg-grey p15 mt-2" style="display: none;">
-              <p class="pl-0">1 - 3 months | 70%</p>
+              </div>
+            </form>
+
+            <div id="global-discounts-reset-block"  class="bg-grey p15 mt-2 reset-block" style="display: none;">
+              <p class="pl-0">global  1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p>
             </div>
-            <div id="div2" class="bg-grey p15 mt-2" style="display: none;">
-              <p class="pl-0">1 - 3 months | 70%</p>
+            <div id="brand-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+              <p class="pl-0">brand 1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p>
             </div>
-            <div id="div3" class="bg-grey p15 mt-2" style="display: none;">
-              <p class="pl-0">1 - 3 months | 70%</p>
+            <div id="variant-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+              <p class="pl-0">variant 1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p>
             </div>
 
@@ -874,22 +877,28 @@
         $('.modal-toggle').click(function(){
         // e.preventDefault();
         $('.modal').toggleClass('is-visible');
+        $('.reset-block').hide()
       });
 
-      $('#id_radio1').click(function () {
-          $('#div2, #div3').hide('fast');
-          $('#div1').show('fast');
+      $('.reset-select-radio').click(function () {
+          var divId=$(this).data('block') 
+          $('.reset-block:not(#'+divId+')').hide('fast');
+          $('#'+divId).show('fast');
+          if($('#rangeModalPopup').find('.table-cover').hasClass('disabled') == false){
+              $('#rangeModalPopup').find('.table-cover').addClass('disabled')
+          }
+          
       });
       
-      $('#id_radio2').click(function () {
-          $('#div1, #div3').hide('fast');
-          $('#div2').show('fast');
-      });
+      // $('#id_radio2').click(function () {
+      //     $('#div1, #div3').hide('fast');
+      //     $('#div2').show('fast');
+      // });
 
-      $('#id_radio3').click(function () {
-          $('#div1, #div2').hide('fast');
-          $('#div3').show('fast');
-      });
+      // $('#id_radio3').click(function () {
+      //     $('#div1, #div2').hide('fast');
+      //     $('#div3').show('fast');
+      // });
 
 
 
