@@ -475,7 +475,7 @@ function saveRangeOptions(thisObj){
 	data['discounts']=discounts
 	data['discountTypeId']=discounts_id_list[type]
 	data['rows']=[]
-	data['reset_to']={}
+	data['resetTo']={}
 	var row_arr=[]
 	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
 	  if($(this).is(":checked")){
