@@ -1,4 +1,5 @@
 var global_discounts
+var defaultSlab=6
 var listDiscounts = function(options){
 
     /*
@@ -229,6 +230,9 @@ var listDiscounts = function(options){
 	                	if(row['discounts'].length>0){
 	                		renderStr +='</div>'
 	                	}
+	                	else{
+	                		renderStr +='<span style="padding-left: 1.5em">--</span>'
+	                	}
 	                	return renderStr
 	                }
 	            });
@@ -276,13 +280,23 @@ function updatedSelectAllCheckbox(type,thisObj){
 }
 
 function showRangePopup(thisObj,type){
-	console.log($(thisObj).data('row'))
-	console.log("type==="+type)
-	console.log("select all======")
-	$('.submitBtn').removeAttr('disabled')
-	$('.submitBtn').removeClass('disabled')
-	$('.addExpiryRange').removeAttr('disabled')
-	$('.addExpiryRange').removeClass('disabled')
+	//console.log($(thisObj).data('row'))
+	var data=$(thisObj).data('row')
+	if(data['discounts'].length>0){
+		$('.submitBtn').removeAttr('disabled')
+		$('.submitBtn').removeClass('disabled')
+		$('.addExpiryRange').removeAttr('disabled')
+		$('.addExpiryRange').removeClass('disabled')
+	}
+	else{
+		$('.addExpiryRange').attr('disabled','disabled')
+		if($('.addExpiryRange').hasClass('disabled') == false)
+			$('.addExpiryRange').addClass('disabled')
+		if($('.submitBtn').hasClass('disabled') == false)
+			$('.submitBtn').addClass('disabled')
+		$('.submitBtn').attr('disabled','disabled')
+	}
+	
 	$("#rangeModalPopup").data("row",$(thisObj).data('row'))
 	$("#rangeModalPopup").data("type",type)
 	if(type == "global-discounts" && $('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false){
@@ -322,9 +336,14 @@ function showRangePopup(thisObj,type){
 	} ) );
 	console.log(selectedRows);
 	console.log(row_arr)
-	var data=$(thisObj).data('row')
+	
 	var appendRow=''
-	for(var i=0;i<data['discounts'].length;i++){
+	var dicountsArr=data['discounts']
+	if(dicountsArr.length == 0){
+		dicountsArr.push({"start":0,"end":defaultSlab,"discountPercent":"","hkOfferApplied":false})
+		dicountsArr.push({"start":(defaultSlab+1),"end":null,"discountPercent":"","hkOfferApplied":false})
+	}
+	for(var i=0;i<dicountsArr.length;i++){
 		appendRow +='<tr>'
 		var checkedstr='';
 		if(data['discounts'][i]['hkOfferApplied'] == true){
@@ -350,24 +369,24 @@ function showRangePopup(thisObj,type){
 		var classStr='';
 		var endClassStr='';
 		var disabledStr=''
-		if(i == (data['discounts'].length-1)){
+		if(i == (dicountsArr.length-1)){
 			classStr ='expiry-start-limits-inp'
 		}
 		
-		if(i == (data['discounts'].length-2)){
+		if(i == (dicountsArr.length-2)){
 			endClassStr ='expiry-end-limits-inp'
 		}
 		else{
 			disabledStr='disabled="disabled"'
 		}
 
-		appendRow +='<td class="text-center"><span class="expiry-start-lbl '+classStr+'">'+data['discounts'][i]['start']+'</span></td>'+
+		appendRow +='<td class="text-center"><span class="expiry-start-lbl '+classStr+'">'+dicountsArr[i]['start']+'</span></td>'+
               '<td>-</td>';
-        if(i == (data['discounts'].length-1))
+        if(i == (dicountsArr.length-1))
         	appendRow +='<td><label class="expiry-end-lbl">'+endVal+'</label></td>'
        	else
-        	appendRow +='<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-lbl '+endClassStr+'" oninput="updateNextExpiryLimit(this)" value="'+endVal+'" '+disabledStr+'></td>'
-        appendRow +='<td><input type="number" min="0" class="input_field discount-percent-lbl" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
+        	appendRow +='<td><input type="number" min="'+dicountsArr[i]['start']+'" class="input_field expiry-end-lbl '+endClassStr+'" oninput="updateNextExpiryLimit(this)" value="'+endVal+'" '+disabledStr+'></td>'
+        appendRow +='<td><input type="number" min="0" class="input_field discount-percent-lbl" value="'+dicountsArr[i]['discountPercent']+'"></td>'+
               '<td class="text-center"><input class="hk-offer-lbl" type="checkbox" '+checkedstr+'/></td>'+
               '<td class="text-center">'+removeStr+'</td>'
 		// }
@@ -712,7 +731,7 @@ $(document).ready( function () {
 	   $('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
-	var defaultSlab=6
+	
 	$('.addExpiryRange').on('click', function(){
 	   var parentObj=$('#rangeModalPopup .expiry-end-limits-inp').parent().parent()
 	   var cloneObj=parentObj.clone()
@@ -726,11 +745,11 @@ $(document).ready( function () {
 	   $('#rangeModalPopup .expiry-start-limits-inp').text(parseInt(endval)+defaultSlab+1)
 	   parentObj.after(cloneObj)
 	   $('.addExpiryRange').attr('disabled','disabled')
-	   if($('.addExpiryRange').hasClass('disabled') == false)
+		if($('.addExpiryRange').hasClass('disabled') == false)
 			$('.addExpiryRange').addClass('disabled')
-	   if($('.submitBtn').hasClass('disabled') == false)
-	   		$('.submitBtn').attr('disabled','disabled')
-	   $('.submitBtn').addClass('disabled')
+		if($('.submitBtn').hasClass('disabled') == false)
+			$('.submitBtn').addClass('disabled')
+		$('.submitBtn').attr('disabled','disabled')
 
 	});	
 
