@@ -124,7 +124,7 @@ var listDiscounts = function(options){
 					'className': 'dt-body-center',
 					'render': function (data, type, full, meta){
 						var jsonObj={"brand":full['brand'],"variantId":full['productVariantId'],"warehouseId":full['warehouseId']}
-					 return '<input type="checkbox" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
+					 return '<input type="checkbox" onclick="updatedSelectAllCheckbox(\''+list_vars.type+'\',this)" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
 					}
 		      });
     		index++;
@@ -268,10 +268,21 @@ var listDiscounts = function(options){
 };
 
 
+function updatedSelectAllCheckbox(type,thisObj){
+	console.log("entered=="+type)
+	if($(thisObj).is(':checked') == false){
+		$("#"+type+"-select-all").prop( "checked", false );
+	}
+}
+
 function showRangePopup(thisObj,type){
 	console.log($(thisObj).data('row'))
 	console.log("type==="+type)
 	console.log("select all======")
+	$('.submitBtn').removeAttr('disabled')
+	$('.submitBtn').removeClass('disabled')
+	$('.addExpiryRange').removeAttr('disabled')
+	$('.addExpiryRange').removeClass('disabled')
 	$("#rangeModalPopup").data("row",$(thisObj).data('row'))
 	$("#rangeModalPopup").data("type",type)
 	if(type == "global-discounts" && $('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false){
@@ -350,7 +361,7 @@ function showRangePopup(thisObj,type){
 			disabledStr='disabled="disabled"'
 		}
 
-		appendRow +='<td class="text-center"><span class="'+classStr+' expiry-start-lbl">'+data['discounts'][i]['start']+'</span></td>'+
+		appendRow +='<td class="text-center"><span class="expiry-start-lbl '+classStr+'">'+data['discounts'][i]['start']+'</span></td>'+
               '<td>-</td>';
         if(i == (data['discounts'].length-1))
         	appendRow +='<td><label class="expiry-end-lbl">'+endVal+'</label></td>'
@@ -473,6 +484,7 @@ function saveRangeOptions(thisObj){
 			  data: data,
 		})
 	  .done(function( data ) {
+	  	$('#'+type+'-table').DataTable().ajax.reload();
 	  	$('.modal').toggleClass('is-visible');
 	  });
 	
@@ -508,6 +520,7 @@ function getVariantFilterDetails(tabelem){
 function updateNextExpiryLimit(thisObj){
 	var val= $(thisObj).val()
 	$('.expiry-start-limits-inp').text(parseInt(val)+1)
+	
 
 }
 
@@ -699,7 +712,90 @@ $(document).ready( function () {
 	   $('input[type="checkbox"]', rows).prop('checked', this.checked);
 	});
 
+	var defaultSlab=6
+	$('.addExpiryRange').on('click', function(){
+	   var parentObj=$('#rangeModalPopup .expiry-end-limits-inp').parent().parent()
+	   var cloneObj=parentObj.clone()
+	   parentObj.find('.expiry-end-limits-inp').attr("disabled","disabled")
+	   var endval=parentObj.find('.expiry-end-limits-inp').val()
+	   parentObj.find('.expiry-end-limits-inp').removeClass('expiry-end-limits-inp')
+	   cloneObj.find('.input_field').val('')
+	   cloneObj.find('.expiry-end-limits-inp').val(parseInt(endval)+defaultSlab)
+	   cloneObj.find('.expiry-end-limits-inp').attr('min',parseInt(endval)+1)
+	   cloneObj.find('.expiry-start-lbl').text(parseInt(endval)+1)
+	   $('#rangeModalPopup .expiry-start-limits-inp').text(parseInt(endval)+defaultSlab+1)
+	   parentObj.after(cloneObj)
+	   $('.addExpiryRange').attr('disabled','disabled')
+	   if($('.addExpiryRange').hasClass('disabled') == false)
+			$('.addExpiryRange').addClass('disabled')
+	   if($('.submitBtn').hasClass('disabled') == false)
+	   		$('.submitBtn').attr('disabled','disabled')
+	   $('.submitBtn').addClass('disabled')
 
-		
+	});	
+
+	$('body').on('input','#rangeModalPopup .input_field',function(e){
+		// if($(this).hasClass('expiry-end-lbl')){
+		// 	console.log()
+			
+		// }
+		var enableSubmitBtn=true
+		var enableSubmitCheck=true
+		var startval=parseInt($(this).parent().parent().find('.expiry-start-lbl').text())
+		console.log(startval+ "==>"+ parseInt($(this).parent().parent().find('.expiry-end-lbl').val()))
+		if(startval > parseInt($(this).parent().parent().find('.expiry-end-lbl').val())){
+			console.log("error")
+			enableSubmitBtn=false
+			if($(this).parent().parent().find('.expiry-end-lbl').hasClass('error') == false ){
+
+				$(this).parent().parent().find('.expiry-end-lbl').addClass('error') 
+				// $('.submitBtn').attr('disabled','disabled')
+	   //      	if($('.submitBtn').hasClass('disabled') == false)
+		  //  			$('.submitBtn').addClass('disabled')
+		   		
+			}
+		}
+		else{
+			$(this).parent().parent().find('.expiry-end-lbl').removeClass('error') 
+				// $('.submitBtn').attr('disabled','disabled')
+		  //  		$('.submitBtn').removeClass('disabled')
+		}
+		var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
+            return $.trim(this.value) === "";
+        });
+		console.log("len-====="+$emptyFields.length)
+        if (!$emptyFields.length) {
+      //       $('.addExpiryRange').removeAttr('disabled')
+	   		// $('.addExpiryRange').removeClass('disabled')
+	   		// $('.submitBtn').removeAttr('disabled')
+	   		// $('.submitBtn').removeClass('disabled')
+        }
+        else{
+
+       //  	$('.addExpiryRange').attr('disabled','disabled')
+       //  	if($('.addExpiryRange').hasClass('disabled') == false)
+	   			// $('.addExpiryRange').addClass('disabled')
+	   		enableSubmitCheck=false
+	   		// $('.submitBtn').attr('disabled','disabled')
+      //   	if($('.submitBtn').hasClass('disabled') == false)
+	   		// 	$('.submitBtn').addClass('disabled')
+        }
+        console.log("enableSubmitBtn="+enableSubmitBtn+"==="+enableSubmitCheck)
+        if(enableSubmitBtn== true && enableSubmitCheck==true){
+        	$('.submitBtn').removeAttr('disabled')
+	   		$('.submitBtn').removeClass('disabled')
+	   		$('.addExpiryRange').removeAttr('disabled')
+	   		$('.addExpiryRange').removeClass('disabled')
+        }
+        else{
+        	$('.submitBtn').attr('disabled','disabled')
+        	if($('.submitBtn').hasClass('disabled') == false)
+	   			$('.submitBtn').addClass('disabled')
+	   		$('.addExpiryRange').attr('disabled','disabled')
+        	if($('.addExpiryRange').hasClass('disabled') == false)
+	   			$('.addExpiryRange').addClass('disabled')
+        }
+	   
+	});
 
 });
