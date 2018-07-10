@@ -538,6 +538,19 @@ function getVariantFilterDetails(tabelem){
 		tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
 }
 
+function loadZonesFilter(){
+	var options=[]
+	for(var j=0;j<zones.length;j++){
+	    	options.push({
+	            name   : zones[j],
+	            value  : zones[j],
+	            checked: false
+	        });
+	    }
+	console.log(options)
+	$('#custom-discounts-zone').multiselect('loadOptions', options );
+}
+
 
 function updateNextExpiryLimit(thisObj){
 	var val= $(thisObj).val()
@@ -546,9 +559,30 @@ function updateNextExpiryLimit(thisObj){
 
 }
 
+function CustomFilterValidate(tabelem){
+	var selectedBrands=tabelem.find('.filter-brand-name').val()
+	var selectedStores=tabelem.find('.filter-store').val()
+	if(selectedBrands.length>0 && selectedStores.length>0){
+		tabelem.find('.apply-filter').removeClass('disabled')
+		tabelem.find('.apply-filter').removeAttr('disabled');
+		tabelem.find('.clear-filter').removeClass('disabled');
+		tabelem.find('.clear-filter').removeAttr('disabled');
+	}
+	else{
+		if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+			tabelem.find('.apply-filter').addClass('disabled');
+		if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+			tabelem.find('.clear-filter').addClass('disabled');
+		tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+		tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+	}
+	
+}
+
 $(document).ready( function () {
 	global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-global-discounts" , tablename : 'global-discounts-table' , type:'global-discounts' , discountTypeId:1 });
 	global_discounts.generateIPList()
+	
 	// var brand_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-brand-discounts" , tablename : 'brand-discounts-table' , type:'brand-discounts' , discountTypeId:2 });
 	// brand_discounts.generateIPList()
 	// var variant_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-variant-discounts" , tablename : 'variant-discounts-table' , type:'variant-discounts' , discountTypeId:3 });
@@ -641,7 +675,7 @@ $(document).ready( function () {
 		        	totalBrandFilterOptions[tabelem.attr('id')].splice( totalBrandFilterOptions[tabelem.attr('id')].indexOf(thisOpt.val()), 1 );
 		        }
 		        
-		        if(tabelem.attr('id') != "brand-discounts"){
+		        if(tabelem.attr('id') == "variant-discounts"){
 		        	if(totalBrandFilterOptions[tabelem.attr('id')].length>0){
 			        	
 			        	tabelem.find('.apply-filter').removeClass('disabled')
@@ -658,14 +692,20 @@ $(document).ready( function () {
 						tabelem.find('.clear-filter').attr('disabled', 'disabled' );
 					}
 					console.log(tabelem.find('.filter-brand-name').val())
-					getVariantFilterDetails(tabelem)
+					
+		        }
+		        if (tabelem.attr('id') != "brand-discounts"){
+		        	getVariantFilterDetails(tabelem)
+		        }
+		        if(tabelem.attr('id') == "custom-discounts"){
+		        	CustomFilterValidate(tabelem)
 		        }
 		        
 
 		    },
 		    onSelectAll   : function( element, selected ){
 		    	var tabelem=$(element).parent().parent().parent().parent()
-		    	if(tabelem.attr('id') != "brand-discounts"){
+		    	if(tabelem.attr('id') == "variant-discounts"){
 			    	if(selected>0){
 			    		tabelem.find('.apply-filter').removeClass('disabled')
 						tabelem.find('.apply-filter').removeAttr('disabled');
@@ -681,24 +721,40 @@ $(document).ready( function () {
 						tabelem.find('.apply-filter').attr('disabled', 'disabled' );
 						tabelem.find('.clear-filter').attr('disabled', 'disabled' );
 					}
-					getVariantFilterDetails(tabelem)
+					
 					console.log(tabelem.find('.filter-brand-name').val())
 				}
+				if (tabelem.attr('id') != "brand-discounts"){
+		        	getVariantFilterDetails(tabelem)
+		        }
+		        if(tabelem.attr('id') == "custom-discounts"){
+		        	CustomFilterValidate(tabelem)
+		        }
 		    },
 		    onClear: function( element ){
 		    	var tabelem=$(element).parent().parent().parent().parent()
 		    	totalBrandFilterOptions[tabelem.attr('id')]=[]
-		    	if(tabelem.attr('id') != "brand-discounts"){
+		    	if(tabelem.attr('id') == "variant-discounts"){
+		    		if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+						tabelem.find('.apply-filter').addClass('disabled');
+					if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+						tabelem.find('.clear-filter').addClass('disabled');
 			    	tabelem.find('.apply-filter').attr('disabled', 'disabled' );
 					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
-					tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
+					
 				}
+				if (tabelem.attr('id') != "brand-discounts"){
+		        	tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
+		        }
+		        if(tabelem.attr('id') == "custom-discounts"){
+		        	CustomFilterValidate(tabelem)
+		        }
 
 		    }
 
         });
 
-	 $('.filter-variant-id,.filter-zone,.filter-store').multiselect({
+	 $('.filter-variant-id,.filter-store').multiselect({
             columns: 1,
             placeholder: 'Select',
             search: true,
@@ -707,7 +763,78 @@ $(document).ready( function () {
 
         });
 
+	 var totalStoreFilterOptions=[]
+	 $('.filter-zone').multiselect({
+            columns: 1,
+            placeholder: 'Select',
+            search: true,
+            selectAll: true,
+            clear: true,
+            onOptionClick: function( element, option ){
+		        var thisOpt = $(option);
+		        var options=[]
+		        var tabelem=$(element).parent().parent().parent().parent()
+	        	console.log($(element).parent().parent().parent().parent())
+		       
+		        if(thisOpt.prop('checked')){
+		        	if(jQuery.inArray( thisOpt.val(), totalStoreFilterOptions ) == -1)
+		        		totalStoreFilterOptions.push(thisOpt.val())
+		        	
+		        }
+		        else{
+		        	totalStoreFilterOptions.splice( totalStoreFilterOptions.indexOf(thisOpt.val()), 1 );
+		        }
+		        
+		        for(var i=0;i<totalStoreFilterOptions.length;i++){
+		        		for(store_item in store_mapping){
+		        			console.log(store_mapping[store_item])
+		        			console.log(store_mapping[store_item].zone +'=='+ totalStoreFilterOptions[i])
+		        			if(store_mapping[store_item].zone == totalStoreFilterOptions[i]){
+							  	options.push({
+						            name   : store_mapping[store_item].name,
+						            value  : store_mapping[store_item].id,
+						            checked: false
+						        });
+							  }
+		        		}
+		        		
+		        	}
+		        console.log(options)
+		        tabelem.find('.filter-store').multiselect('loadOptions', options  );
+		        CustomFilterValidate(tabelem)	        
 
+		    },
+		    onSelectAll   : function( element, selected ){
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	var options=[]
+
+		    	if(selected>0){
+			    	for(store_item in store_mapping){
+	    			  	options.push({
+				            name   : store_mapping[store_item].name,
+				            value  : store_mapping[store_item].id,
+				            checked: false
+				        });
+				        totalStoreFilterOptions.push(store_mapping[store_item].id)
+	        		}
+        		}
+        		tabelem.find('.filter-store').multiselect('loadOptions', options  );
+        		CustomFilterValidate(tabelem)
+
+		    },
+		    onClear: function( element ){
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	totalStoreFilterOptions=[]		    	
+		    	tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+				tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+				tabelem.find('.filter-store').multiselect('loadOptions', [] );	
+				CustomFilterValidate(tabelem)		
+
+		    }
+
+        });
+
+	 loadZonesFilter()
 
 	 // Handle click on "Select all" control
 	$('#brand-discounts-select-all').on('click', function(){

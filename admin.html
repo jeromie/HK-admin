@@ -563,10 +563,10 @@
               <label>Zone wise Store</label>
             </div>
             <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds" >
-              <option value="NORTH">NORTH</option>
+             <!--  <option value="NORTH">NORTH</option>
               <option value="SOUTH">SOUTH</option>
               <option value="EAST">EAST</option>
-              <option value="WEST">WEST</option>
+              <option value="WEST">WEST</option> -->
             </select>
           </div>
 
@@ -575,8 +575,7 @@
               <label>Store Name</label>
             </div>
             <select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds" >
-              <option value="1">DEL Rajouri Bagh</option>
-              <option value="2">DEL Rajouri Garden</option>
+
             </select>
           </div>
         </div>
@@ -831,6 +830,19 @@
        "Physique and Fitness Health Club": "NPL",
        "JSB": "NPL",
      }
+    var store_mapping=[{
+        "id": 1,
+        "name":"DEL Rajouri Bagh",
+        "zone":"north"
+      },
+      {
+        "id": 2,
+        "name":"DEL Rajouri Garden",
+        "zone":"south"
+      }
+
+      ]
+    var zones=["north","south"]
     var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
     var list_initialized_arr=['global-discounts'];
     $('input[type="checkbox"]').click(function() {
