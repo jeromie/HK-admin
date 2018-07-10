@@ -475,6 +475,7 @@ function saveRangeOptions(thisObj){
 	data['discounts']=discounts
 	data['discountTypeId']=discounts_id_list[type]
 	data['rows']=[]
+	data['reset_to']={}
 	var row_arr=[]
 	var selectedRows = $( $('#'+type+'-table').DataTable().$('input[type="checkbox"]').map(function () {
 	  if($(this).is(":checked")){
@@ -499,8 +500,10 @@ function saveRangeOptions(thisObj){
 	
 	$.ajax({
 		  url: "https://demo8727571.mockable.io/editDiscounts",
+		  dataType: 'json',
+          contentType: 'application/json',
 		  method: "POST",
-			  data: data,
+		  data: JSON.stringify(data),
 		})
 	  .done(function( data ) {
 	  	$('#'+type+'-table').DataTable().ajax.reload();
