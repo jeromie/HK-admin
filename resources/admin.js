@@ -42,9 +42,17 @@ var listDiscounts = function(options){
      */
     this.generateIPList = function(){
         console.log(list_vars.type);
+        var enableOpt=true
+        if(list_vars.type == "global-discounts")
+        	enableOpt=false
         $('#'+list_vars.tablename).DataTable({
-		        "pageLength": 2,
+		        "pageLength": 50,
 		        "bDestroy": true,
+		        "bLengthChange": enableOpt,
+				"bPaginate": enableOpt,
+		        "ordering": enableOpt,
+		        "searching": enableOpt,
+		        "bInfo" : enableOpt,
 		        "ajax": {
 		        	"url":list_vars.url,
 		        	"type":"POST",
@@ -128,14 +136,14 @@ var listDiscounts = function(options){
 					 return '<input type="checkbox" onclick="updatedSelectAllCheckbox(\''+list_vars.type+'\',this)" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
 					}
 		      });
-    		index++;
-    		columns.push({ 
-	                "targets": index,
-	                render: function(data, type, row, meta){
+    		// index++;
+    		// columns.push({ 
+	     //            "targets": index,
+	     //            render: function(data, type, row, meta){
 	                	
-	                	return (meta.row+1)
-	                }
-	            });
+	     //            	return (meta.row+1)
+	     //            }
+	     //        });
     		index++;
     		if(jQuery.inArray( list_vars.type, [ "variant-discounts", "custom-discounts"] ) != -1){
 
@@ -201,6 +209,7 @@ var listDiscounts = function(options){
 
     	columns.push({ 
 	                "targets": index,
+	                orderable:  false,
 	                render: function(data, type, row, meta){
 	                	var renderStr='';
 	                	var fullStr='';
@@ -237,8 +246,12 @@ var listDiscounts = function(options){
 	                }
 	            });
     	index++;
+    	var orderDiscountType=true
+    	if(list_vars.type == "global-discounts")
+    		orderDiscountType=false
     	columns.push({ 
 	                "targets": index,
+	                orderable:  orderDiscountType,
 	                render: function(data, type, row, meta){
 	                	
 	                	return row['discountType']
@@ -406,9 +419,33 @@ function showRangePopup(thisObj,type){
 	else
 		$('#rangeModalPopup').find('.submitBtn').data('confirm',false)
 	$("#rangeModalPopup").find('.rangeTable tbody').html(appendRow);
-	$("#rangeModalPopup").find('.rangeModalVariantId').text(data['productVariantId'])
-	$("#rangeModalPopup").find('.rangeModalVariantName').text(data['productVariantName'])
-	$("#rangeModalPopup").find('.rangeModalStoreName').text(data['storeName'])
+	if(data['brand'] == null){
+		$("#rangeModalPopup").find('.rangeModalBrandName').parent().hide()
+	}
+	else{
+		$("#rangeModalPopup").find('.rangeModalBrandName').text(data['brand']+" ("+data['brandType']+")")
+		$("#rangeModalPopup").find('.rangeModalBrandName').parent().show()
+	}
+	if(data['productVariantId'] == null){
+		$("#rangeModalPopup").find('.rangeModalVariantId').parent().hide()
+		$("#rangeModalPopup").find('.rangeModalVariantName').parent().hide()
+	}
+	else{
+		$("#rangeModalPopup").find('.rangeModalVariantId').text(data['productVariantId'])
+		$("#rangeModalPopup").find('.rangeModalVariantName').text(data['productVariantName'])
+		$("#rangeModalPopup").find('.rangeModalVariantId').parent().show()
+		$("#rangeModalPopup").find('.rangeModalVariantName').parent().show()
+	}
+	if(data['storeName'] == null){
+		$("#rangeModalPopup").find('.rangeModalStoreName').parent().hide()
+	}
+	else{
+		$("#rangeModalPopup").find('.rangeModalStoreName').text(data['storeName']+" ("+data['zone']+")")
+		$("#rangeModalPopup").find('.rangeModalStoreName').parent().show()
+	}
+	
+	
+	
 	$('.modal').toggleClass('is-visible');
 	generateResetBlocks(type)
 
@@ -491,10 +528,12 @@ function adjustExpiryRange(thisObj){
 
 function saveRangeOptions(thisObj){
 	var saveData=true
+	var confirmFlag =false
 	console.log("set==="+$('input[name="reset_discount_radio"]:checked').val())
 	if($(thisObj).data('confirm') == true){
 		saveData=false
-		var r = confirm("Are you sure you want to apply these settings to all selected records?");
+		confirmFlag=true
+		var r = confirm("Do you want to apply this discount setting to other selected records as well?");
 	    if (r == true) {
 	        saveData=true
 	    } else {
@@ -503,8 +542,7 @@ function saveRangeOptions(thisObj){
 	    }
 	    //console.log(txt)
 	}
-	if(saveData == false)
-		return;
+	
 	var discounts=[]
 	$(".rangeTable tbody tr").each(function() {
 		console.log($(this))
@@ -548,10 +586,18 @@ function saveRangeOptions(thisObj){
 	  }
 	  return row_arr
 	} ) );
+	var singleRow=true
 	if(row_arr.length>0){
-		data['rows']=row_arr
+		if(saveData == false && confirmFlag == true){
+			singleRow=true
+		}
+		else{
+			data['rows']=row_arr
+			singleRow=false
+		}
+		
 	}
-	else{
+	if(singleRow == true){
 		data['rows'].push({
 			"warehouseId":popupData.warehouseId,
 			"variantId":popupData.productVariantId,
@@ -568,7 +614,10 @@ function saveRangeOptions(thisObj){
 		})
 	  .done(function( data ) {
 	  	$('#'+type+'-table').DataTable().ajax.reload();
-	  	$('.modal').toggleClass('is-visible');
+	  	console.log("fild==="+'#'+type+'-select-all')
+	  	console.log("v==="+$('#'+type+'-select-all').is(':checked')) 
+	  	$('#'+type+'-select-all').prop('checked',false)
+	  	$('.modal-toggle').trigger('click')
 	  });
 	
    
@@ -623,6 +672,7 @@ function updateNextExpiryLimit(thisObj){
 function CustomFilterValidate(tabelem){
 	var selectedBrands=tabelem.find('.filter-brand-name').val()
 	var selectedStores=tabelem.find('.filter-store').val()
+	console.log(selectedBrands.length+"===="+selectedStores.length)
 	if(selectedBrands.length>0 && selectedStores.length>0){
 		tabelem.find('.apply-filter').removeClass('disabled')
 		tabelem.find('.apply-filter').removeAttr('disabled');
@@ -641,18 +691,14 @@ function CustomFilterValidate(tabelem){
 }
 
 $(document).ready( function () {
+	$.fn.dataTable.ext.errMode = 'none';
 	for(ditem in discounts_id_list){
+		console.log("item=="+ditem)
 		global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+ditem , tablename : ditem+'-table' , type:ditem , discountTypeId:discounts_id_list[ditem] });
 		global_discounts.generateIPList()
 	}
 	
 	
-	// var brand_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-brand-discounts" , tablename : 'brand-discounts-table' , type:'brand-discounts' , discountTypeId:2 });
-	// brand_discounts.generateIPList()
-	// var variant_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-variant-discounts" , tablename : 'variant-discounts-table' , type:'variant-discounts' , discountTypeId:3 });
-	// variant_discounts.generateIPList()
-	// var custom_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-custom-discounts" , tablename : 'custom-discounts-table' , type:'custom-discounts' , discountTypeId:4 });
-	// custom_discounts.generateIPList()
 
 	$("body").tooltip({
 		selector: '[rel=tooltip]',
@@ -818,13 +864,38 @@ $(document).ready( function () {
 
         });
 
-	 $('.filter-variant-id,.filter-store').multiselect({
+	 $('.filter-variant-id').multiselect({
             columns: 1,
             placeholder: 'Select',
             search: true,
             selectAll: true,
             clear: true,
 
+        });
+
+	  $('.filter-store').multiselect({
+            columns: 1,
+            placeholder: 'Select',
+            search: true,
+            selectAll: true,
+            clear: true,
+             onOptionClick: function( element, option ){
+		        var thisOpt = $(option);
+		        var options=[]
+		        var tabelem=$(element).parent().parent().parent().parent()
+	        	CustomFilterValidate(tabelem)	        
+
+		    },
+		    onSelectAll   : function( element, selected ){
+		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	CustomFilterValidate(tabelem)
+
+		    },
+		    onClear: function( element ){
+		    	var tabelem=$(element).parent().parent().parent().parent()
+				CustomFilterValidate(tabelem)		
+
+		    }
         });
 
 	 var totalStoreFilterOptions=[]
