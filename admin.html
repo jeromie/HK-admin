@@ -719,7 +719,7 @@
       }
 
       ]
-    var zones=["north","south"]
+    var zones=[]
     var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
     var list_initialized_arr=['global-discounts'];
     $('input[type="checkbox"]').click(function() {
@@ -727,6 +727,8 @@
     });
 
     $(document).ready(function(){
+       var zones_list=["north","south"]
+       zones=zones_list
       // tabs
       $('ul.tabs li').click(function(){
         var tab_id = $(this).attr('data-tab');
