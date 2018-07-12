@@ -621,7 +621,9 @@ function saveRangeOptions(thisObj){
 	  	console.log("fild==="+'#'+type+'-select-all')
 	  	console.log("v==="+$('#'+type+'-select-all').is(':checked')) 
 	  	$('#'+type+'-select-all').prop('checked',false)
-	  	$('.modal-toggle').trigger('click')
+	  	$('.modal').removeClass('is-visible');
+        $('.reset-block').hide()
+	  	//$('.modal-toggle').trigger('click')
 	  });
 	
    
