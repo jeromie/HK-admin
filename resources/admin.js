@@ -362,7 +362,7 @@ function showRangePopup(thisObj,type){
 	var appendRow=''
 	var dicountsArr=data['discounts']
 	if(dicountsArr.length == 0){
-		dicountsArr.push({"start":0,"end":defaultSlab,"discountPercent":"","hkOfferApplied":false})
+		dicountsArr.push({"start":1,"end":defaultSlab,"discountPercent":"","hkOfferApplied":false})
 		dicountsArr.push({"start":(defaultSlab+1),"end":null,"discountPercent":"","hkOfferApplied":false})
 	}
 	for(var i=0;i<dicountsArr.length;i++){
@@ -376,27 +376,27 @@ function showRangePopup(thisObj,type){
 			endVal='Max'
 		}
 		var removeStr=''
-		if(i != 0 && i != (data['discounts'].length-1))
-			removeStr='<span style="color: red;cursor:pointer;" class="fosz14" onclick="adjustExpiryRange(this)">&#10006;</span>'
+		var extraStyle=''
+		if(i == 0 && dicountsArr.length != 2)
+			extraStyle='display:none;'
+		// if(i != 0 && i != (data['discounts'].length-1))
+		if(i == (data['discounts'].length-1))
+			extraStyle='display:none;'
+		removeStr='<span style="color: red;cursor:pointer;'+extraStyle+'" class="fosz14 remove-exp-cls" onclick="adjustExpiryRange(this)">&#10006;</span>'
 
-		// if(i == (data['discounts'].length-2)){
-		// 	appendRow +='<td class="text-center">'+data['discounts'][i]['start']+'</td>'+
-  //                 '<td>-</td>'+
-  //                 '<td><input type="number" min="'+data['discounts'][i]['start']+'" class="input_field expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" value="'+endVal+'"></td>'+
-  //                 '<td><input type="number" min="0" class="input_field" value="'+data['discounts'][i]['discountPercent']+'"></td>'+
-  //                 '<td class="text-center"><input type="checkbox" '+checkedstr+'/></td>'+
-  //                 '<td class="text-center">'+removeStr+'</td>'
-		// }
-		// else{
+
 		var classStr='';
 		var endClassStr='';
 		var disabledStr=''
+
+		if(i == 0)
+			endClassStr +="expiry-first-record "
 		if(i == (dicountsArr.length-1)){
 			classStr ='expiry-start-limits-inp'
 		}
 		
 		if(i == (dicountsArr.length-2)){
-			endClassStr ='expiry-end-limits-inp'
+			endClassStr +='expiry-end-limits-inp'
 		}
 		else{
 			disabledStr='disabled="disabled"'
@@ -517,16 +517,25 @@ function applyFilters(tableName){
 
 function adjustExpiryRange(thisObj){
 	var parentDiv=$(thisObj).parent().parent().prev()  
+	var nextParentDiv=$(thisObj).parent().parent().next() 
 	var currDiv=$(thisObj).parent().parent().find('.expiry-end-lbl')
 	var endval=currDiv.val()
 	if(currDiv.hasClass('expiry-end-limits-inp')){
 		parentDiv.find('.expiry-end-lbl').addClass('expiry-end-limits-inp')
 		parentDiv.find('.expiry-end-lbl').removeAttr('disabled')
 	} 
+	if(currDiv.hasClass('expiry-first-record')){
+		$(thisObj).parent().parent().next().find('.expiry-start-lbl').text(1)
+	}
+	if($('.expiry-end-lbl').length == 3){
+		console.log("remove-exp-cls")
+		$('.expiry-first-record').parent().parent().find('.remove-exp-cls').show()
+	}
 	console.log("endval=="+endval)
 	console.log(parentDiv.find('.expiry-end-lbl'))
 	parentDiv.find('.expiry-end-lbl').val(endval)
 	$(thisObj).parent().parent().remove()
+	//inputValidate(nextParentDiv.find('.expiry-end-lbl'))
 
 }
 
@@ -608,7 +617,7 @@ function saveRangeOptions(thisObj){
 			"brand":popupData.brand
 		})
 	}
-	
+	console.log(data)
 	$.ajax({
 		  url: "https://demo8727571.mockable.io/editDiscounts",
 		  dataType: 'json',
@@ -696,6 +705,72 @@ function CustomFilterValidate(tabelem){
 		tabelem.find('.clear-filter').attr('disabled', 'disabled' );
 	}
 	
+}
+
+
+function inputValidate(thisObj){
+		// if($(this).hasClass('expiry-end-lbl')){
+		// 	console.log()
+			
+		// }
+		console.log("in inputValidate")
+		var enableSubmitBtn=true
+		var enableSubmitCheck=true
+		var startval=parseInt($(thisObj).parent().parent().find('.expiry-start-lbl').text())
+		console.log(startval+ "==>"+ parseInt($(thisObj).parent().parent().find('.expiry-end-lbl').val()))
+		if(startval > parseInt($(thisObj).parent().parent().find('.expiry-end-lbl').val())){
+			console.log("error")
+			enableSubmitBtn=false
+			if($(thisObj).parent().parent().find('.expiry-end-lbl').hasClass('error') == false ){
+
+				$(thisObj).parent().parent().find('.expiry-end-lbl').addClass('error') 
+				// $('.submitBtn').attr('disabled','disabled')
+	   //      	if($('.submitBtn').hasClass('disabled') == false)
+		  //  			$('.submitBtn').addClass('disabled')
+		   		
+			}
+		}
+		else{
+			$(thisObj).parent().parent().find('.expiry-end-lbl').removeClass('error') 
+				// $('.submitBtn').attr('disabled','disabled')
+		  //  		$('.submitBtn').removeClass('disabled')
+		}
+		var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
+            return $.trim(thisObj.value) === "";
+        });
+		console.log("len-====="+$emptyFields.length)
+        if (!$emptyFields.length) {
+      //       $('.addExpiryRange').removeAttr('disabled')
+	   		// $('.addExpiryRange').removeClass('disabled')
+	   		// $('.submitBtn').removeAttr('disabled')
+	   		// $('.submitBtn').removeClass('disabled')
+        }
+        else{
+
+       //  	$('.addExpiryRange').attr('disabled','disabled')
+       //  	if($('.addExpiryRange').hasClass('disabled') == false)
+	   			// $('.addExpiryRange').addClass('disabled')
+	   		enableSubmitCheck=false
+	   		// $('.submitBtn').attr('disabled','disabled')
+      //   	if($('.submitBtn').hasClass('disabled') == false)
+	   		// 	$('.submitBtn').addClass('disabled')
+        }
+        console.log("enableSubmitBtn="+enableSubmitBtn+"==="+enableSubmitCheck)
+        if(enableSubmitBtn== true && enableSubmitCheck==true){
+        	$('.submitBtn').removeAttr('disabled')
+	   		$('.submitBtn').removeClass('disabled')
+	   		$('.addExpiryRange').removeAttr('disabled')
+	   		$('.addExpiryRange').removeClass('disabled')
+        }
+        else{
+        	$('.submitBtn').attr('disabled','disabled')
+        	if($('.submitBtn').hasClass('disabled') == false)
+	   			$('.submitBtn').addClass('disabled')
+	   		$('.addExpiryRange').attr('disabled','disabled')
+        	if($('.addExpiryRange').hasClass('disabled') == false)
+	   			$('.addExpiryRange').addClass('disabled')
+        }
+
 }
 
 $(document).ready( function () {
@@ -1006,17 +1081,40 @@ $(document).ready( function () {
 
 	
 	$('.addExpiryRange').on('click', function(){
+		if($('.expiry-end-lbl').length == 2){
+			$('.expiry-first-record').parent().parent().find('.remove-exp-cls').hide()
+		}
+		
+	   
+	   var rowHtml='<tr><td class="text-center">'+
+	   '<span class="expiry-start-lbl "></span></td>'+
+	   ' <td>-</td><td><input type="number" min="0" class="input_field expiry-end-lbl expiry-first-record expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" ></td>'+
+	   ' <td><input type="number" min="0" class="input_field discount-percent-lbl" ></td>'+
+	   '<td class="text-center"><input class="hk-offer-lbl" type="checkbox"></td>'+
+	   '<td class="text-center"><span style="color: red;cursor:pointer;" class="fosz14 remove-exp-cls" onclick="adjustExpiryRange(this)">✖</span></td></tr>'
+
+
 	   var parentObj=$('#rangeModalPopup .expiry-end-limits-inp').parent().parent()
-	   var cloneObj=parentObj.clone()
-	   parentObj.find('.expiry-end-limits-inp').attr("disabled","disabled")
-	   var endval=parentObj.find('.expiry-end-limits-inp').val()
-	   parentObj.find('.expiry-end-limits-inp').removeClass('expiry-end-limits-inp')
+	   // var parentObj=$('#rangeModalPopup .expiry-start-limits-inp').parent().parent()
+	   
+	   // var cloneObj=parentObj.clone()
+	   var endval=0
+	   var cloneObj=$(rowHtml)
+	   if(parentObj.length>0){
+		   parentObj.find('.expiry-end-limits-inp').attr("disabled","disabled")
+		   endval=parentObj.find('.expiry-end-limits-inp').val()
+		   parentObj.find('.expiry-end-limits-inp').removeClass('expiry-end-limits-inp')
+	   }
+	   
 	   cloneObj.find('.input_field').val('')
 	   cloneObj.find('.expiry-end-limits-inp').val(parseInt(endval)+defaultSlab)
 	   cloneObj.find('.expiry-end-limits-inp').attr('min',parseInt(endval)+1)
 	   cloneObj.find('.expiry-start-lbl').text(parseInt(endval)+1)
+	   cloneObj.find('.remove-exp-cls').show()
 	   $('#rangeModalPopup .expiry-start-limits-inp').text(parseInt(endval)+defaultSlab+1)
-	   parentObj.after(cloneObj)
+	   //parentObj.after(cloneObj)
+	   var pObj=$('#rangeModalPopup .expiry-start-limits-inp').parent().parent()
+	   pObj.before(cloneObj)
 	   $('.addExpiryRange').attr('disabled','disabled')
 		if($('.addExpiryRange').hasClass('disabled') == false)
 			$('.addExpiryRange').addClass('disabled')
@@ -1027,66 +1125,7 @@ $(document).ready( function () {
 	});	
 
 	$('body').on('input','#rangeModalPopup .input_field',function(e){
-		// if($(this).hasClass('expiry-end-lbl')){
-		// 	console.log()
-			
-		// }
-		var enableSubmitBtn=true
-		var enableSubmitCheck=true
-		var startval=parseInt($(this).parent().parent().find('.expiry-start-lbl').text())
-		console.log(startval+ "==>"+ parseInt($(this).parent().parent().find('.expiry-end-lbl').val()))
-		if(startval > parseInt($(this).parent().parent().find('.expiry-end-lbl').val())){
-			console.log("error")
-			enableSubmitBtn=false
-			if($(this).parent().parent().find('.expiry-end-lbl').hasClass('error') == false ){
-
-				$(this).parent().parent().find('.expiry-end-lbl').addClass('error') 
-				// $('.submitBtn').attr('disabled','disabled')
-	   //      	if($('.submitBtn').hasClass('disabled') == false)
-		  //  			$('.submitBtn').addClass('disabled')
-		   		
-			}
-		}
-		else{
-			$(this).parent().parent().find('.expiry-end-lbl').removeClass('error') 
-				// $('.submitBtn').attr('disabled','disabled')
-		  //  		$('.submitBtn').removeClass('disabled')
-		}
-		var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
-            return $.trim(this.value) === "";
-        });
-		console.log("len-====="+$emptyFields.length)
-        if (!$emptyFields.length) {
-      //       $('.addExpiryRange').removeAttr('disabled')
-	   		// $('.addExpiryRange').removeClass('disabled')
-	   		// $('.submitBtn').removeAttr('disabled')
-	   		// $('.submitBtn').removeClass('disabled')
-        }
-        else{
-
-       //  	$('.addExpiryRange').attr('disabled','disabled')
-       //  	if($('.addExpiryRange').hasClass('disabled') == false)
-	   			// $('.addExpiryRange').addClass('disabled')
-	   		enableSubmitCheck=false
-	   		// $('.submitBtn').attr('disabled','disabled')
-      //   	if($('.submitBtn').hasClass('disabled') == false)
-	   		// 	$('.submitBtn').addClass('disabled')
-        }
-        console.log("enableSubmitBtn="+enableSubmitBtn+"==="+enableSubmitCheck)
-        if(enableSubmitBtn== true && enableSubmitCheck==true){
-        	$('.submitBtn').removeAttr('disabled')
-	   		$('.submitBtn').removeClass('disabled')
-	   		$('.addExpiryRange').removeAttr('disabled')
-	   		$('.addExpiryRange').removeClass('disabled')
-        }
-        else{
-        	$('.submitBtn').attr('disabled','disabled')
-        	if($('.submitBtn').hasClass('disabled') == false)
-	   			$('.submitBtn').addClass('disabled')
-	   		$('.addExpiryRange').attr('disabled','disabled')
-        	if($('.addExpiryRange').hasClass('disabled') == false)
-	   			$('.addExpiryRange').addClass('disabled')
-        }
+		inputValidate(this)
 	   
 	});
 
