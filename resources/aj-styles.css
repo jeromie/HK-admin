@@ -344,7 +344,8 @@
           position: relative;
         }
 
-        .table-cover.disabled:after {
+        .table-cover.disabled:after,
+        .disabled-block:after {
           content: "\f05e";
           font-family: FontAwesome;
           position: absolute;
@@ -358,6 +359,10 @@
           align-items: center;
           justify-content: CENTER;
           font-size: 32px;
+        }
+
+        .disabled-block:after{
+          content: "";
         }
 
         .filter h5 {
@@ -375,4 +380,8 @@
         .disabled {
           pointer-events: none;
           opacity: 0.65;
+        }
+
+        .position-relative{
+          position:relative;
         }

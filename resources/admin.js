@@ -46,6 +46,10 @@ var listDiscounts = function(options){
         if(list_vars.type == "global-discounts")
         	enableOpt=false
         $('#'+list_vars.tablename).DataTable({
+		         processing: true,
+			    "language": {
+			        "processing": '<i class="fa fa-spinner fa-spin"></i> Loading...' //add a loading image,simply putting <img src="loader.gif" /> tag.
+			    },
 		        "pageLength": 50,
 		        "bDestroy": true,
 		        "bLengthChange": enableOpt,
@@ -628,8 +632,10 @@ function getVariantFilterDetails(tabelem){
 	if(selectedBrands.length>0){
 		$.ajax({
 		  url: "https://demo8727571.mockable.io/getVariantsFromBrand",
+		   dataType: 'json',
+          contentType: 'application/json',
 		  method: "POST",
-			  data: { brands : selectedBrands },
+			data: JSON.stringify({ brands : selectedBrands }),
 		})
 		  .done(function( data ) {
 		  	var options=[]
