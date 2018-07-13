@@ -400,3 +400,9 @@
           transform: translateY(-50%);
           top: 50%;
         }
+        
+        .disabled-field,
+        input:disabled,
+        select:disabled {
+          cursor: not-allowed;
+        }
