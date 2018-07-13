@@ -220,7 +220,8 @@
 
         /*modal*/
         .modal {
-            position: absolute;
+            /*position: absolute;*/
+            position: fixed;
             z-index: 10000; /* 1 */
             top: 0;
             left: 0;
@@ -384,4 +385,18 @@
 
         .position-relative{
           position:relative;
+        }
+
+        .rangeTable .input_field {
+          width: 90% !important;
+        }
+
+        /*modal vertical centering*/
+        .modal.is-visible {
+          position: fixed;
+        }
+
+        .modal.is-visible  .modal-transition {
+          transform: translateY(-50%);
+          top: 50%;
         }
