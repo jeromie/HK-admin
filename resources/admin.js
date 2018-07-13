@@ -217,13 +217,20 @@ var listDiscounts = function(options){
 	                render: function(data, type, row, meta){
 	                	var renderStr='';
 	                	var fullStr='';
+	                	if(row['discounts'] == null){
+	                		row['discounts']=[{start:1,end:null,discountPercent:"",hkOfferApplied:false}]
+	                	}
+
 	                	for(var i=0;i<row['discounts'].length;i++) {
 	                		var endPeriod
 	                		if(row['discounts'][i]["end"] == null)
 	                			endPeriod="Max"
 	                		else
 	                			endPeriod=row['discounts'][i]["end"]
-	                		fullStr +='<p>'+row['discounts'][i]["start"]+' - '+endPeriod+' months | '+row['discounts'][i]["discountPercent"]+'%</p>'
+	                		var discountPercentStr=''
+	                		if(row['discounts'][i]["discountPercent"] !="")
+	                			discountPercentStr=' | '+row['discounts'][i]["discountPercent"]+'%'
+	                		fullStr +='<p>'+row['discounts'][i]["start"]+' - '+endPeriod+' months'+discountPercentStr+'</p>'
 	                	}
 	                	if(row['discounts'].length>0){
 	                		renderStr +='<div rel="tooltip" title="'+fullStr+'">'
@@ -237,7 +244,11 @@ var listDiscounts = function(options){
 	                			endPeriod="Max"
 	                		else
 	                			endPeriod=row['discounts'][i]["end"]
-	                		renderStr +='<p class="exp-month-range-tootltip" >'+row['discounts'][i]["start"]+' - '+endPeriod+' months | '+row['discounts'][i]["discountPercent"]+'%</p>'
+	                		var discountPercentStr=''
+	                		if(row['discounts'][i]["discountPercent"] !="")
+	                			discountPercentStr=' | '+row['discounts'][i]["discountPercent"]+'%'
+	                		renderStr +='<p class="exp-month-range-tootltip" >'+row['discounts'][i]["start"]+' - '+endPeriod+' months'+discountPercentStr+'</p>'
+
 	                		
 	                	}
 	                	if(row['discounts'].length>0){
@@ -301,6 +312,7 @@ function updatedSelectAllCheckbox(type,thisObj){
 
 function showRangePopup(thisObj,type){
 	//console.log($(thisObj).data('row'))
+	
 	$('#rangeModalPopup').find('.table-cover').removeClass('disabled')
 	$('.reset-select-radio').removeAttr('checked')
 	$('#resetDiscountsForm')[0].reset()
@@ -319,6 +331,8 @@ function showRangePopup(thisObj,type){
 			$('.submitBtn').addClass('disabled')
 		$('.submitBtn').attr('disabled','disabled')
 	}
+
+
 	
 	$("#rangeModalPopup").data("row",$(thisObj).data('row'))
 	$("#rangeModalPopup").data("type",type)
@@ -330,18 +344,36 @@ function showRangePopup(thisObj,type){
 	}
 	else{
 		$('#rangeModalPopup .reset-opt-block').removeClass('hidden')
+		var globaldata=$('#global-discounts').find('.modal-toggle[data-discount-type-id="1"]').data('row')
 		if(type == "brand-discounts"){
-			$('#rangeModalPopup').find('.reset-opt:not(.global-reset-opt):not(.hidden)').addClass('hidden')
-			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			if(globaldata['discounts'].length == 1 && globaldata['discounts'][0]["discountPercent"] == ""){
+				if($('#rangeModalPopup .reset-opt-block').hasClass('hidden') == false)
+					$('#rangeModalPopup').find('.reset-opt-block').addClass('hidden')
+			}
+			else{
+				$('#rangeModalPopup').find('.reset-opt:not(.global-reset-opt):not(.hidden)').addClass('hidden')
+				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			}
+			
 		}
 		else if(type == "variant-discounts"){
 			$('#rangeModalPopup').find('.reset-opt:not(.hidden)').addClass('hidden')
-			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			if(globaldata['discounts'].length == 1 && globaldata['discounts'][0]["discountPercent"] == ""){
+				if($('#rangeModalPopup').find('.global-discounts-reset-opt').hasClass('hidden') == false)
+					$('#rangeModalPopup').find('.global-discounts-reset-opt').addClass('hidden')
+			}
+			else
+				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
 		}
 		else if(type == "custom-discounts"){
 			$('#rangeModalPopup').find('.reset-opt:not(.hidden)').addClass('hidden')
-			$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
+			if(globaldata['discounts'].length == 1 && globaldata['discounts'][0]["discountPercent"] == ""){
+				if($('#rangeModalPopup').find('.global-discounts-reset-opt').hasClass('hidden') == false)
+					$('#rangeModalPopup').find('.global-discounts-reset-opt').addClass('hidden')
+			}
+			else
+				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeClass('hidden')
 		}
@@ -452,7 +484,7 @@ function showRangePopup(thisObj,type){
 	}
 	
 	
-	
+	inputValidate($('.expiry-start-limits-inp'))
 	$('.modal').toggleClass('is-visible');
 	generateResetBlocks(type)
 
@@ -636,6 +668,7 @@ function saveRangeOptions(thisObj){
 	  	$('#'+type+'-select-all').prop('checked',false)
 	  	$('.modal').removeClass('is-visible');
         $('.reset-block').hide()
+        $('.reset-select-radio').data('checked',false)
 	  	//$('.modal-toggle').trigger('click')
 	  });
 	
@@ -1147,6 +1180,22 @@ $(document).ready( function () {
 	$('body').on('input','#rangeModalPopup .input_field',function(e){
 		inputValidate(this)
 	   
+	});
+
+	$('.reset-select-radio').click(function(e){
+
+	   if($(this).data("checked")){
+	   	$(this).prop('checked', false);
+	    $(this).data('checked',false)
+	    $('#'+$(this).data('block')).hide()
+	    $('#rangeModalPopup').find('.table-cover').removeClass('disabled')
+	   }
+	   else{
+	   //$(this).prop('checked', true);
+	   	$('.reset-select-radio').data('checked',false)
+	    $(this).data('checked',true)
+	   }
+	    
 	});
 
 });
