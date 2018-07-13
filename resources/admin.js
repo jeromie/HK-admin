@@ -246,6 +246,9 @@ var listDiscounts = function(options){
 	                	else{
 	                		renderStr +='<span style="padding-left: 1.5em">--</span>'
 	                	}
+	                	if(list_vars.type == "global-discounts"){
+	                		renderStr=fullStr
+	                	}
 	                	return renderStr
 	                }
 	            });
