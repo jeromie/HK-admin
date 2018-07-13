@@ -539,7 +539,7 @@ function adjustExpiryRange(thisObj){
 	parentDiv.find('.expiry-end-lbl').val(endval)
 	$(thisObj).parent().parent().remove()
 	//inputValidate(nextParentDiv.find('.expiry-end-lbl'))
-	//inputValidate(nextParentDiv.find('.expiry-end-lbl'))
+	inputValidate($('.expiry-start-limits-inp'))
 
 }
 
@@ -764,8 +764,12 @@ function inputValidate(thisObj){
 			enableSubmitBtn=false
 		}
         console.log("dlem="+$dErrorFields.length)
-		var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
-            return $.trim(thisObj.value) === "";
+        $emptyFields=[]
+		//var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
+		$('#rangeModalPopup .input_field').each(function ( index, element ){
+            //return $.trim(thisObj.value) === "";
+            if($(this).val().trim() == "")
+            	$emptyFields.push($(this).val())
         });
 		console.log("len-====="+$emptyFields.length)
         if ($emptyFields.length) {
