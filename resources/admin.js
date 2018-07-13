@@ -408,7 +408,7 @@ function showRangePopup(thisObj,type){
         	appendRow +='<td><label class="expiry-end-lbl">'+endVal+'</label></td>'
        	else
         	appendRow +='<td><input type="number" min="'+dicountsArr[i]['start']+'" class="input_field expiry-end-lbl '+endClassStr+'" oninput="updateNextExpiryLimit(this)" value="'+endVal+'" '+disabledStr+'></td>'
-        appendRow +='<td><input type="number" min="0" class="input_field discount-percent-lbl" value="'+dicountsArr[i]['discountPercent']+'"></td>'+
+        appendRow +='<td><input type="number" min="0" max="100" class="input_field discount-percent-lbl" value="'+dicountsArr[i]['discountPercent']+'"></td>'+
               '<td class="text-center"><input class="hk-offer-lbl" type="checkbox" '+checkedstr+'/></td>'+
               '<td class="text-center">'+removeStr+'</td>'
 		// }
@@ -735,6 +735,81 @@ function inputValidate(thisObj){
 				// $('.submitBtn').attr('disabled','disabled')
 		  //  		$('.submitBtn').removeClass('disabled')
 		}
+		// var discountError=false
+		// if(parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) > 100 || parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) < 0){
+		// 	enableSubmitBtn=false
+		// 	discountError=true
+		// 	if($(thisObj).parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
+
+		// 		$(thisObj).parent().parent().find('.discount-percent-lbl').addClass('error') 
+		   		
+		// 	}
+		// }
+		
+
+		// if($('.discount-percent-lbl').length>1){
+		// 	if(parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) >= parseInt($(thisObj).parent().parent().prev().find('.discount-percent-lbl').val())){
+		// 		enableSubmitBtn=false
+		// 		discountError=true
+		// 		if($(thisObj).parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
+
+		// 			$(thisObj).parent().parent().find('.discount-percent-lbl').addClass('error') 
+			   		
+		// 		}
+		// 	}
+		// }
+		
+
+		
+		// if($('.discount-percent-lbl').length>1){
+		// 	if(parseInt($('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').val()) >= parseInt($('.expiry-start-limits-inp').parent().parent().prev().find('.discount-percent-lbl').val())){
+		// 		enableSubmitBtn=false
+		// 		if($('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
+
+		// 			$('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').addClass('error') 
+			   		
+		// 		}
+		// 		if($(thisObj).parent().parent().find('.expiry-start-lbl').hasClass('expiry-start-limits-inp') == true)
+		// 			discountError == true
+		// 	}
+		// 	else{
+		// 		if($(thisObj).parent().parent().find('.expiry-start-lbl').hasClass('expiry-start-limits-inp') == false)
+		// 			$('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').removeClass('error') 
+		// 	}
+		// }
+		
+		// if(discountError == false){
+		// 	$(thisObj).parent().parent().find('.discount-percent-lbl').removeClass('error') 
+		// }
+		
+        $dErrorFields=[]
+        var prevDiscVal=0
+        $('#rangeModalPopup .discount-percent-lbl').each(function ( index, element ){
+		  console.log("val=="+$(this).val())
+		  var hasErr=false
+		  if((parseInt($(this).val()) >100) || (parseInt($(this).val()) <0)){
+		  	$dErrorFields.push($(this).val())
+		  	hasErr=true
+		  	if($(this).hasClass('error') == false )
+		  		$(this).addClass('error')
+		  }
+		 else if(index!=0){
+		 	if($(this).val()>=prevDiscVal){
+		 		$dErrorFields.push($(this).val())
+		 		hasErr=true
+		 		if($(this).hasClass('error') == false )
+		  			$(this).addClass('error')
+		 	}
+		 }
+		 if(hasErr==false){
+		 	$(this).removeClass('error')
+		 }
+		  prevDiscVal=$(this).val()
+		});
+		if($dErrorFields.length){
+			enableSubmitBtn=false
+		}
+        console.log("dlem="+$dErrorFields.length)
 		var $emptyFields = $('#rangeModalPopup .input_field').filter(function() {
             return $.trim(thisObj.value) === "";
         });
@@ -1089,7 +1164,7 @@ $(document).ready( function () {
 	   var rowHtml='<tr><td class="text-center">'+
 	   '<span class="expiry-start-lbl "></span></td>'+
 	   ' <td>-</td><td><input type="number" min="0" class="input_field expiry-end-lbl expiry-first-record expiry-end-limits-inp" oninput="updateNextExpiryLimit(this)" ></td>'+
-	   ' <td><input type="number" min="0" class="input_field discount-percent-lbl" ></td>'+
+	   ' <td><input type="number" min="0" max="100" class="input_field discount-percent-lbl" ></td>'+
 	   '<td class="text-center"><input class="hk-offer-lbl" type="checkbox"></td>'+
 	   '<td class="text-center"><span style="color: red;cursor:pointer;" class="fosz14 remove-exp-cls" onclick="adjustExpiryRange(this)">✖</span></td></tr>'
 
