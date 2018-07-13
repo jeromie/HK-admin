@@ -539,6 +539,7 @@ function adjustExpiryRange(thisObj){
 	parentDiv.find('.expiry-end-lbl').val(endval)
 	$(thisObj).parent().parent().remove()
 	//inputValidate(nextParentDiv.find('.expiry-end-lbl'))
+	//inputValidate(nextParentDiv.find('.expiry-end-lbl'))
 
 }
 
@@ -727,63 +728,13 @@ function inputValidate(thisObj){
 			if($(thisObj).parent().parent().find('.expiry-end-lbl').hasClass('error') == false ){
 
 				$(thisObj).parent().parent().find('.expiry-end-lbl').addClass('error') 
-				// $('.submitBtn').attr('disabled','disabled')
-	   //      	if($('.submitBtn').hasClass('disabled') == false)
-		  //  			$('.submitBtn').addClass('disabled')
 		   		
 			}
 		}
 		else{
 			$(thisObj).parent().parent().find('.expiry-end-lbl').removeClass('error') 
-				// $('.submitBtn').attr('disabled','disabled')
-		  //  		$('.submitBtn').removeClass('disabled')
+			
 		}
-		// var discountError=false
-		// if(parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) > 100 || parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) < 0){
-		// 	enableSubmitBtn=false
-		// 	discountError=true
-		// 	if($(thisObj).parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
-
-		// 		$(thisObj).parent().parent().find('.discount-percent-lbl').addClass('error') 
-		   		
-		// 	}
-		// }
-		
-
-		// if($('.discount-percent-lbl').length>1){
-		// 	if(parseInt($(thisObj).parent().parent().find('.discount-percent-lbl').val()) >= parseInt($(thisObj).parent().parent().prev().find('.discount-percent-lbl').val())){
-		// 		enableSubmitBtn=false
-		// 		discountError=true
-		// 		if($(thisObj).parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
-
-		// 			$(thisObj).parent().parent().find('.discount-percent-lbl').addClass('error') 
-			   		
-		// 		}
-		// 	}
-		// }
-		
-
-		
-		// if($('.discount-percent-lbl').length>1){
-		// 	if(parseInt($('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').val()) >= parseInt($('.expiry-start-limits-inp').parent().parent().prev().find('.discount-percent-lbl').val())){
-		// 		enableSubmitBtn=false
-		// 		if($('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').hasClass('error') == false ){
-
-		// 			$('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').addClass('error') 
-			   		
-		// 		}
-		// 		if($(thisObj).parent().parent().find('.expiry-start-lbl').hasClass('expiry-start-limits-inp') == true)
-		// 			discountError == true
-		// 	}
-		// 	else{
-		// 		if($(thisObj).parent().parent().find('.expiry-start-lbl').hasClass('expiry-start-limits-inp') == false)
-		// 			$('.expiry-start-limits-inp').parent().parent().find('.discount-percent-lbl').removeClass('error') 
-		// 	}
-		// }
-		
-		// if(discountError == false){
-		// 	$(thisObj).parent().parent().find('.discount-percent-lbl').removeClass('error') 
-		// }
 		
         $dErrorFields=[]
         var prevDiscVal=0
@@ -797,7 +748,7 @@ function inputValidate(thisObj){
 		  		$(this).addClass('error')
 		  }
 		 else if(index!=0){
-		 	if($(this).val()>=prevDiscVal){
+		 	if(parseInt($(this).val())>=parseInt(prevDiscVal)){
 		 		$dErrorFields.push($(this).val())
 		 		hasErr=true
 		 		if($(this).hasClass('error') == false )
@@ -817,21 +768,8 @@ function inputValidate(thisObj){
             return $.trim(thisObj.value) === "";
         });
 		console.log("len-====="+$emptyFields.length)
-        if (!$emptyFields.length) {
-      //       $('.addExpiryRange').removeAttr('disabled')
-	   		// $('.addExpiryRange').removeClass('disabled')
-	   		// $('.submitBtn').removeAttr('disabled')
-	   		// $('.submitBtn').removeClass('disabled')
-        }
-        else{
-
-       //  	$('.addExpiryRange').attr('disabled','disabled')
-       //  	if($('.addExpiryRange').hasClass('disabled') == false)
-	   			// $('.addExpiryRange').addClass('disabled')
+        if ($emptyFields.length) {
 	   		enableSubmitCheck=false
-	   		// $('.submitBtn').attr('disabled','disabled')
-      //   	if($('.submitBtn').hasClass('disabled') == false)
-	   		// 	$('.submitBtn').addClass('disabled')
         }
         console.log("enableSubmitBtn="+enableSubmitBtn+"==="+enableSubmitCheck)
         if(enableSubmitBtn== true && enableSubmitCheck==true){
