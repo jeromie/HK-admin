@@ -337,7 +337,7 @@
       <h5 class="mb-4">Brand Discount</h5>
 
       <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Variant-wise Filter</h5>
+        <h5 class="mb-4">Brand - wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
@@ -752,6 +752,8 @@
         //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
           var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
           discounts.generateIPList()
+
+          
          // list_initialized_arr.push(tab_id)
         //}
         //console.log(list_initialized_arr)

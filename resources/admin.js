@@ -544,6 +544,9 @@ function generateResetBlockContent(type){
 function resetFilters(type,tableName){
 	$('#'+type).find('.filter-filelds').val('')
 	$('#'+type).find('.ms-clear').trigger('click')
+	$('#'+type).find('.ms-options .ms-search input[type="text"]').val('')
+	var tabelem=$('#'+type) 
+	tabelem.find('.filter-zone').multiselect('reset',true);
 	$('#'+tableName).DataTable().ajax.reload();
 }
 function applyFilters(tableName){
@@ -695,11 +698,22 @@ function getVariantFilterDetails(tabelem){
 		        });
 		    }
 		    console.log(options)
+		    if(options.length>0){
+		        	tabelem.find('.filter-variant-id').removeAttr('disabled');
+		        	tabelem.find('.filter-variant-id').multiselect('disable', false );
+		        }
+		        else{
+		        	tabelem.find('.filter-variant-id').attr('disabled','disabled');
+		        	tabelem.find('.filter-variant-id').multiselect('disable', true );
+		        }
 		    tabelem.find('.filter-variant-id').multiselect('loadOptions', options );
 		  });
 	}
-	else
+	else{
+		tabelem.find('.filter-variant-id').attr('disabled','disabled');
+		tabelem.find('.filter-variant-id').multiselect('disable', true );
 		tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
+	}
 }
 
 function loadZonesFilter(){
@@ -832,6 +846,11 @@ $(document).ready( function () {
 		console.log("item=="+ditem)
 		global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+ditem , tablename : ditem+'-table' , type:ditem , discountTypeId:discounts_id_list[ditem] });
 		global_discounts.generateIPList()
+
+		console.log(ditem+"-brand-name")
+        $("#"+ditem+"-brand-name").attr("disabled","disabled")
+        $("#"+ditem+"-variant-id").attr("disabled","disabled")
+        $("#"+ditem+"-store").attr("disabled","disabled")
 	}
 	
 	
@@ -856,6 +875,7 @@ $(document).ready( function () {
             columns: 1,
             placeholder: 'Select',
             clear:true,
+            minHeight:90,
             onOptionClick: function( element, option ){
 		        var thisOpt = $(option);
 		        var tabelem=$(element).parent().parent().parent().parent()
@@ -870,6 +890,7 @@ $(document).ready( function () {
 		        	totalFilterOptions[tabelem.attr('id')].splice( totalFilterOptions[tabelem.attr('id')].indexOf(thisOpt.val()), 1 );
 		        }
 
+		        console.log(totalFilterOptions)
 		        for(var i=0;i<totalFilterOptions[tabelem.attr('id')].length;i++){
 		        		$.each( brands_mapping, function( key, value ) {
 						 
@@ -883,13 +904,23 @@ $(document).ready( function () {
 						});
 		        	}
 		        
+		        console.log("OPTIONS===")
 		        console.log(options)
-		        
+		        if(options.length>0){
+		        	tabelem.find('.filter-brand-name').removeAttr('disabled');
+		        	tabelem.find('.filter-brand-name').multiselect('disable', false );
+		        }
+		        else{
+		        	tabelem.find('.filter-brand-name').attr('disabled','disabled');
+		        	tabelem.find('.filter-brand-name').multiselect('disable', true );
+		        }
 				tabelem.find('.filter-brand-name').multiselect('loadOptions', options );
 		    },
 		    onClear: function( element ){
 		    	
 		    	var tabelem=$(element).parent().parent().parent().parent()
+		    	tabelem.find('.filter-brand-name').attr('disabled','disabled');
+		        tabelem.find('.filter-brand-name').multiselect('disable', true );
 		    	totalFilterOptions[tabelem.attr('id')]=[]
 		    	tabelem.find('.filter-brand-name').multiselect('loadOptions', [] );
 		    }
@@ -907,6 +938,7 @@ $(document).ready( function () {
             search: true,
             selectAll: true,
             clear: true,
+            minHeight:90,
             onOptionClick: function( element, option ){
 		        var thisOpt = $(option);
 		        var tabelem=$(element).parent().parent().parent().parent()
@@ -990,6 +1022,8 @@ $(document).ready( function () {
 					
 				}
 				if (tabelem.attr('id') != "brand-discounts"){
+					tabelem.find('.filter-variant-id').attr('disabled','disabled');
+		        	tabelem.find('.filter-variant-id').multiselect('disable', true );
 		        	tabelem.find('.filter-variant-id').multiselect('loadOptions', [] );
 		        }
 		        if(tabelem.attr('id') == "custom-discounts"){
@@ -1006,6 +1040,7 @@ $(document).ready( function () {
             search: true,
             selectAll: true,
             clear: true,
+            minHeight:90,
 
         });
 
@@ -1015,6 +1050,7 @@ $(document).ready( function () {
             search: true,
             selectAll: true,
             clear: true,
+             minHeight:90,
              onOptionClick: function( element, option ){
 		        var thisOpt = $(option);
 		        var options=[]
@@ -1041,6 +1077,7 @@ $(document).ready( function () {
             search: true,
             selectAll: true,
             clear: true,
+            minHeight:90,
             onOptionClick: function( element, option ){
 		        var thisOpt = $(option);
 		        var options=[]
@@ -1071,6 +1108,14 @@ $(document).ready( function () {
 		        		
 		        	}
 		        console.log(options)
+		        if(options.length>0){
+		        	tabelem.find('.filter-store').removeAttr('disabled');
+		        	tabelem.find('.filter-store').multiselect('disable', false );
+		        }
+		        else{
+		        	tabelem.find('.filter-store').attr('disabled','disabled');
+		        	tabelem.find('.filter-store').multiselect('disable', true );
+		        }
 		        tabelem.find('.filter-store').multiselect('loadOptions', options  );
 		        CustomFilterValidate(tabelem)	        
 
@@ -1089,6 +1134,14 @@ $(document).ready( function () {
 				        totalStoreFilterOptions.push(store_mapping[store_item].id)
 	        		}
         		}
+        		if(options.length>0){
+		        	tabelem.find('.filter-store').removeAttr('disabled');
+		        	tabelem.find('.filter-store').multiselect('disable', false );
+		        }
+		        else{
+		        	tabelem.find('.filter-store').attr('disabled','disabled');
+		        	tabelem.find('.filter-store').multiselect('disable', true );
+		        }
         		tabelem.find('.filter-store').multiselect('loadOptions', options  );
         		CustomFilterValidate(tabelem)
 
@@ -1098,6 +1151,8 @@ $(document).ready( function () {
 		    	totalStoreFilterOptions=[]		    	
 		    	tabelem.find('.apply-filter').attr('disabled', 'disabled' );
 				tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+				tabelem.find('.filter-store').attr('disabled','disabled');
+		        tabelem.find('.filter-store').multiselect('disable', true );
 				tabelem.find('.filter-store').multiselect('loadOptions', [] );	
 				CustomFilterValidate(tabelem)		
 
