@@ -406,3 +406,21 @@
         select:disabled {
           cursor: not-allowed;
         }
+        
+        .exp-month-range-tootltip {
+          position: relative;
+        }
+
+        .exp-month-range-tootltip:last-of-type {
+          padding-bottom: 15px;
+          margin-bottom: 0;
+        }
+
+        .exp-month-range-tootltip:last-of-type:after {
+          content: "...";
+          transform: rotate(90deg);
+          display: inline-block;
+          position: absolute;
+          bottom: -4px;
+          left: 80px;
+        }
