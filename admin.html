@@ -364,8 +364,8 @@
 
 
       <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('brand-discounts','brand-discounts-table');" >
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('brand-discounts-table');">
+        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
+        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
       </div>
       <table class="w-100 table" id="brand-discounts-table" style="width:100%">
         <thead>
@@ -552,11 +552,11 @@
           </button> -->
           <i class="close modal-close modal-toggle fosz14"></i>
 
-          <h2 class="modal-heading">FEFO Discounting Admin Panel</h2>
+          <h2 class="modal-heading">View / Edit Range</h2>
         </div>
 
         <div class="modal-body">
-          <div class="modal-content">
+          <div class="modal-content" style="max-height: 500px;overflow: scroll;">
             <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
              <div class="fosz14 mb-2">
               <label for="" class="font-weight-bold">Brand:</label>
@@ -752,8 +752,7 @@
         //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
           var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
           discounts.generateIPList()
-
-          
+          $('#'+tab_id+'-select-all').prop('checked',false)
          // list_initialized_arr.push(tab_id)
         //}
         //console.log(list_initialized_arr)

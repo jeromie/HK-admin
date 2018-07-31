@@ -906,6 +906,7 @@ $(document).ready( function () {
 		        
 		        console.log("OPTIONS===")
 		        console.log(options)
+
 		        if(options.length>0){
 		        	tabelem.find('.filter-brand-name').removeAttr('disabled');
 		        	tabelem.find('.filter-brand-name').multiselect('disable', false );
@@ -913,6 +914,26 @@ $(document).ready( function () {
 		        else{
 		        	tabelem.find('.filter-brand-name').attr('disabled','disabled');
 		        	tabelem.find('.filter-brand-name').multiselect('disable', true );
+		        }
+		        if(tabelem.attr('id') == "brand-discounts"){
+		        	if(totalFilterOptions[tabelem.attr('id')].length>0){
+			        	
+			        	tabelem.find('.apply-filter').removeClass('disabled')
+						tabelem.find('.apply-filter').removeAttr('disabled');
+						tabelem.find('.clear-filter').removeClass('disabled');
+						tabelem.find('.clear-filter').removeAttr('disabled');
+					}
+					else{
+						if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+							tabelem.find('.apply-filter').addClass('disabled');
+						if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+							tabelem.find('.clear-filter').addClass('disabled');
+						tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+						tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+					}
+					console.log(tabelem.find('.filter-brand-name').val())
+					
+
 		        }
 				tabelem.find('.filter-brand-name').multiselect('loadOptions', options );
 		    },
@@ -922,6 +943,15 @@ $(document).ready( function () {
 		    	tabelem.find('.filter-brand-name').attr('disabled','disabled');
 		        tabelem.find('.filter-brand-name').multiselect('disable', true );
 		    	totalFilterOptions[tabelem.attr('id')]=[]
+		    	if(tabelem.attr('id') == "brand-discounts"){
+		    		if(tabelem.find('.apply-filter').hasClass('disabled') == false)
+						tabelem.find('.apply-filter').addClass('disabled');
+					if(tabelem.find('.clear-filter').hasClass('disabled') == false)
+						tabelem.find('.clear-filter').addClass('disabled');
+			    	tabelem.find('.apply-filter').attr('disabled', 'disabled' );
+					tabelem.find('.clear-filter').attr('disabled', 'disabled' );
+					
+				}
 		    	tabelem.find('.filter-brand-name').multiselect('loadOptions', [] );
 		    }
         });
@@ -1219,6 +1249,7 @@ $(document).ready( function () {
 	   cloneObj.find('.expiry-end-limits-inp').attr('min',parseInt(endval)+1)
 	   cloneObj.find('.expiry-start-lbl').text(parseInt(endval)+1)
 	   cloneObj.find('.remove-exp-cls').show()
+	   cloneObj.find('.expiry-first-record').removeClass('expiry-first-record')
 	   $('#rangeModalPopup .expiry-start-limits-inp').text(parseInt(endval)+defaultSlab+1)
 	   //parentObj.after(cloneObj)
 	   var pObj=$('#rangeModalPopup .expiry-start-limits-inp').parent().parent()
@@ -1244,10 +1275,16 @@ $(document).ready( function () {
 	    $(this).data('checked',false)
 	    $('#'+$(this).data('block')).hide()
 	    $('#rangeModalPopup').find('.table-cover').removeClass('disabled')
+	    $('.addExpiryRange').removeAttr('disabled')
+	    $('.addExpiryRange').removeClass('disabled')
 	   }
 	   else{
 	   //$(this).prop('checked', true);
 	   	$('.reset-select-radio').data('checked',false)
+	   	
+	    $('.addExpiryRange').attr('disabled','disabled')
+	    if( $('.addExpiryRange').hasClass('disabled') == false)
+	    	$('.addExpiryRange').addClass('disabled')
 	    $(this).data('checked',true)
 	   }
 	    
