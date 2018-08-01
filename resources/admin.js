@@ -333,9 +333,9 @@ function showRangePopup(thisObj,type){
 	
 	$('#rangeModalPopup').find('.table-cover').removeClass('disabled')
 	$('.reset-select-radio').removeAttr('checked')
-	$('#rangeModalPopup').find('.global-discounts-reset-opt').removeAttr("disabled")
-	$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeAttr("disabled")
-	$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeAttr("disabled")
+	$('#rangeModalPopup').find('input[data-block="global-discounts-reset-block"]').removeAttr("disabled")
+	$('#rangeModalPopup').find('input[data-block="brand-discounts-reset-block"]').removeAttr("disabled")
+	$('#rangeModalPopup').find('input[data-block="variant-discounts-reset-block"]').removeAttr("disabled")
 	$('#resetDiscountsForm')[0].reset()
 	var data=$(thisObj).data('row')
 	console.log("showRangePopup===")
@@ -554,6 +554,7 @@ function generateResetBlockContent(type){
 		rowdata=$('#'+type).find('.modal-toggle[data-discount-type-id="1"]').data('row')
 		discounts=rowdata["discounts"]
 		console.log(rowdata["discounts"])
+		buildResetBlock(type,discounts)
 	}
 	else if(type == "brand-discounts"){
 		console.log("brand disc===")
@@ -565,6 +566,29 @@ function generateResetBlockContent(type){
 		console.log("brand rowdata reset===")
 		console.log(rowdata)
 		discounts=rowdata["discounts"]
+		var jsondata={}
+		jsondata["brandTypes"]=[]
+		jsondata["brands"]=[]
+		jsondata["brands"].push(data['brand'])
+
+		jsondata["discountTypeId"]=2
+
+		jsondata["variantIds"]=[]
+
+		jsondata["warehouseIds"]=[]
+		$.ajax({
+		  url: "https://demo8727571.mockable.io/list-brand-discounts",
+		  dataType: 'json',
+          contentType: 'application/json',
+		  method: "POST",
+		  data: JSON.stringify(jsondata),
+		})
+	  .done(function( data ) {
+	  	console.log(data["data"][0]["discounts"])
+	  	discounts=data["data"][0]["discounts"]
+	  	buildResetBlock(type,discounts)
+	  	//$('.modal-toggle').trigger('click')
+	  });
 	}
 	else if(type == "variant-discounts"){
 		data=$("#rangeModalPopup").data("row")
@@ -573,9 +597,41 @@ function generateResetBlockContent(type){
 		console.log(data)
 		console.log("var rowdata reset===")
 		console.log(rowdata)
-		discounts=rowdata["discounts"]
+		var jsondata={}
+		jsondata["brandTypes"]=[]
+		jsondata["brands"]=[]
+		jsondata["brands"].push(data['brand'])
+
+		jsondata["discountTypeId"]=2
+
+		jsondata["variantIds"]=[]
+		jsondata["variantIds"].push(data['productVariantId'])
+
+		jsondata["warehouseIds"]=[]
+		jsondata["warehouseIds"].push(data['warehouseId'])
+		$.ajax({
+		  url: "https://demo8727571.mockable.io/list-variant-discounts",
+		  dataType: 'json',
+          contentType: 'application/json',
+		  method: "POST",
+		  data: JSON.stringify(jsondata),
+		})
+	  .done(function( data ) {
+	  	console.log(data["data"][0]["discounts"])
+	  	discounts=data["data"][0]["discounts"]
+	  	buildResetBlock(type,discounts)
+	  	//$('.modal-toggle').trigger('click')
+	  });
+		// discounts=rowdata["discounts"]
+		// buildResetBlock(type,discounts)
 	}
 	
+
+
+}
+
+
+function buildResetBlock(type,discounts){
 	var html=''
 	for(var k=0;k<discounts.length;k++){
 		var endval=discounts[k].end
@@ -588,7 +644,6 @@ function generateResetBlockContent(type){
 	}
 	
 	$('#'+type+'-reset-block').html(html)
-
 }
 
 
