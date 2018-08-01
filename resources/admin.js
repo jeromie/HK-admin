@@ -565,7 +565,7 @@ function generateResetBlockContent(type){
 		rowdata=$('#'+type).find('.modal-toggle[data-brand="'+data['brand']+'"]').data('row')
 		console.log("brand rowdata reset===")
 		console.log(rowdata)
-		discounts=rowdata["discounts"]
+		//discounts=rowdata["discounts"]
 		var jsondata={}
 		jsondata["brandTypes"]=[]
 		jsondata["brands"]=[]
