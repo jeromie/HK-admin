@@ -1326,7 +1326,12 @@ $(document).ready( function () {
 	    if( $('.addExpiryRange').hasClass('disabled') == false)
 	    	$('.addExpiryRange').addClass('disabled')
 	    $(this).data('checked',true)
+
 	   }
+	   var dbloc=$(this).data('block')
+	   $('.modal-content').animate({
+	        scrollTop: $("#"+dbloc).position().top
+	    }, 2000);
 	    
 	});
 
