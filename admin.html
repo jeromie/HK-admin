@@ -180,6 +180,10 @@
           padding-top: 10px!important;
         }
 
+        input[type="checkbox"][readonly] {
+          pointer-events: none;
+        }
+
       </style>
   </head>
   <body id="">
@@ -306,7 +310,7 @@
     </ul>
 
     <div id="global-discounts" class="tab-content current">
-      <h5 class="mb-4">Global Discount</h5>
+      <h5 class="mb-4">Global Discounts</h5>
       <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
 
       <table class="w-100 table" id="global-discounts-table" style="width:100%">
@@ -334,14 +338,14 @@
     </div>
 
     <div id="brand-discounts" class="tab-content">
-      <h5 class="mb-4">Brand Discount</h5>
+      <h5 class="mb-4">Brand Discounts</h5>
 
       <div class="d-inline-block p-4 bg-grey filter">
         <h5 class="mb-4">Brand - wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
-              <label>Brand Type</label>
+              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
             </div>
             <select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds" >
               <option value="PL">Private Label</option>
@@ -388,14 +392,14 @@
     </div>
     <div id="variant-discounts" class="tab-content">
 
-       <h5 class="mb-4">Variant Discount</h5>
+       <h5 class="mb-4">Variant Discounts</h5>
 
       <div class="d-inline-block p-4 bg-grey filter">
         <h5 class="mb-4">Variant-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
-              <label>Brand Type</label>
+              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
             </div>
             <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type" >
              <option value="PL">Private Label</option>
@@ -412,7 +416,7 @@
           </div>
           <div>
             <div class="labe_div">
-              <label>Variant Id</label>
+              <label>Product Variant Id</label>
             </div>
 
             <!-- <div class="position-relative disabled disabled-block"> -->
@@ -451,45 +455,14 @@
 
     </div>
     <div id="custom-discounts" class="tab-content">
-      <h5 class="mb-4">Custom Discount</h5>
+      <h5 class="mb-4">Custom Discounts</h5>
 
-      <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Variant-wise Filter</h5>
-        <div class="d-flex">
-          <div class="mr-4">
-            <div class="labe_div">
-              <label>Brand Type</label>
-            </div>
-            <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type" >
-              <option value="PL">Private Label</option>
-              <option value="NPL">Non Private Label</option>
-            </select>
-          </div>
-
-          <div class="mr-4">
-            <div class="labe_div">
-               <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name" >
-            </select>
-          </div>
-
-          <div>
-            <div class="labe_div">
-              <label>Variant Id</label>
-            </div>
-            <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id" >
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="d-inline-block p-4 bg-grey filter">
+            <div class="d-inline-block p-4 bg-grey filter">
         <h5 class="mb-4">Store-wise Filter</h5>
         <div class="d-flex">
           <div class="mr-4">
             <div class="labe_div">
-              <label>Zone wise Store</label>
+              <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
             </div>
             <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds" >
              <!--  <option value="NORTH">NORTH</option>
@@ -509,6 +482,39 @@
           </div>
         </div>
       </div>
+
+      <div class="d-inline-block p-4 bg-grey filter">
+        <h5 class="mb-4">Variant-wise Filter</h5>
+        <div class="d-flex">
+          <div class="mr-4">
+            <div class="labe_div">
+              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+            </div>
+            <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type" >
+              <option value="PL">Private Label</option>
+              <option value="NPL">Non Private Label</option>
+            </select>
+          </div>
+
+          <div class="mr-4">
+            <div class="labe_div">
+               <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
+            </div>
+            <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name" >
+            </select>
+          </div>
+
+          <div>
+            <div class="labe_div">
+              <label>Product Variant Id</label>
+            </div>
+            <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id" >
+            </select>
+          </div>
+        </div>
+      </div>
+
+
 
 
       <div class="d-flex justify-content-end">
@@ -556,7 +562,7 @@
         </div>
 
         <div class="modal-body">
-          <div class="modal-content" style="max-height: 500px;overflow: scroll;">
+          <div class="modal-content" style="max-height: 500px;overflow-y: scroll;">
             <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
              <div class="fosz14 mb-2">
               <label for="" class="font-weight-bold">Brand:</label>
@@ -750,9 +756,15 @@
         $("#"+tab_id).addClass('current');
 
         //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
+          $('#'+tab_id+'-select-all').prop('checked',false)
+          $('#'+tab_id).find('.filter-filelds').val('')
+          $('#'+tab_id).find('.ms-clear').trigger('click')
+          $('#'+tab_id).find('.ms-options .ms-search input[type="text"]').val('')
+          var tabelem=$('#'+tab_id) 
+          tabelem.find('.filter-zone').multiselect('reset',true);
           var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
           discounts.generateIPList()
-          $('#'+tab_id+'-select-all').prop('checked',false)
+
          // list_initialized_arr.push(tab_id)
         //}
         //console.log(list_initialized_arr)

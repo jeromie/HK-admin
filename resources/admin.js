@@ -43,8 +43,14 @@ var listDiscounts = function(options){
     this.generateIPList = function(){
         console.log(list_vars.type);
         var enableOpt=true
-        if(list_vars.type == "global-discounts")
+        var orderList=[[ 3, "asc" ]]
+        if(list_vars.type == "global-discounts"){
         	enableOpt=false
+        	orderList=[]
+        }
+        if(list_vars.type == "brand-discounts"){
+        	orderList=[[ 2, "asc" ]]
+        }
         $('#'+list_vars.tablename).DataTable({
 		         processing: true,
 			    "language": {
@@ -56,6 +62,7 @@ var listDiscounts = function(options){
 				"bPaginate": enableOpt,
 		        "ordering": enableOpt,
 		        "searching": enableOpt,
+		        "order":orderList,
 		        "bInfo" : enableOpt,
 		        "ajax": {
 		        	"url":list_vars.url,
@@ -131,13 +138,13 @@ var listDiscounts = function(options){
     	var index=0
     	if(list_vars.type != "global-discounts"){
     		 columns.push({
-					'targets': 0,
-					'searchable': false,
-					'orderable': false,
-					'className': 'dt-body-center',
-					'render': function (data, type, full, meta){
+					targets: 0,
+					searchable: false,
+					orderable: false,
+					className: 'dt-body-center',
+					render: function (data, type, full, meta){
 						var jsonObj={"brand":full['brand'],"variantId":full['productVariantId'],"warehouseId":full['warehouseId']}
-					 return '<input type="checkbox" onclick="updatedSelectAllCheckbox(\''+list_vars.type+'\',this)" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
+					 return '<input type="checkbox" class="ind-checkbox" onclick="updatedSelectAllCheckbox(\''+list_vars.type+'\',this)" name="'+list_vars.type+'-id[]" data-brand="'+jsonObj["brand"]+'" data-variant-id="'+jsonObj["variantId"]+'" data-warehouse-id="'+jsonObj["warehouseId"]+'"value="'+jsonObj["brand"]+'">';
 					}
 		      });
     		// index++;
@@ -243,7 +250,7 @@ var listDiscounts = function(options){
 	                		if(i>=list_vars.monthrangelimit){
 	                			break;
 	                		}
-	                		console.log(i+"---"+list_vars.monthrangelimit)
+	                		//console.log(i+"---"+list_vars.monthrangelimit)
 	                		var endPeriod
 	                		if(row['discounts'][i]["end"] == null)
 	                			endPeriod="Max"
@@ -310,9 +317,13 @@ var listDiscounts = function(options){
 
 function updatedSelectAllCheckbox(type,thisObj){
 	console.log("entered=="+type)
+	console.log("total="+$('#'+type).find('.ind-checkbox').length)
+	console.log("checked="+$('#'+type).find('.ind-checkbox:checked').length)
 	if($(thisObj).is(':checked') == false){
 		$("#"+type+"-select-all").prop( "checked", false );
 	}
+	if($('#'+type).find('.ind-checkbox').length == $('#'+type).find('.ind-checkbox:checked').length)
+		$("#"+type+"-select-all").prop( "checked", true );
 }
 
 function showRangePopup(thisObj,type){
@@ -320,6 +331,9 @@ function showRangePopup(thisObj,type){
 	
 	$('#rangeModalPopup').find('.table-cover').removeClass('disabled')
 	$('.reset-select-radio').removeAttr('checked')
+	$('#rangeModalPopup').find('.global-discounts-reset-opt').removeAttr("disabled")
+	$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeAttr("disabled")
+	$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeAttr("disabled")
 	$('#resetDiscountsForm')[0].reset()
 	var data=$(thisObj).data('row')
 	if(data['discounts'].length>0){
@@ -359,6 +373,10 @@ function showRangePopup(thisObj,type){
 				$('#rangeModalPopup').find('.reset-opt:not(.global-reset-opt):not(.hidden)').addClass('hidden')
 				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
 			}
+
+			if(data["globalDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="global-discounts-reset-block"]').attr("disabled","disabled")
+
 			
 		}
 		else if(type == "variant-discounts"){
@@ -370,6 +388,11 @@ function showRangePopup(thisObj,type){
 			else
 				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
+
+			if(data["brandDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="brand-discounts-reset-block"]').attr("disabled","disabled")
+			if(data["globalDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="global-discounts-reset-block"]').attr("disabled","disabled")
 		}
 		else if(type == "custom-discounts"){
 			$('#rangeModalPopup').find('.reset-opt:not(.hidden)').addClass('hidden')
@@ -381,6 +404,12 @@ function showRangePopup(thisObj,type){
 				$('#rangeModalPopup').find('.global-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.brand-discounts-reset-opt').removeClass('hidden')
 			$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeClass('hidden')
+			if(data["variantDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="variant-discounts-reset-block"]').attr("disabled","disabled")
+			if(data["brandDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="brand-discounts-reset-block"]').attr("disabled","disabled")
+			if(data["globalDiscountAvailable"] == false)
+				$('#rangeModalPopup').find('input[data-block="global-discounts-reset-block"]').attr("disabled","disabled")
 		}
 	}
 	//var selectedRows = $('#brand-discounts-table').DataTable().rows({ selected: true }).ids(true);
@@ -519,6 +548,7 @@ function generateResetBlockContent(type){
 	var data={}
 	if(type == "global-discounts"){
 		rowdata=$('#'+type).find('.modal-toggle[data-discount-type-id="1"]').data('row')
+		discounts=rowdata["discounts"]
 		console.log(rowdata["discounts"])
 	}
 	else if(type == "brand-discounts"){
@@ -526,18 +556,23 @@ function generateResetBlockContent(type){
 		console.log($("#rangeModalPopup").data("row"))
 		data=$("#rangeModalPopup").data("row")
 		rowdata=$('#'+type).find('.modal-toggle[data-brand="'+data['brand']+'"]').data('row')
+		discounts=rowdata["discounts"]
 	}
 	else if(type == "variant-discounts"){
 		data=$("#rangeModalPopup").data("row")
 		rowdata=$('#'+type).find('.modal-toggle[data-variant-id="'+data['productVariantId']+'"]').data('row')
+		discounts=rowdata["discounts"]
 	}
-	discounts=rowdata["discounts"]
+	
 	var html=''
 	for(var k=0;k<discounts.length;k++){
 		var endval=discounts[k].end
 		if(endval ==null)
 			endval='Max'
-		html +='<p class="pl-0"> '+discounts[k].start+'- '+endval+' months | '+discounts[k].discountPercent+'%</p>'
+		var checkedAttr=''
+		if(discounts[k].hkOfferApplied == true)
+			checkedAttr='checked'
+		html +='<p class="pl-0"> '+discounts[k].start+'- '+endval+' months | '+discounts[k].discountPercent+'% | <input type="checkbox" readonly '+checkedAttr+'/></p>'
 	}
 	
 	$('#'+type+'-reset-block').html(html)
@@ -851,7 +886,7 @@ $(document).ready( function () {
 		console.log("item=="+ditem)
 		global_discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+ditem , tablename : ditem+'-table' , type:ditem , discountTypeId:discounts_id_list[ditem] });
 		global_discounts.generateIPList()
-
+		
 		console.log(ditem+"-brand-name")
         $("#"+ditem+"-brand-name").attr("disabled","disabled")
         $("#"+ditem+"-variant-id").attr("disabled","disabled")
