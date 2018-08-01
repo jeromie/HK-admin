@@ -217,6 +217,7 @@ var listDiscounts = function(options){
 	                render: function(data, type, row, meta){
 	                	var renderStr='';
 	                	var fullStr='';
+	                	var addCls=''
 	                	if(row['discounts'] == null){
 	                		row['discounts']=[{start:1,end:null,discountPercent:"",hkOfferApplied:false}]
 	                	}
@@ -232,13 +233,17 @@ var listDiscounts = function(options){
 	                			discountPercentStr=' | '+row['discounts'][i]["discountPercent"]+'%'
 	                		fullStr +='<p>'+row['discounts'][i]["start"]+' - '+endPeriod+' months'+discountPercentStr+'</p>'
 	                	}
-	                	if(row['discounts'].length>0){
+
+	                	if(row['discounts'].length>list_vars.monthrangelimit){
 	                		renderStr +='<div rel="tooltip" title="'+fullStr+'">'
+	                		addCls='class="exp-month-range-tootltip"'
 	                	}
 	                	for(var i=0;i<row['discounts'].length;i++) {
+	                		
 	                		if(i>=list_vars.monthrangelimit){
 	                			break;
 	                		}
+	                		console.log(i+"---"+list_vars.monthrangelimit)
 	                		var endPeriod
 	                		if(row['discounts'][i]["end"] == null)
 	                			endPeriod="Max"
@@ -247,14 +252,14 @@ var listDiscounts = function(options){
 	                		var discountPercentStr=''
 	                		if(row['discounts'][i]["discountPercent"] !="")
 	                			discountPercentStr=' | '+row['discounts'][i]["discountPercent"]+'%'
-	                		renderStr +='<p class="exp-month-range-tootltip" >'+row['discounts'][i]["start"]+' - '+endPeriod+' months'+discountPercentStr+'</p>'
+	                		renderStr +='<p '+addCls+' >'+row['discounts'][i]["start"]+' - '+endPeriod+' months'+discountPercentStr+'</p>'
 
 	                		
 	                	}
-	                	if(row['discounts'].length>0){
+	                	if(row['discounts'].length>list_vars.monthrangelimit){
 	                		renderStr +='</div>'
 	                	}
-	                	else{
+	                	if(row['discounts'].length<=0){
 	                		renderStr +='<span style="padding-left: 1.5em">--</span>'
 	                	}
 	                	if(list_vars.type == "global-discounts"){
