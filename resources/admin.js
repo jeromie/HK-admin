@@ -317,12 +317,14 @@ var listDiscounts = function(options){
 
 function updatedSelectAllCheckbox(type,thisObj){
 	console.log("entered=="+type)
-	console.log("total="+$('#'+type).find('.ind-checkbox').length)
-	console.log("checked="+$('#'+type).find('.ind-checkbox:checked').length)
+	var rows = $('#'+type+'-table').DataTable().rows({ 'search': 'applied' }).nodes();
+	console.log("total="+$('input[type=checkbox]',rows).length)
+	console.log("checked="+$('input[type=checkbox]:checked',rows).length)
+	var rows = $('#'+type+'-table').DataTable().rows({ 'search': 'applied' }).nodes();
 	if($(thisObj).is(':checked') == false){
 		$("#"+type+"-select-all").prop( "checked", false );
 	}
-	if($('#'+type).find('.ind-checkbox').length == $('#'+type).find('.ind-checkbox:checked').length)
+	if($('input[type=checkbox]',rows).length == $('input[type=checkbox]:checked',rows).length)
 		$("#"+type+"-select-all").prop( "checked", true );
 }
 
@@ -336,6 +338,8 @@ function showRangePopup(thisObj,type){
 	$('#rangeModalPopup').find('.variant-discounts-reset-opt').removeAttr("disabled")
 	$('#resetDiscountsForm')[0].reset()
 	var data=$(thisObj).data('row')
+	console.log("showRangePopup===")
+	console.log(data)
 	if(data['discounts'].length>0){
 		$('.submitBtn').removeAttr('disabled')
 		$('.submitBtn').removeClass('disabled')
@@ -555,12 +559,20 @@ function generateResetBlockContent(type){
 		console.log("brand disc===")
 		console.log($("#rangeModalPopup").data("row"))
 		data=$("#rangeModalPopup").data("row")
+		console.log("brand reset===")
+		console.log(data)
 		rowdata=$('#'+type).find('.modal-toggle[data-brand="'+data['brand']+'"]').data('row')
+		console.log("brand rowdata reset===")
+		console.log(rowdata)
 		discounts=rowdata["discounts"]
 	}
 	else if(type == "variant-discounts"){
 		data=$("#rangeModalPopup").data("row")
 		rowdata=$('#'+type).find('.modal-toggle[data-variant-id="'+data['productVariantId']+'"]').data('row')
+		console.log("var reset===")
+		console.log(data)
+		console.log("var rowdata reset===")
+		console.log(rowdata)
 		discounts=rowdata["discounts"]
 	}
 	
