@@ -6,17 +6,31 @@ var listDiscounts = function(options) {
      * Variables accessible
      * in the class
      */
+//    var list_vars = {
+//        url: "",
+//        tablename: "",
+//        type: "",
+//        monthrangelimit: 3,
+//        discountTypeId: 1,
+//        filters: {
+//            brandTypes: [],
+//            brands: [],
+//            variantIds: [],
+//            warehouseIds: []
+//        }
+//    };
+
     var list_vars = {
         url: "",
         tablename: "",
         type: "",
         monthrangelimit: 3,
-        discountTypeId: 1,
+        configType: 1,
         filters: {
-            brandTypes: [],
-            brands: [],
-            variantIds: [],
-            warehouseIds: []
+            brand: [],
+            productVariantId: [],
+            warehouseId: [],
+            zoneId: [],
         }
     };
 
@@ -75,18 +89,16 @@ var listDiscounts = function(options) {
                 dataType: 'json',
                 contentType: 'application/json',
                 "data": function(d) {
-                    d.discountTypeId = list_vars.discountTypeId
-                    // d = $.extend(d, list_vars.filters);
-                    // console.log("fil==")
-                    // console.log(d)
-
-                    console.log("val id==" + $('#' + list_vars.type + '-brand-type').val())
-                    d.brandTypes = ($('#' + list_vars.type + '-brand-type').val() == undefined || $('#' + list_vars.type + '-brand-type').val() == "") ? [] : $('#' + list_vars.type + '-brand-type').val()
-                    d.brands = ($('#' + list_vars.type + '-brand-name').val() == undefined || $('#' + list_vars.type + '-brand-name').val() == "") ? [] : $('#' + list_vars.type + '-brand-name').val()
+                    d.configType = list_vars.configType
+                    console.log("[ INFO ] " + list_vars.type);
+//                    console.log("val id==" + $('#' + list_vars.type + '-brand-type').val())
+//                    d.brandTypes = ($('#' + list_vars.type + '-brand-type').val() == undefined || $('#' + list_vars.type + '-brand-type').val() == "") ? [] : $('#' + list_vars.type + '-brand-type').val()
+                    d.brand = ($('#' + list_vars.type + '-brand-name').val() == undefined || $('#' + list_vars.type + '-brand-name').val() == "") ? [] : $('#' + list_vars.type + '-brand-name').val()
                     console.log("fil==")
                     console.log(d)
-                    d.variantIds = ($('#' + list_vars.type + '-variant-id').val() == undefined || $('#' + list_vars.type + '-variant-id').val() == "") ? [] : $('#' + list_vars.type + '-variant-id').val()
-                    d.warehouseIds = ($('#' + list_vars.type + '-store').val() == undefined || $('#' + list_vars.type + '-store').val() == "") ? [] : $('#' + list_vars.type + '-store').val()
+                    d.productVariantId = ($('#' + list_vars.type + '-variant-id').val() == undefined || $('#' + list_vars.type + '-variant-id').val() == "") ? [] : $('#' + list_vars.type + '-variant-id').val()
+                    d.warehouseId = ($('#' + list_vars.type + '-store').val() == undefined || $('#' + list_vars.type + '-store').val() == "") ? [] : $('#' + list_vars.type + '-store').val()
+                    d.zoneId = ($('#' + list_vars.type + '-store').val() == undefined || $('#' + list_vars.type + '-store').val() == "") ? [] : $('#' + list_vars.type + '-store').val()
                     return JSON.stringify(d)
                 }
             },
@@ -592,7 +604,7 @@ function generateResetBlockContent(type) {
 
         jsondata["warehouseIds"] = []
         $.ajax({
-                url: "https://demo8727571.mockable.io/list-brand-discounts",
+                url: "http://localhost:5050/rest/api/ajax/fetchMinimumInventoryConfig",
                 dataType: 'json',
                 contentType: 'application/json',
                 method: "POST",
@@ -624,7 +636,7 @@ function generateResetBlockContent(type) {
         jsondata["warehouseIds"] = []
         jsondata["warehouseIds"].push(data['warehouseId'])
         $.ajax({
-                url: "https://demo8727571.mockable.io/list-variant-discounts",
+                url: "http://localhost:5050/rest/api/ajax/fetchMinimumInventoryConfig",
                 dataType: 'json',
                 contentType: 'application/json',
                 method: "POST",
@@ -981,13 +993,14 @@ $(document).ready(function() {
             $('#' + tab_id).find('.filter-filelds').val('')
             $('#' + tab_id).find('.ms-clear').trigger('click')
             $('#' + tab_id).find('.ms-options .ms-search input[type="text"]').val('')
+            console.log(">>>>>>>>>> tab id " + tab_id)
             var tabelem = $('#' + tab_id)
             tabelem.find('.filter-zone').multiselect('reset', true);
             var discounts = new listDiscounts({
-                url: "https://demo8727571.mockable.io/list-" + tab_id,
+                url: "http://localhost:5050/rest/api/ajax/fetchMinimumInventoryConfig",
                 tablename: tab_id + '-table',
                 type: tab_id,
-                discountTypeId: discounts_id_list[tab_id]
+                configType: discounts_id_list[tab_id]
             });
             discounts.generateIPList();
         });
@@ -1015,7 +1028,7 @@ $(document).ready(function() {
     for (ditem in discounts_id_list) {
         console.log("item==" + ditem)
         global_discounts = new listDiscounts({
-            url: "https://demo8727571.mockable.io/list-" + ditem,
+            url: "http://localhost:5050/rest/api/ajax/fetchMinimumInventoryConfig",
             tablename: ditem + '-table',
             type: ditem,
             discountTypeId: discounts_id_list[ditem]

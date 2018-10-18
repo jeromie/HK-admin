@@ -356,12 +356,17 @@
                                 </div>
 
                                 <!-- <div class="position-relative disabled disabled-block"> -->
-                                <select name="variant-discounts-variant-id[]" multiple id="global-discounts-variant-id" class="input_field filter-variant-id">
+                                <select name="global-discounts-variant-id[]" multiple id="global-discounts-variant-id" class="input_field filter-variant-id">
                                 </select>
                                 <!-- </div> -->
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-end">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('global-discounts','global-discounts-table');">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('global-discounts-table');">
+                    </div>
+
 
                     <table class="w-100 table" id="global-discounts-table" style="width:100%">
                         <thead>
@@ -857,9 +862,8 @@
             var zones = []
             var discounts_id_list = {
                 "global-discounts": 1,
-                "brand-discounts": 2,
-                "variant-discounts": 3,
-                "custom-discounts": 4
+                "variant-discounts": 2,
+                "custom-discounts": 3
             }
             var list_initialized_arr = ['global-discounts'];
             $('input[type="checkbox"]').click(function() {
