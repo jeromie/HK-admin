@@ -1,14 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0065)http://aqua61.healthkartqa.com/admin/store/StoreFefoConfig.action -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Enable/Disable FEFO - Store wise | HealthKart.com</title>
-<!--[if lte IE 6]><script src="/plugins/system/J2top/fixed.js" type="text/javascript"></script><![endif]-->
-<link href="resources/new.css" rel="stylesheet" type="text/css">
-<link href="resources/style.css" rel="stylesheet" type="text/css">
-<!--[if IE 8]>
+    <!--[if lte IE 6]><script src="/plugins/system/J2top/fixed.js" type="text/javascript"></script><![endif]-->
+    <link href="resources/new.css" rel="stylesheet" type="text/css">
+    <link href="resources/style.css" rel="stylesheet" type="text/css">
+    <!--[if IE 8]>
     <link href="/css/ie8.css" rel="stylesheet" type="text/css" />
 <![endif]-->
-<!--[if IE 7]>
+    <!--[if IE 7]>
     <link href="/css/ie7.css" rel="stylesheet" type="text/css" />
 <![endif]-->
     <link href="resources/fluid.css" rel="stylesheet" type="text/css">
@@ -21,7 +24,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 
 
-  
+
 
 
     <!-- <script type="text/javascript" src="./Enable_Disable FEFO - Store wise _ HealthKart.com_files/jquery-1.6.2.min.js.download"></script> -->
@@ -30,171 +33,184 @@
     <script type="text/javascript" src="resources/multiselect/jquery.multiselect.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="resources/jquery-datatables-checkboxes-1.2.11/js/dataTables.checkboxes.min.js"></script>
-    
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<style type="text/css">
-  .ui-tooltip {
-  opacity:1;
-}
-</style>
-  <script type="text/javascript">
-    function filterList(){
-            $('.storeFefoRow').each(function(){
+    <style type="text/css">
+        .ui-tooltip {
+            opacity: 1;
+        }
+    </style>
+    <script type="text/javascript">
+        function filterList() {
+            $('.storeFefoRow').each(function() {
                 $(this).css("display", "none");
                 //Store name search filter
-                if($(".storeSearchField").val() != ''){
+                if ($(".storeSearchField").val() != '') {
                     var searchText = $(".storeSearchField").val();
                     var storeName = $(".storeName", this).html();
-                    if(storeName.indexOf(searchText)>=0) {
+                    if (storeName.indexOf(searchText) >= 0) {
                         $(this).css("display", "block");
                     }
                 }
                 //Enable disable option filter
-                if($("#fefoSelect").val() != ''){
-                    if($("#fefoSelect").val() == '1'){
-                        if($(".storeSearchField").val() == ''){
-                            if($("input[type='checkbox']", this).hasClass("fefoEnabled")){
+                if ($("#fefoSelect").val() != '') {
+                    if ($("#fefoSelect").val() == '1') {
+                        if ($(".storeSearchField").val() == '') {
+                            if ($("input[type='checkbox']", this).hasClass("fefoEnabled")) {
                                 $(this).css("display", "block");
                             }
-                        }else{
-                            if($("input[type='checkbox']", this).hasClass("fefoDisabled") && $(this).is(':visible')){
-                                 $(this).css("display", "none");
+                        } else {
+                            if ($("input[type='checkbox']", this).hasClass("fefoDisabled") && $(this).is(':visible')) {
+                                $(this).css("display", "none");
                             }
                         }
-                    }else{
-                        if($(".storeSearchField").val() == ''){
-                           if($("input[type='checkbox']", this).hasClass("fefoDisabled")){
-                              $(this).css("display", "block");
-                           }
-                        }else{
-                           if($("input[type='checkbox']", this).hasClass("fefoEnabled") && $(this).is(':visible')){
-                              $(this).css("display", "none");
-                           }
+                    } else {
+                        if ($(".storeSearchField").val() == '') {
+                            if ($("input[type='checkbox']", this).hasClass("fefoDisabled")) {
+                                $(this).css("display", "block");
+                            }
+                        } else {
+                            if ($("input[type='checkbox']", this).hasClass("fefoEnabled") && $(this).is(':visible')) {
+                                $(this).css("display", "none");
+                            }
                         }
                     }
-                }else{
-                    if($(".storeSearchField").val() == ''){
+                } else {
+                    if ($(".storeSearchField").val() == '') {
                         $(this).css("display", "block");
                     }
                 }
             });
-    }
-    function resetFilter(){
-        $(".storeSearchField").val('');
-        $("#fefoSelect option[value='']").attr('selected', true);
-        $('.storeFefoRow').css("display", "block");
-    }
-  </script>
+        }
+
+        function resetFilter() {
+            $(".storeSearchField").val('');
+            $("#fefoSelect option[value='']").attr('selected', true);
+            $('.storeFefoRow').css("display", "block");
+        }
+    </script>
     <style type="text/css">
-        input[type='submit'].searchBtn, input[type='button'].resetBtn{
-          padding: 9px 33px;
-          border-radius: 20px;
-          /* background: #01bfa5; */
-          text-transform: uppercase;
-          font-size: 15px;
-          display: inline-block;
-          color: #fff;
-          font-weight: 600;
-          border: none;
+        input[type='submit'].searchBtn,
+        input[type='button'].resetBtn {
+            padding: 9px 33px;
+            border-radius: 20px;
+            /* background: #01bfa5; */
+            text-transform: uppercase;
+            font-size: 15px;
+            display: inline-block;
+            color: #fff;
+            font-weight: 600;
+            border: none;
         }
+
         input[type='text'].input_field {
-          font-size: 14px;
-          padding: 2px;
-          height: 18px;
-          box-sizing: border-box;
+            font-size: 14px;
+            padding: 2px;
+            height: 18px;
+            box-sizing: border-box;
         }
+
         .search_btn {
-          width: 270px;
-          float: left;
-          margin: 20px 0 0 0;
+            width: 270px;
+            float: left;
+            margin: 20px 0 0 0;
         }
+
         .input_area {
-          float: left;
-          padding: 0 15px;
-          width: 29.4%;
-          padding-bottom: 10px !important;
+            float: left;
+            padding: 0 15px;
+            width: 29.4%;
+            padding-bottom: 10px !important;
         }
+
         .labe_div label {
-          display: inline-block;
-          max-width: 100%;
-          margin-bottom: 5px;
-          font-size: 14px;
-          font-weight: 600;
-          color: #35484f;
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #35484f;
         }
+
         .input_field {
-          width: 100% !important;
-          border: 2px solid #d6dee1;
-          border-radius: 3px;
-          min-height: 38px;
-          padding: 0 10px;
-          background: #F2F7FB;
-          font-size: 14px;
+            width: 100% !important;
+            border: 2px solid #d6dee1;
+            border-radius: 3px;
+            min-height: 38px;
+            padding: 0 10px;
+            background: #F2F7FB;
+            font-size: 14px;
         }
+
         .input_fields {
-          width: 100%;
-          float: left;
-          margin-bottom: 32px;
+            width: 100%;
+            float: left;
+            margin-bottom: 32px;
         }
+
         .main_heading {
-          width: 100%;
-          float: left;
-          margin: 10px 0 25px;
-          position: relative;
+            width: 100%;
+            float: left;
+            margin: 10px 0 25px;
+            position: relative;
         }
+
         .main_heading h2 {
-          color: #35484f;
-          font-weight: 400;
-          font-size: 19px;
+            color: #35484f;
+            font-weight: 400;
+            font-size: 19px;
         }
+
         .main_heading:after {
-          position: absolute;
-          content: "";
-          width: 91%;
-          background: #edeef0;
-          right: 0;
-          height: 1px;
-          top: 14px;
-        }
-        .row{
-          margin: 0 -15px;
-        }
-        .row:after{
-          display: table;
-          content: " ";
-          clear: both;
+            position: absolute;
+            content: "";
+            width: 91%;
+            background: #edeef0;
+            right: 0;
+            height: 1px;
+            top: 14px;
         }
 
-        .hidden{
-          display:none;
+        .row {
+            margin: 0 -15px;
+        }
+
+        .row:after {
+            display: table;
+            content: " ";
+            clear: both;
+        }
+
+        .hidden {
+            display: none;
         }
 
 
-        .input_field:disabled{
-          background: #fafaee;
+        .input_field:disabled {
+            background: #fafaee;
         }
 
         .dataTables_processing {
-          height: 18px!important;
-          margin-top: -1px!important;
-          padding-top: 10px!important;
+            height: 18px !important;
+            margin-top: -1px !important;
+            padding-top: 10px !important;
         }
 
         input[type="checkbox"][readonly] {
-          pointer-events: none;
+            pointer-events: none;
         }
+    </style>
+</head>
 
-      </style>
-  </head>
-  <body id="">
-  <div class="container_12">
-    <div class="grid_12">
-   <div class="menuBar adminMenuBar grid_12" style="width:100%; margin:0px; height: 100px;">
-           <div class="prom yellow help" style="height:20px">
+<body id="">
+    <div class="container_12">
+        <div class="grid_12">
+            <div class="menuBar adminMenuBar grid_12" style="width:100%; margin:0px; height: 100px;">
+                <div class="prom yellow help" style="height:20px">
                     <div class="grid_4">
-                            <form method="post" action="http://aqua61.healthkartqa.com/admin/warehouse/SelectWH.action" style="height: 20px; font-size: 12px;" id="selectWHForm">
-                                Select a WH:
-                                <select name="setWarehouse">
+                        <form method="post" action="http://aqua61.healthkartqa.com/admin/warehouse/SelectWH.action" style="height: 20px; font-size: 12px;" id="selectWHForm">
+                            Select a WH:
+                            <select name="setWarehouse">
                                             <option value="4056" selected="selected">PUN Ludhiana</option>
                                         <option value="4022">BLR Indira Nagar</option>
                                         <option value="4051">BLR JP Nagar</option>
@@ -222,109 +238,110 @@
                                         <option value="4056" selected="selected">PUN Ludhiana</option>
                                         <option value="710">UP Noida Sec 18</option>
                                 </select>
-                                    <input name="redirectUrl" id="hiddenURL" type="hidden" value="http://aqua61.healthkartqa.com/admin/store/StoreFefoConfig.action">
-                                    <script>
-                                        var currentURL = window.location.href;
-                                        document.getElementById("hiddenURL").setAttribute("value",currentURL);
-                                    </script>
-                                <input name="bindUserWithWarehouse" style="height: 25px;font-size: 12px;margin-bottom: 0px;margin-top: 0px;" type="submit" value="Save">
-                            <div style="display: none;"><input type="hidden" name="_sourcePage" value="oZ5quXwLoY73XBbNrQDx52e3VRRAveVx9ijswDSgnP8i1K2IF0VdRfGEmM3V95dm"><input type="hidden" name="__fp" value="n0PU4Av7NMJ28e2vWixA_qMEDW3xewEL"></div></form>
+                            <input name="redirectUrl" id="hiddenURL" type="hidden" value="http://aqua61.healthkartqa.com/admin/store/StoreFefoConfig.action">
+                            <script>
+                                var currentURL = window.location.href;
+                                document.getElementById("hiddenURL").setAttribute("value", currentURL);
+                            </script>
+                            <input name="bindUserWithWarehouse" style="height: 25px;font-size: 12px;margin-bottom: 0px;margin-top: 0px;" type="submit" value="Save">
+                            <div style="display: none;"><input type="hidden" name="_sourcePage" value="oZ5quXwLoY73XBbNrQDx52e3VRRAveVx9ijswDSgnP8i1K2IF0VdRfGEmM3V95dm"><input type="hidden" name="__fp" value="n0PU4Av7NMJ28e2vWixA_qMEDW3xewEL"></div>
+                        </form>
                     </div>
-               <div align="center" class="grid_8 " style="height:20px; font-size:16px; color:red; font-weight:bold;">
-                PUN Ludhiana
+                    <div align="center" class="grid_8 " style="height:20px; font-size:16px; color:red; font-weight:bold;">
+                        PUN Ludhiana
 
-            <span style="float:right;">
+                        <span style="float:right;">
                 Hi Vikas
                 <a href="http://aqua61.healthkartqa.com/core/auth/Logout.action?redirectUrl=%2Fcore%2Fauth%2FLogin.action">LOG OUT</a>
                 </span>
-        </div>
+                    </div>
                 </div>
                 <div class="grid_12">
-        <ul class="lvl1">
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/pages/admin/adminHome.jsp">Admin Home</a>
-            </li>
-                <li class="lvl1 menuItem trimPadding" title="">
-                    <a href="http://aqua61.healthkartqa.com/admin/queue/ActionAwaitingQueue.action" class="invert">Action Q</a></li>
-                <li class="lvl1 menuItem trimPadding" title="">
-                    <a href="http://aqua61.healthkartqa.com/admin/queue/PackingAwaitingQueue.action" class="invert">Packing Queue</a></li>
-                <li class="lvl1 menuItem trimPadding" title="">
-                    <a href="http://aqua61.healthkartqa.com/admin/queue/ChooseOrdersForPrintPick.action" class="invert">Print/Pick</a></li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchOrder.action" class="invert">Search BO</a></li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchShippingOrder.action" class="invert">Search SO</a></li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/admin/user/SearchUser.action" class="invert">Search Users</a></li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/pages/admin/courier/courierAdminHome.jsp">OPS</a>
-            </li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/pages/admin/categoryAdminHome.jsp">Category</a>
-            </li>
-            <li class="lvl1 menuItem trimPadding" title="">
-                <a href="http://aqua61.healthkartqa.com/pages/admin/warehouseAdmin.jsp">Warehouse</a>
-            </li>
-                <li class="lvl1 menuItem trimPadding" title="">
-                    <a href="http://aqua61.healthkartqa.com/pages/hk/hkOrderDetails.jsp">HK.com Orders</a>
-                </li>
-                    <li class="lvl1 menuItem trimPadding" title="">
-                        <a href="http://aqua61.healthkartqa.com/pages/pos/posAdminHome.jsp">Store Manager</a></li>
-            <div class="floatfix"></div>
-        </ul>
+                    <ul class="lvl1">
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/admin/adminHome.jsp">Admin Home</a>
+                        </li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/queue/ActionAwaitingQueue.action" class="invert">Action Q</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/queue/PackingAwaitingQueue.action" class="invert">Packing Queue</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/queue/ChooseOrdersForPrintPick.action" class="invert">Print/Pick</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchOrder.action" class="invert">Search BO</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/order/search/SearchShippingOrder.action" class="invert">Search SO</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/admin/user/SearchUser.action" class="invert">Search Users</a></li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/admin/courier/courierAdminHome.jsp">OPS</a>
+                        </li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/admin/categoryAdminHome.jsp">Category</a>
+                        </li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/admin/warehouseAdmin.jsp">Warehouse</a>
+                        </li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/hk/hkOrderDetails.jsp">HK.com Orders</a>
+                        </li>
+                        <li class="lvl1 menuItem trimPadding" title="">
+                            <a href="http://aqua61.healthkartqa.com/pages/pos/posAdminHome.jsp">Store Manager</a></li>
+                        <div class="floatfix"></div>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+            </div>
+            <script type="text/javascript">
+                //  $('li.lvl1').click(function() {
+                //    url = $(this).children('a').attr('href');
+                //    document.location = url;
+                //    return false;
+                //  });
+            </script>
         </div>
-    </div>
-    <div class="right">
-    </div>
-    <script type="text/javascript">
-        //  $('li.lvl1').click(function() {
-        //    url = $(this).children('a').attr('href');
-        //    document.location = url;
-        //    return false;
-        //  });
-    </script>
-    </div>
-    <div class="grid_12">
-      
-<div class="grid_12 mt-4">
+        <div class="grid_12">
 
-  <!-- content -->
+            <div class="grid_12 mt-4">
+
+                <!-- content -->
 
 
 
 
-  <!-- tabs -->
-  <ul class="tabs clearfix">
-      <li class="tab-link current" data-tab="global-discounts" >
-        <div>Global Discounts</div>
-      </li>
-      <li class="tab-link" data-tab="brand-discounts">
-        <div>Brand Discounts</div>
-      </li>
-      <li class="tab-link" data-tab="variant-discounts">
-        <div>Variant Discounts</div>
-      </li>
-      <li class="tab-link" data-tab="custom-discounts">
-        <div>Custom Discounts</div>
-      </li>
-    </ul>
+                <!-- tabs -->
+                <ul class="tabs clearfix">
+                    <li class="tab-link current" data-tab="global-discounts">
+                        <div>Global Discounts</div>
+                    </li>
+                    <li class="tab-link" data-tab="brand-discounts">
+                        <div>Brand Discounts</div>
+                    </li>
+                    <li class="tab-link" data-tab="variant-discounts">
+                        <div>Variant Discounts</div>
+                    </li>
+                    <li class="tab-link" data-tab="custom-discounts">
+                        <div>Custom Discounts</div>
+                    </li>
+                </ul>
 
-    <div id="global-discounts" class="tab-content current">
-      <h5 class="mb-4">Global Discounts</h5>
-      <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
+                <div id="global-discounts" class="tab-content current">
+                    <h5 class="mb-4">Global Discounts</h5>
+                    <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
 
-      <table class="w-100 table" id="global-discounts-table" style="width:100%">
-        <thead>
-          <tr>
-            <th width="50%">Expiry Month Range | Discount(%)</th>
-            <!-- <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th> -->
-            <th width="30%">Discount Type</th>
-            <th width="20%">Action</th>
-          </tr>
-        </thead>
+                    <table class="w-100 table" id="global-discounts-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="50%">Expiry Month Range | Discount(%)</th>
+                                <!-- <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th> -->
+                                <th width="30%">Discount Type</th>
+                                <th width="20%">Action</th>
+                            </tr>
+                        </thead>
 
-        <tbody>
-          <!-- <tr>
+                        <tbody>
+                            <!-- <tr>
             <td>
               <p>1 - 3 months | 70%</p>
               <p>4 - 6 months | 50%</p>
@@ -333,274 +350,274 @@
             <td> Global Discount</td>
             <td><a href="javascript:void(0);" class="modal-toggle">View/Edit Range</a></td>
           </tr> -->
-        </tbody>
-      </table>
-    </div>
+                        </tbody>
+                    </table>
+                </div>
 
-    <div id="brand-discounts" class="tab-content">
-      <h5 class="mb-4">Brand Discounts</h5>
+                <div id="brand-discounts" class="tab-content">
+                    <h5 class="mb-4">Brand Discounts</h5>
 
-      <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Brand - wise Filter</h5>
-        <div class="d-flex">
-          <div class="mr-4">
-            <div class="labe_div">
-              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds" >
+                    <div class="d-inline-block p-4 bg-grey filter">
+                        <h5 class="mb-4">Brand - wise Filter</h5>
+                        <div class="d-flex">
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds">
               <option value="PL">Private Label</option>
               <option value="NPL">Non Private Label</option>
             </select>
-          </div>
+                            </div>
 
-          <div>
-            <div class="labe_div">
-              <label>Brand Name</label>
-            </div>
-            <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds" >
+                            <div>
+                                <div class="labe_div">
+                                    <label>Brand Name</label>
+                                </div>
+                                <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds">
               <!-- <option value="1">HealthKart</option>
               <option value="2">HealthViva</option> -->
             </select>
-          </div>
-        </div>
-      </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
-      <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
-      </div>
-      <table class="w-100 table" id="brand-discounts-table" style="width:100%">
-        <thead>
-          <tr>
-            <th width="5%"><input type="checkbox" name="brand-discounts_select_all" value="1" id="brand-discounts-select-all"></th>
-            <!-- <th width="5%">Sr.No.</th> -->
-            <th width="10%">Brand Type</th>
-            <th width="10%">Brand</th>
-            <th width="30%">Expiry Month Range | Discount(%)</th>
-            <th width="25%">Discount Type</th>
-            <th width="15%">Action</th>
-          </tr>
-        </thead>
+                    <div class="d-flex justify-content-end">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
+                    </div>
+                    <table class="w-100 table" id="brand-discounts-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="5%"><input type="checkbox" name="brand-discounts_select_all" value="1" id="brand-discounts-select-all"></th>
+                                <!-- <th width="5%">Sr.No.</th> -->
+                                <th width="10%">Brand Type</th>
+                                <th width="10%">Brand</th>
+                                <th width="30%">Expiry Month Range | Discount(%)</th>
+                                <th width="25%">Discount Type</th>
+                                <th width="15%">Action</th>
+                            </tr>
+                        </thead>
 
-        <tbody>
-         
-        </tbody>
-      </table>
+                        <tbody>
 
-    </div>
-    <div id="variant-discounts" class="tab-content">
+                        </tbody>
+                    </table>
 
-       <h5 class="mb-4">Variant Discounts</h5>
+                </div>
+                <div id="variant-discounts" class="tab-content">
 
-      <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Variant-wise Filter</h5>
-        <div class="d-flex">
-          <div class="mr-4">
-            <div class="labe_div">
-              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type" >
+                    <h5 class="mb-4">Variant Discounts</h5>
+
+                    <div class="d-inline-block p-4 bg-grey filter">
+                        <h5 class="mb-4">Variant-wise Filter</h5>
+                        <div class="d-flex">
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">
              <option value="PL">Private Label</option>
               <option value="NPL">Non Private Label</option>
             </select>
-          </div>
+                            </div>
 
-          <div class="mr-4">
-            <div class="labe_div">
-              <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name" >
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name">
             </select>
-          </div>
-          <div>
-            <div class="labe_div">
-              <label>Product Variant Id</label>
-            </div>
+                            </div>
+                            <div>
+                                <div class="labe_div">
+                                    <label>Product Variant Id</label>
+                                </div>
 
-            <!-- <div class="position-relative disabled disabled-block"> -->
-            <select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id" >
+                                <!-- <div class="position-relative disabled disabled-block"> -->
+                                <select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id">
             </select>
-            <!-- </div> -->
-          </div>
-        </div>
-      </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
 
 
 
-      <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('variant-discounts','variant-discounts-table');" disabled="disabled">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('variant-discounts-table');" disabled="disabled">
-      </div>
-      <table class="w-100 table" id="variant-discounts-table" style="width:100%">
-        <thead>
-          <tr>
-            <th width="5%"><input type="checkbox" name="variant-discounts_select_all" value="1" id="variant-discounts-select-all"></th>
-            <!-- <th width="5%">Sr.No.</th> -->
-            <th width="10%">Product Variant Id</th>
-            <th width="10%">Brand Type</th>
-            <th width="10%">Brand</th>
-            <th width="10%">Product Variant Name</th>
-            <th width="30%">Expiry Month Range | Discount(%)</th>
-            <th width="25%">Discount Type</th>
-            <th width="15%">Action</th>
-          </tr>
-        </thead>
+                    <div class="d-flex justify-content-end">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('variant-discounts','variant-discounts-table');" disabled="disabled">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('variant-discounts-table');" disabled="disabled">
+                    </div>
+                    <table class="w-100 table" id="variant-discounts-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="5%"><input type="checkbox" name="variant-discounts_select_all" value="1" id="variant-discounts-select-all"></th>
+                                <!-- <th width="5%">Sr.No.</th> -->
+                                <th width="10%">Product Variant Id</th>
+                                <th width="10%">Brand Type</th>
+                                <th width="10%">Brand</th>
+                                <th width="10%">Product Variant Name</th>
+                                <th width="30%">Expiry Month Range | Discount(%)</th>
+                                <th width="25%">Discount Type</th>
+                                <th width="15%">Action</th>
+                            </tr>
+                        </thead>
 
-        <tbody>
-          
-        </tbody>
-      </table>
+                        <tbody>
 
-    </div>
-    <div id="custom-discounts" class="tab-content">
-      <h5 class="mb-4">Custom Discounts</h5>
+                        </tbody>
+                    </table>
 
-            <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Store-wise Filter</h5>
-        <div class="d-flex">
-          <div class="mr-4">
-            <div class="labe_div">
-              <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds" >
+                </div>
+                <div id="custom-discounts" class="tab-content">
+                    <h5 class="mb-4">Custom Discounts</h5>
+
+                    <div class="d-inline-block p-4 bg-grey filter">
+                        <h5 class="mb-4">Store-wise Filter</h5>
+                        <div class="d-flex">
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds">
              <!--  <option value="NORTH">NORTH</option>
               <option value="SOUTH">SOUTH</option>
               <option value="EAST">EAST</option>
               <option value="WEST">WEST</option> -->
             </select>
-          </div>
+                            </div>
 
-          <div>
-            <div class="labe_div">
-               <label><span style="float:left;">Store Name</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds" >
+                            <div>
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Store Name</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds">
 
             </select>
-          </div>
-        </div>
-      </div>
+                            </div>
+                        </div>
+                    </div>
 
-      <div class="d-inline-block p-4 bg-grey filter">
-        <h5 class="mb-4">Variant-wise Filter</h5>
-        <div class="d-flex">
-          <div class="mr-4">
-            <div class="labe_div">
-              <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type" >
+                    <div class="d-inline-block p-4 bg-grey filter">
+                        <h5 class="mb-4">Variant-wise Filter</h5>
+                        <div class="d-flex">
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">
               <option value="PL">Private Label</option>
               <option value="NPL">Non Private Label</option>
             </select>
-          </div>
+                            </div>
 
-          <div class="mr-4">
-            <div class="labe_div">
-               <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
-            </div>
-            <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name" >
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name">
             </select>
-          </div>
+                            </div>
 
-          <div>
-            <div class="labe_div">
-              <label>Product Variant Id</label>
-            </div>
-            <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id" >
+                            <div>
+                                <div class="labe_div">
+                                    <label>Product Variant Id</label>
+                                </div>
+                                <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id">
             </select>
-          </div>
-        </div>
-      </div>
+                            </div>
+                        </div>
+                    </div>
 
 
 
 
-      <div class="d-flex justify-content-end">
-        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled"  onclick="resetFilters('custom-discounts','custom-discounts-table');" disabled="disabled">
-        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled"  onclick="applyFilters('custom-discounts-table');" disabled="disabled">
-      </div>
-      <table class="w-100 table" id="custom-discounts-table" style="width:100%">
-        <thead>
-          <tr>
-            <th width="5%"><input type="checkbox" name="custom-discounts_select_all" value="1" id="custom-discounts-select-all"></th>
-            <!-- <th width="5%">Sr.No.</th> -->
-            <th width="10%">Product Variant Id</th>
-            <th width="10%">Brand Type</th>
-            <th width="10%">Brand</th>
-            <th width="10%">Product Variant Name</th>
-            <th width="10%">Store Name</th>
-            <th width="10%">Zone</th>
-            <th width="30%">Expiry Month Range | Discount(%)</th>
-            <th width="25%">Discount Type</th>
-            <th width="15%">Action</th>
-          </tr>
-        </thead>
+                    <div class="d-flex justify-content-end">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('custom-discounts','custom-discounts-table');" disabled="disabled">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('custom-discounts-table');" disabled="disabled">
+                    </div>
+                    <table class="w-100 table" id="custom-discounts-table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="5%"><input type="checkbox" name="custom-discounts_select_all" value="1" id="custom-discounts-select-all"></th>
+                                <!-- <th width="5%">Sr.No.</th> -->
+                                <th width="10%">Product Variant Id</th>
+                                <th width="10%">Brand Type</th>
+                                <th width="10%">Brand</th>
+                                <th width="10%">Product Variant Name</th>
+                                <th width="10%">Store Name</th>
+                                <th width="10%">Zone</th>
+                                <th width="30%">Expiry Month Range | Discount(%)</th>
+                                <th width="25%">Discount Type</th>
+                                <th width="15%">Action</th>
+                            </tr>
+                        </thead>
 
-        <tbody>
-        </tbody>
-      </table>
-    </div>
-  <!-- /tabs -->
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /tabs -->
 
-  <!-- modal -->
-
-
+                <!-- modal -->
 
 
-  <div class="modal" id="rangeModalPopup">
-      <div class="modal-overlay modal-toggle"></div>
-      <div class="modal-wrapper modal-transition">
-        <div class="modal-header">
-          <!-- <button class="modal-close modal-toggle fosz14">
+
+
+                <div class="modal" id="rangeModalPopup">
+                    <div class="modal-overlay modal-toggle"></div>
+                    <div class="modal-wrapper modal-transition">
+                        <div class="modal-header">
+                            <!-- <button class="modal-close modal-toggle fosz14">
             X
           </button> -->
-          <i class="close modal-close modal-toggle fosz14"></i>
+                            <i class="close modal-close modal-toggle fosz14"></i>
 
-          <h2 class="modal-heading">View / Edit Range</h2>
-        </div>
+                            <h2 class="modal-heading">View / Edit Range</h2>
+                        </div>
 
-        <div class="modal-body">
-          <div class="modal-content" style="max-height: 500px;overflow-y: scroll;">
-            <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
-             <div class="fosz14 mb-2">
-              <label for="" class="font-weight-bold">Brand:</label>
-              <span class="rangeModalBrandName"></span>
-            </div>
-            <div class="fosz14 mb-2">
-              <label for="" class="font-weight-bold">Variant ID:</label>
-              <span class="rangeModalVariantId"></span>
-            </div>
+                        <div class="modal-body">
+                            <div class="modal-content" style="max-height: 500px;overflow-y: scroll;">
+                                <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
+                                <div class="fosz14 mb-2">
+                                    <label for="" class="font-weight-bold">Brand:</label>
+                                    <span class="rangeModalBrandName"></span>
+                                </div>
+                                <div class="fosz14 mb-2">
+                                    <label for="" class="font-weight-bold">Variant ID:</label>
+                                    <span class="rangeModalVariantId"></span>
+                                </div>
 
-            <div class="fosz14 mb-2">
-              <label for="" class="font-weight-bold">Variant Name:</label>
-              <span class="rangeModalVariantName"></span>
-            </div>
+                                <div class="fosz14 mb-2">
+                                    <label for="" class="font-weight-bold">Variant Name:</label>
+                                    <span class="rangeModalVariantName"></span>
+                                </div>
 
-             <div class="fosz14 mb-2">
-              <label for="" class="font-weight-bold">Store Name:</label>
-              <span class="rangeModalStoreName"></span>
-            </div>
+                                <div class="fosz14 mb-2">
+                                    <label for="" class="font-weight-bold">Store Name:</label>
+                                    <span class="rangeModalStoreName"></span>
+                                </div>
 
-            <!-- table -->
-            <!-- <div class="table-cover disabled"> -->
-            <div class="table-cover">
+                                <!-- table -->
+                                <!-- <div class="table-cover disabled"> -->
+                                <div class="table-cover">
 
-            <table class="w-100 rangeTable" >
-              <thead>
-                <tr>
-                  <th class="text-center">Expiry Month Range From</th>
-                  <th></th>
-                  <th>Expiry Month Range To</th>
-                  <th>Discount (%)</th>
-                  <th class="text-center">HK.COM Offer Applied</th>
-                  <th></th>
-                </tr>
-              </thead>
+                                    <table class="w-100 rangeTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">Expiry Month Range From</th>
+                                                <th></th>
+                                                <th>Expiry Month Range To</th>
+                                                <th>Discount (%)</th>
+                                                <th class="text-center">HK.COM Offer Applied</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
 
-              <tbody>
-               <!--  <tr>
+                                        <tbody>
+                                            <!--  <tr>
                   <td class="text-center">0</td>
                   <td>-</td>
                   <td><input type="text" class="input_field"></td>
@@ -615,19 +632,19 @@
                   <td><input type="text" class="input_field"></td>
                   <td class="text-center"><input type="checkbox" /></td>
                 </tr> -->
-              </tbody>
-            </table>
-            </div>
-            <div class="text-right" >
-              <!-- <a href="#" class="addExpiryRange">+ Add</a> -->
-              <input style="float:right;" type="button" class="fosz14 btn-green addExpiryRange" value="+ Add"/>
-              
-            </div>
-            <div style="clear:both;"></div>
-      <!-- /table -->
-            <div class="mt-4 reset-opt-block" >
-              <label for="" class="mb-2 d-block fosz14">Reset to Default Discounts:</label>
-<!--               <div class="d-flex">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-right">
+                                    <!-- <a href="#" class="addExpiryRange">+ Add</a> -->
+                                    <input style="float:right;" type="button" class="fosz14 btn-green addExpiryRange" value="+ Add" />
+
+                                </div>
+                                <div style="clear:both;"></div>
+                                <!-- /table -->
+                                <div class="mt-4 reset-opt-block">
+                                    <label for="" class="mb-2 d-block fosz14">Reset to Default Discounts:</label>
+                                    <!--               <div class="d-flex">
                 <div class="checkbox mr-4 global-discounts-reset-opt reset-opt" >
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Global Discounts
@@ -647,167 +664,177 @@
                 </div>
               </div>
             </div> -->
-            <form id="resetDiscountsForm">
-              <div class="d-flex">
-              
-                <div class="radio mr-4 global-discounts-reset-opt reset-opt" >
-                  <label class="fosz12 d-flex align-items-center">
+                                    <form id="resetDiscountsForm">
+                                        <div class="d-flex">
+
+                                            <div class="radio mr-4 global-discounts-reset-opt reset-opt">
+                                                <label class="fosz12 d-flex align-items-center">
                     <input id="id_radio1" data-block="global-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="1">Global Discounts
                   </label>
-                </div>
+                                            </div>
 
-                <div class="radio mr-4 brand-discounts-reset-opt reset-opt" >
-                  <label class="fosz12 d-flex align-items-center">
+                                            <div class="radio mr-4 brand-discounts-reset-opt reset-opt">
+                                                <label class="fosz12 d-flex align-items-center">
                     <input id="id_radio2" data-block="brand-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="2" >Brand Discounts
                   </label>
-                </div>
+                                            </div>
 
-                <div class="radio mr-4 variant-discounts-reset-opt reset-opt" >
-                  <label class="fosz12 d-flex align-items-center">
+                                            <div class="radio mr-4 variant-discounts-reset-opt reset-opt">
+                                                <label class="fosz12 d-flex align-items-center">
                     <input id="id_radio3" data-block="variant-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="3" >Variant Discounts
                   </label>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                    <div id="global-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+                                        <!--  <p class="pl-0">global  1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p> -->
+                                    </div>
+                                    <div id="brand-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+                                        <!--  <p class="pl-0">brand 1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p> -->
+                                    </div>
+                                    <div id="variant-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+                                        <!--  <p class="pl-0">variant 1 - 3 months | 70%</p>
+              <p class="pl-0">4 - 6 months | 50%</p> -->
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <div class="text-right">
+                                    <input type="submit" value="Save" class="fosz14 btn-green submitBtn" data-confirm="false" onclick="saveRangeOptions(this)">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /modal -->
+                    <!-- /content -->
                 </div>
-
-              </div>
-            </form>
-
-            <div id="global-discounts-reset-block"  class="bg-grey p15 mt-2 reset-block" style="display: none;">
-             <!--  <p class="pl-0">global  1 - 3 months | 70%</p>
-              <p class="pl-0">4 - 6 months | 50%</p> -->
             </div>
-            <div id="brand-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
-             <!--  <p class="pl-0">brand 1 - 3 months | 70%</p>
-              <p class="pl-0">4 - 6 months | 50%</p> -->
-            </div>
-            <div id="variant-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
-             <!--  <p class="pl-0">variant 1 - 3 months | 70%</p>
-              <p class="pl-0">4 - 6 months | 50%</p> -->
-            </div>
-
-
-          </div>
         </div>
 
-        <div class="modal-footer">
-          <div class="text-right">
-            <input type="submit" value="Save" class="fosz14 btn-green submitBtn" data-confirm="false" onclick="saveRangeOptions(this)">
-          </div>
-        </div>
+        <script type="text/javascript">
+            var brands_mapping = {
+                "JRI": "PL",
+                "Acu Care": "PL",
+                "SCS": "PL",
+                "Rama": "NPL",
+                "Herbs WellBeing": "NPL",
+                "Merit": "NPL",
+                "NutriCheer": "NPL",
+                "Ray": "NPL",
+                "Ketocare": "NPL",
+                "RiteBite": "NPL",
+                "Green Elements": "NPL",
+                "Bodygard": "NPL",
+                "Kibosh": "NPL",
+                "Garden of Life": "NPL",
+                "Chicco Pure.Bio": "NPL",
+                "Physique and Fitness Health Club": "NPL",
+                "JSB": "NPL",
+                "MuscleBlaze": "PL"
+            }
+            var store_mapping = [{
+                    "id": 1,
+                    "name": "DEL Rajouri Bagh",
+                    "zone": "north"
+                },
+                {
+                    "id": 2,
+                    "name": "DEL Rajouri Garden",
+                    "zone": "south"
+                }
 
-      </div>
-    </div>
-  <!-- /modal -->
-  <!-- /content -->
-</div>
-    </div>
-  </div>
+            ]
+            var zones = []
+            var discounts_id_list = {
+                "global-discounts": 1,
+                "brand-discounts": 2,
+                "variant-discounts": 3,
+                "custom-discounts": 4
+            }
+            var list_initialized_arr = ['global-discounts'];
+            $('input[type="checkbox"]').click(function() {
+                $(this).parent("label").toggleClass('highlight');
+            });
 
-  <script type="text/javascript">
-    var brands_mapping={
-       "JRI": "PL",
-       "Acu Care": "PL",
-       "SCS": "PL",
-       "Rama": "NPL",
-       "Herbs WellBeing": "NPL",
-       "Merit": "NPL",
-       "NutriCheer": "NPL",
-       "Ray": "NPL",
-       "Ketocare": "NPL",
-       "RiteBite": "NPL",
-       "Green Elements": "NPL",
-       "Bodygard": "NPL",
-       "Kibosh": "NPL",
-       "Garden of Life": "NPL",
-       "Chicco Pure.Bio": "NPL",
-       "Physique and Fitness Health Club": "NPL",
-       "JSB": "NPL",
-       "MuscleBlaze":"PL"
-     }
-    var store_mapping=[{
-        "id": 1,
-        "name":"DEL Rajouri Bagh",
-        "zone":"north"
-      },
-      {
-        "id": 2,
-        "name":"DEL Rajouri Garden",
-        "zone":"south"
-      }
+            $(document).ready(function() {
+                var zones_list = ["north", "south"]
+                zones = zones_list
+                // tabs
+                $('ul.tabs li').click(function() {
+                    var tab_id = $(this).attr('data-tab');
 
-      ]
-    var zones=[]
-    var discounts_id_list={ "global-discounts":1,"brand-discounts":2,"variant-discounts":3,"custom-discounts":4 }
-    var list_initialized_arr=['global-discounts'];
-    $('input[type="checkbox"]').click(function() {
-      $(this).parent("label").toggleClass('highlight');
-    });
+                    $('ul.tabs li').removeClass('current');
+                    $('.tab-content').removeClass('current');
 
-    $(document).ready(function(){
-       var zones_list=["north","south"]
-       zones=zones_list
-      // tabs
-      $('ul.tabs li').click(function(){
-        var tab_id = $(this).attr('data-tab');
+                    $(this).addClass('current');
+                    $("#" + tab_id).addClass('current');
 
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content').removeClass('current');
+                    //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
+                    $('#' + tab_id + '-select-all').prop('checked', false)
+                    $('#' + tab_id).find('.filter-filelds').val('')
+                    $('#' + tab_id).find('.ms-clear').trigger('click')
+                    $('#' + tab_id).find('.ms-options .ms-search input[type="text"]').val('')
+                    var tabelem = $('#' + tab_id)
+                    tabelem.find('.filter-zone').multiselect('reset', true);
+                    var discounts = new listDiscounts({
+                        url: "https://demo8727571.mockable.io/list-" + tab_id,
+                        tablename: tab_id + '-table',
+                        type: tab_id,
+                        discountTypeId: discounts_id_list[tab_id]
+                    });
+                    discounts.generateIPList()
 
-        $(this).addClass('current');
-        $("#"+tab_id).addClass('current');
+                    // list_initialized_arr.push(tab_id)
+                    //}
+                    //console.log(list_initialized_arr)
 
-        //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
-          $('#'+tab_id+'-select-all').prop('checked',false)
-          $('#'+tab_id).find('.filter-filelds').val('')
-          $('#'+tab_id).find('.ms-clear').trigger('click')
-          $('#'+tab_id).find('.ms-options .ms-search input[type="text"]').val('')
-          var tabelem=$('#'+tab_id) 
-          tabelem.find('.filter-zone').multiselect('reset',true);
-          var discounts = new listDiscounts({  url : "https://demo8727571.mockable.io/list-"+tab_id , tablename : tab_id+'-table' , type:tab_id , discountTypeId: discounts_id_list[tab_id] });
-          discounts.generateIPList()
+                });
 
-         // list_initialized_arr.push(tab_id)
-        //}
-        //console.log(list_initialized_arr)
-        
-      });
+                // modal
+                // $('.modal-toggle').on('click', function(e) {
+                $('.modal-toggle').click(function() {
+                    // e.preventDefault();
+                    $('.modal').toggleClass('is-visible');
+                    console.log("enters toggle")
+                    $('.reset-block').hide()
+                    $('.reset-select-radio').data('checked', false)
+                });
 
-      // modal
-      // $('.modal-toggle').on('click', function(e) {
-        $('.modal-toggle').click(function(){
-        // e.preventDefault();
-        $('.modal').toggleClass('is-visible');
-        console.log("enters toggle")
-        $('.reset-block').hide()
-        $('.reset-select-radio').data('checked',false)
-      });
+                $('.reset-select-radio').click(function() {
+                    var divId = $(this).data('block')
+                    $('.reset-block:not(#' + divId + ')').hide('fast');
+                    $('#' + divId).show('fast');
+                    if ($('#rangeModalPopup').find('.table-cover').hasClass('disabled') == false) {
+                        $('#rangeModalPopup').find('.table-cover').addClass('disabled')
+                    }
 
-      $('.reset-select-radio').click(function () {
-          var divId=$(this).data('block') 
-          $('.reset-block:not(#'+divId+')').hide('fast');
-          $('#'+divId).show('fast');
-          if($('#rangeModalPopup').find('.table-cover').hasClass('disabled') == false){
-              $('#rangeModalPopup').find('.table-cover').addClass('disabled')
-          }
-          
-      });
-      
-      // $('#id_radio2').click(function () {
-      //     $('#div1, #div3').hide('fast');
-      //     $('#div2').show('fast');
-      // });
+                });
 
-      // $('#id_radio3').click(function () {
-      //     $('#div1, #div2').hide('fast');
-      //     $('#div3').show('fast');
-      // });
+                // $('#id_radio2').click(function () {
+                //     $('#div1, #div3').hide('fast');
+                //     $('#div2').show('fast');
+                // });
+
+                // $('#id_radio3').click(function () {
+                //     $('#div1, #div2').hide('fast');
+                //     $('#div3').show('fast');
+                // });
 
 
 
-       
-
-    });
 
 
-  </script>
-<script type="text/javascript" src="resources/admin.js"></script>
-  </body></html>
+            });
+        </script>
+        <script type="text/javascript" src="resources/admin.js"></script>
+</body>
+
+</html>
