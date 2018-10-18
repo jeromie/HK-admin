@@ -60,10 +60,10 @@ var listDiscounts = function(options) {
         var orderList = [
             [3, "asc"]
         ]
-        if (list_vars.type == "global-discounts") {
-            enableOpt = false
-            orderList = []
-        }
+//        if (list_vars.type == "global-discounts") {
+//            enableOpt = false
+//            orderList = []
+//        }
         if (list_vars.type == "brand-discounts") {
             orderList = [
                 [2, "asc"]
@@ -152,7 +152,7 @@ var listDiscounts = function(options) {
     this.generateColumns = function() {
         var columns = [];
         var index = 0
-        if (list_vars.type != "global-discounts") {
+//        if (list_vars.type != "global-discounts") {
             columns.push({
                 targets: 0,
                 searchable: false,
@@ -167,151 +167,222 @@ var listDiscounts = function(options) {
                     return '<input type="checkbox" class="ind-checkbox" onclick="updatedSelectAllCheckbox(\'' + list_vars.type + '\',this)" name="' + list_vars.type + '-id[]" data-brand="' + jsonObj["brand"] + '" data-variant-id="' + jsonObj["variantId"] + '" data-warehouse-id="' + jsonObj["warehouseId"] + '"value="' + jsonObj["brand"] + '">';
                 }
             });
-            // index++;
-            // columns.push({
-            //            "targets": index,
-            //            render: function(data, type, row, meta){
 
-            //            	return (meta.row+1)
-            //            }
-            //        });
-            index++;
-            if (jQuery.inArray(list_vars.type, ["variant-discounts", "custom-discounts"]) != -1) {
-
-                columns.push({
-                    "targets": index,
-                    render: function(data, type, row, meta) {
-
-                        return row['productVariantId']
-                    }
-                });
-                index++;
-            }
-
-            columns.push({
-                "targets": index,
-                render: function(data, type, row, meta) {
-
-                    return row['brandType']
-                }
-            });
+            /* NUT ID */
             index++;
             columns.push({
-                "targets": index,
+                targets: index,
                 render: function(data, type, row, meta) {
-
-                    return row['brand']
+                    return row["productVariantId"];
                 }
             });
+
+            /* Product Variant Name */
             index++;
-            if (jQuery.inArray(list_vars.type, ["variant-discounts", "custom-discounts"]) != -1) {
+            columns.push({
+                targets: index,
+                render: function(data, type, row, meta) {
+                    return row["productVariantName"];
+                }
+            });
 
+            /* Brand */
+            index++;
+            columns.push({
+                targets: index,
+                render: function(data, type, row, meta) {
+                    return row["brand"];
+                }
+            });
+
+            /* Zone */
+            if(list_vars.type != "global-discounts") {
+                console.log("[ INFO ] zone selected");
+                index++;
                 columns.push({
-                    "targets": index,
+                    targets: index,
                     render: function(data, type, row, meta) {
-
-                        return row['productVariantName']
+                        return row["zone"];
                     }
                 });
-                index++;
             }
-            if (list_vars.type == "custom-discounts") {
-                columns.push({
-                    "targets": index,
-                    render: function(data, type, row, meta) {
 
-                        return row['storeName']
-                    }
-                });
+            /* Store */
+            if(list_vars.type == "custom_discounts") {
+                console.log("[ INFO ] store selected");
                 index++;
                 columns.push({
-                    "targets": index,
+                    targets: index,
                     render: function(data, type, row, meta) {
-
-                        return row['zone']
+                        return row["warehouse"];
                     }
                 });
-                index++;
             }
 
-        }
-
-
-
-        columns.push({
-            "targets": index,
-            orderable: false,
-            render: function(data, type, row, meta) {
-                var renderStr = '';
-                var fullStr = '';
-                var addCls = ''
-                if (row['discounts'] == null) {
-                    row['discounts'] = [{
-                        start: 1,
-                        end: null,
-                        discountPercent: "",
-                        hkOfferApplied: false
-                    }]
+            /* Min Inventory Qty */
+            index++;
+            columns.push({
+                targets: index,
+                render: function(data, type, row, meta) {
+                    return row["minInventory"];
                 }
+            });
 
-                for (var i = 0; i < row['discounts'].length; i++) {
-                    var endPeriod
-                    if (row['discounts'][i]["end"] == null)
-                        endPeriod = "Max"
-                    else
-                        endPeriod = row['discounts'][i]["end"]
-                    var discountPercentStr = ''
-                    if (row['discounts'][i]["discountPercent"] != "")
-                        discountPercentStr = ' | ' + row['discounts'][i]["discountPercent"] + '%'
-                    fullStr += '<p>' + row['discounts'][i]["start"] + ' - ' + endPeriod + ' months' + discountPercentStr + '</p>'
+            /* Inventory Qty Type */
+            index++;
+            columns.push({
+                targets: index,
+                render: function(data, type, row, meta) {
+                    return row["configType"];
                 }
+            });
 
-                if (row['discounts'].length > list_vars.monthrangelimit) {
-                    renderStr += '<div rel="tooltip" title="' + fullStr + '">'
-                    addCls = 'class="exp-month-range-tootltip"'
-                }
-                for (var i = 0; i < row['discounts'].length; i++) {
+//            // index++;
+//            // columns.push({
+//            //            "targets": index,
+//            //            render: function(data, type, row, meta){
+//
+//            //            	return (meta.row+1)
+//            //            }
+//            //        });
+//            index++;
+//            if (jQuery.inArray(list_vars.type, ["variant-discounts", "custom-discounts"]) != -1) {
+//
+//                columns.push({
+//                    "targets": index,
+//                    render: function(data, type, row, meta) {
+//
+//                        return row['productVariantId']
+//                    }
+//                });
+//                index++;
+//            }
+//
+//            columns.push({
+//                "targets": index,
+//                render: function(data, type, row, meta) {
+//
+//                    return row['brandType']
+//                }
+//            });
+//            index++;
+//            columns.push({
+//                "targets": index,
+//                render: function(data, type, row, meta) {
+//
+//                    return row['brand']
+//                }
+//            });
+//            index++;
+//            if (jQuery.inArray(list_vars.type, ["variant-discounts", "custom-discounts"]) != -1) {
+//
+//                columns.push({
+//                    "targets": index,
+//                    render: function(data, type, row, meta) {
+//
+//                        return row['productVariantName']
+//                    }
+//                });
+//                index++;
+//            }
+//            if (list_vars.type == "custom-discounts") {
+//                columns.push({
+//                    "targets": index,
+//                    render: function(data, type, row, meta) {
+//
+//                        return row['storeName']
+//                    }
+//                });
+//                index++;
+//                columns.push({
+//                    "targets": index,
+//                    render: function(data, type, row, meta) {
+//
+//                        return row['zone']
+//                    }
+//                });
+//                index++;
+//            }
 
-                    if (i >= list_vars.monthrangelimit) {
-                        break;
-                    }
-                    //console.log(i+"---"+list_vars.monthrangelimit)
-                    var endPeriod
-                    if (row['discounts'][i]["end"] == null)
-                        endPeriod = "Max"
-                    else
-                        endPeriod = row['discounts'][i]["end"]
-                    var discountPercentStr = ''
-                    if (row['discounts'][i]["discountPercent"] != "")
-                        discountPercentStr = ' | ' + row['discounts'][i]["discountPercent"] + '%'
-                    renderStr += '<p ' + addCls + ' >' + row['discounts'][i]["start"] + ' - ' + endPeriod + ' months' + discountPercentStr + '</p>'
+//        }
 
 
-                }
-                if (row['discounts'].length > list_vars.monthrangelimit) {
-                    renderStr += '</div>'
-                }
-                if (row['discounts'].length <= 0) {
-                    renderStr += '<span style="padding-left: 1.5em">--</span>'
-                }
-                if (list_vars.type == "global-discounts") {
-                    renderStr = fullStr
-                }
-                return renderStr
-            }
-        });
-        index++;
-        var orderDiscountType = true
-        if (list_vars.type == "global-discounts")
-            orderDiscountType = false
-        columns.push({
-            "targets": index,
-            orderable: orderDiscountType,
-            render: function(data, type, row, meta) {
 
-                return row['discountType']
-            }
-        });
+//        columns.push({
+//            "targets": index,
+//            orderable: false,
+//            render: function(data, type, row, meta) {
+//                var renderStr = '';
+//                var fullStr = '';
+//                var addCls = ''
+//                if (row['discounts'] == null) {
+//                    row['discounts'] = [{
+//                        start: 1,
+//                        end: null,
+//                        discountPercent: "",
+//                        hkOfferApplied: false
+//                    }]
+//                }
+//
+//                for (var i = 0; i < row['discounts'].length; i++) {
+//                    var endPeriod
+//                    if (row['discounts'][i]["end"] == null)
+//                        endPeriod = "Max"
+//                    else
+//                        endPeriod = row['discounts'][i]["end"]
+//                    var discountPercentStr = ''
+//                    if (row['discounts'][i]["discountPercent"] != "")
+//                        discountPercentStr = ' | ' + row['discounts'][i]["discountPercent"] + '%'
+//                    fullStr += '<p>' + row['discounts'][i]["start"] + ' - ' + endPeriod + ' months' + discountPercentStr + '</p>'
+//                }
+//
+//                if (row['discounts'].length > list_vars.monthrangelimit) {
+//                    renderStr += '<div rel="tooltip" title="' + fullStr + '">'
+//                    addCls = 'class="exp-month-range-tootltip"'
+//                }
+//                for (var i = 0; i < row['discounts'].length; i++) {
+//
+//                    if (i >= list_vars.monthrangelimit) {
+//                        break;
+//                    }
+//                    //console.log(i+"---"+list_vars.monthrangelimit)
+//                    var endPeriod
+//                    if (row['discounts'][i]["end"] == null)
+//                        endPeriod = "Max"
+//                    else
+//                        endPeriod = row['discounts'][i]["end"]
+//                    var discountPercentStr = ''
+//                    if (row['discounts'][i]["discountPercent"] != "")
+//                        discountPercentStr = ' | ' + row['discounts'][i]["discountPercent"] + '%'
+//                    renderStr += '<p ' + addCls + ' >' + row['discounts'][i]["start"] + ' - ' + endPeriod + ' months' + discountPercentStr + '</p>'
+//
+//
+//                }
+//                if (row['discounts'].length > list_vars.monthrangelimit) {
+//                    renderStr += '</div>'
+//                }
+//                if (row['discounts'].length <= 0) {
+//                    renderStr += '<span style="padding-left: 1.5em">--</span>'
+//                }
+//                if (list_vars.type == "global-discounts") {
+//                    renderStr = fullStr
+//                }
+//                return renderStr
+//            }
+//        });
+//        index++;
+//        var orderDiscountType = true
+//        if (list_vars.type == "global-discounts")
+//            orderDiscountType = false
+//        columns.push({
+//            "targets": index,
+//            orderable: orderDiscountType,
+//            render: function(data, type, row, meta) {
+//
+//                return row['discountType']
+//            }
+//        });
+
         index++;
         columns.push({
             targets: index,
@@ -322,7 +393,7 @@ var listDiscounts = function(options) {
 
             }
         });
-        console.log(columns)
+        console.log("[ INFO ] columns >>>>>>" + columns);
         return columns
 
     };
@@ -684,6 +755,7 @@ function resetFilters(type, tableName) {
 }
 
 function applyFilters(tableName) {
+    console.log("apply filters - table name: " + tableName);
     $('#' + tableName).DataTable().ajax.reload();
 }
 
