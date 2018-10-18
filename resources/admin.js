@@ -852,7 +852,7 @@ function loadZonesFilter() {
         });
     }
     console.log(options)
-    $('#custom-discounts-zone').multiselect('loadOptions', options);
+    $('.filter-zone').multiselect('loadOptions', options);
 }
 
 
@@ -963,6 +963,54 @@ function inputValidate(thisObj) {
 }
 
 $(document).ready(function() {
+        var zones_list = ["north", "south"]
+        zones = zones_list
+
+        /* Tab clicking */
+        $('ul.tabs li').click(function() {
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $("#" + tab_id).addClass('current');
+
+            //if(jQuery.inArray(tab_id,list_initialized_arr) == -1){
+            $('#' + tab_id + '-select-all').prop('checked', false)
+            $('#' + tab_id).find('.filter-filelds').val('')
+            $('#' + tab_id).find('.ms-clear').trigger('click')
+            $('#' + tab_id).find('.ms-options .ms-search input[type="text"]').val('')
+            var tabelem = $('#' + tab_id)
+            tabelem.find('.filter-zone').multiselect('reset', true);
+            var discounts = new listDiscounts({
+                url: "https://demo8727571.mockable.io/list-" + tab_id,
+                tablename: tab_id + '-table',
+                type: tab_id,
+                discountTypeId: discounts_id_list[tab_id]
+            });
+            discounts.generateIPList();
+        });
+
+        /* Modal */
+        $('.modal-toggle').click(function() {
+            // e.preventDefault();
+            $('.modal').toggleClass('is-visible');
+            console.log("enters toggle")
+            $('.reset-block').hide()
+            $('.reset-select-radio').data('checked', false)
+        });
+
+        $('.reset-select-radio').click(function() {
+            var divId = $(this).data('block')
+            $('.reset-block:not(#' + divId + ')').hide('fast');
+            $('#' + divId).show('fast');
+            if ($('#rangeModalPopup').find('.table-cover').hasClass('disabled') == false) {
+                $('#rangeModalPopup').find('.table-cover').addClass('disabled')
+            }
+
+        });
+
     $.fn.dataTable.ext.errMode = 'none';
     for (ditem in discounts_id_list) {
         console.log("item==" + ditem)
