@@ -808,7 +808,7 @@ function getVariantFilterDetails(tabelem) {
     var selectedBrands = tabelem.find('.filter-brand-name').val()
     if (selectedBrands.length > 0) {
         $.ajax({
-                url: "https://demo8727571.mockable.io/getVariantsFromBrand",
+                url: "http://localhost:5050/rest/api/ajax/getVariantsByBrands",
                 dataType: 'json',
                 contentType: 'application/json',
                 method: "POST",
@@ -818,10 +818,10 @@ function getVariantFilterDetails(tabelem) {
             })
             .done(function(data) {
                 var options = []
-                for (var j = 0; j < data['variant_ids'].length; j++) {
+                for (var j = 0; j < data['data'].length; j++) {
                     options.push({
-                        name: data['variant_ids'][j],
-                        value: data['variant_ids'][j],
+                        name: data['data'][j],
+                        value: data['data'][j],
                         checked: false
                     });
                 }
@@ -1046,90 +1046,91 @@ $(document).ready(function() {
         "variant-discounts": [],
         "custom-discounts": [],
     }
-    $('.filter-brand-type').multiselect({
-        columns: 1,
-        placeholder: 'Select',
-        clear: true,
-        minHeight: 90,
-        onOptionClick: function(element, option) {
-            var thisOpt = $(option);
-            var tabelem = $(element).parent().parent().parent().parent()
-            console.log(tabelem.attr('id'))
-            var options = []
-            if (thisOpt.prop('checked')) {
-                if (jQuery.inArray(thisOpt.val(), totalFilterOptions[tabelem.attr('id')]) == -1)
-                    totalFilterOptions[tabelem.attr('id')].push(thisOpt.val())
-
-            } else {
-                totalFilterOptions[tabelem.attr('id')].splice(totalFilterOptions[tabelem.attr('id')].indexOf(thisOpt.val()), 1);
-            }
-
-            console.log(totalFilterOptions)
-            for (var i = 0; i < totalFilterOptions[tabelem.attr('id')].length; i++) {
-                $.each(brands_mapping, function(key, value) {
-
-                    if (value == totalFilterOptions[tabelem.attr('id')][i]) {
-                        options.push({
-                            name: key,
-                            value: key,
-                            checked: false
-                        });
-                    }
-                });
-            }
-
-            console.log("OPTIONS===")
-            console.log(options)
-
-            if (options.length > 0) {
-                tabelem.find('.filter-brand-name').removeAttr('disabled');
-                tabelem.find('.filter-brand-name').multiselect('disable', false);
-            } else {
-                tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
-                tabelem.find('.filter-brand-name').multiselect('disable', true);
-            }
-            if (tabelem.attr('id') == "brand-discounts") {
-                if (totalFilterOptions[tabelem.attr('id')].length > 0) {
-
-                    tabelem.find('.apply-filter').removeClass('disabled')
-                    tabelem.find('.apply-filter').removeAttr('disabled');
-                    tabelem.find('.clear-filter').removeClass('disabled');
-                    tabelem.find('.clear-filter').removeAttr('disabled');
-                } else {
-                    if (tabelem.find('.apply-filter').hasClass('disabled') == false)
-                        tabelem.find('.apply-filter').addClass('disabled');
-                    if (tabelem.find('.clear-filter').hasClass('disabled') == false)
-                        tabelem.find('.clear-filter').addClass('disabled');
-                    tabelem.find('.apply-filter').attr('disabled', 'disabled');
-                    tabelem.find('.clear-filter').attr('disabled', 'disabled');
-                }
-                console.log(tabelem.find('.filter-brand-name').val())
-
-
-            }
-            tabelem.find('.filter-brand-name').multiselect('loadOptions', options);
-        },
-        onClear: function(element) {
-
-            var tabelem = $(element).parent().parent().parent().parent()
-            tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
-            tabelem.find('.filter-brand-name').multiselect('disable', true);
-            totalFilterOptions[tabelem.attr('id')] = []
-            if (tabelem.attr('id') == "brand-discounts") {
-                if (tabelem.find('.apply-filter').hasClass('disabled') == false)
-                    tabelem.find('.apply-filter').addClass('disabled');
-                if (tabelem.find('.clear-filter').hasClass('disabled') == false)
-                    tabelem.find('.clear-filter').addClass('disabled');
-                tabelem.find('.apply-filter').attr('disabled', 'disabled');
-                tabelem.find('.clear-filter').attr('disabled', 'disabled');
-
-            }
-//            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
-        }
-    });
+//    $('.filter-brand-type').multiselect({
+//        columns: 1,
+//        placeholder: 'Select',
+//        clear: true,
+//        minHeight: 90,
+//        onOptionClick: function(element, option) {
+//            var thisOpt = $(option);
+//            var tabelem = $(element).parent().parent().parent().parent()
+//            console.log(tabelem.attr('id'))
+//            var options = []
+//            if (thisOpt.prop('checked')) {
+//                if (jQuery.inArray(thisOpt.val(), totalFilterOptions[tabelem.attr('id')]) == -1)
+//                    totalFilterOptions[tabelem.attr('id')].push(thisOpt.val())
+//
+//            } else {
+//                totalFilterOptions[tabelem.attr('id')].splice(totalFilterOptions[tabelem.attr('id')].indexOf(thisOpt.val()), 1);
+//            }
+//
+//            console.log(totalFilterOptions)
+//            for (var i = 0; i < totalFilterOptions[tabelem.attr('id')].length; i++) {
+//                $.each(brands_mapping, function(key, value) {
+//
+//                    if (value == totalFilterOptions[tabelem.attr('id')][i]) {
+//                        options.push({
+//                            name: key,
+//                            value: key,
+//                            checked: false
+//                        });
+//                    }
+//                });
+//            }
+//
+//            console.log("OPTIONS===")
+//            console.log(options)
+//
+//            if (options.length > 0) {
+//                tabelem.find('.filter-brand-name').removeAttr('disabled');
+//                tabelem.find('.filter-brand-name').multiselect('disable', false);
+//            } else {
+//                tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
+//                tabelem.find('.filter-brand-name').multiselect('disable', true);
+//            }
+//            if (tabelem.attr('id') == "brand-discounts") {
+//                if (totalFilterOptions[tabelem.attr('id')].length > 0) {
+//
+//                    tabelem.find('.apply-filter').removeClass('disabled')
+//                    tabelem.find('.apply-filter').removeAttr('disabled');
+//                    tabelem.find('.clear-filter').removeClass('disabled');
+//                    tabelem.find('.clear-filter').removeAttr('disabled');
+//                } else {
+//                    if (tabelem.find('.apply-filter').hasClass('disabled') == false)
+//                        tabelem.find('.apply-filter').addClass('disabled');
+//                    if (tabelem.find('.clear-filter').hasClass('disabled') == false)
+//                        tabelem.find('.clear-filter').addClass('disabled');
+//                    tabelem.find('.apply-filter').attr('disabled', 'disabled');
+//                    tabelem.find('.clear-filter').attr('disabled', 'disabled');
+//                }
+//                console.log(tabelem.find('.filter-brand-name').val())
+//
+//
+//            }
+//            tabelem.find('.filter-brand-name').multiselect('loadOptions', options);
+//        },
+//        onClear: function(element) {
+//
+//            var tabelem = $(element).parent().parent().parent().parent()
+//            tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
+//            tabelem.find('.filter-brand-name').multiselect('disable', true);
+//            totalFilterOptions[tabelem.attr('id')] = []
+//            if (tabelem.attr('id') == "brand-discounts") {
+//                if (tabelem.find('.apply-filter').hasClass('disabled') == false)
+//                    tabelem.find('.apply-filter').addClass('disabled');
+//                if (tabelem.find('.clear-filter').hasClass('disabled') == false)
+//                    tabelem.find('.clear-filter').addClass('disabled');
+//                tabelem.find('.apply-filter').attr('disabled', 'disabled');
+//                tabelem.find('.clear-filter').attr('disabled', 'disabled');
+//
+//            }
+////            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
+//        }
+//    });
 
 
     var totalBrandFilterOptions = {
+        "global-discounts": [],
         "brand-discounts": [],
         "variant-discounts": [],
         "custom-discounts": [],
