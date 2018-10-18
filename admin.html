@@ -313,22 +313,55 @@
                 <!-- tabs -->
                 <ul class="tabs clearfix">
                     <li class="tab-link current" data-tab="global-discounts">
-                        <div>Global Discounts</div>
+                        <div>Global</div>
                     </li>
-                    <li class="tab-link" data-tab="brand-discounts">
-                        <div>Brand Discounts</div>
-                    </li>
+                    <!--<li class="tab-link" data-tab="brand-discounts">-->
+                        <!--<div>Brand Discounts</div>-->
+                    <!--</li>-->
                     <li class="tab-link" data-tab="variant-discounts">
-                        <div>Variant Discounts</div>
+                        <div>Zone</div>
                     </li>
                     <li class="tab-link" data-tab="custom-discounts">
-                        <div>Custom Discounts</div>
+                        <div>Custom</div>
                     </li>
                 </ul>
 
                 <div id="global-discounts" class="tab-content current">
-                    <h5 class="mb-4">Global Discounts</h5>
+                    <h5 class="mb-4">Global</h5>
                     <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
+
+                    <div class="d-inline-block p-4 bg-grey filter">
+                        <h5 class="mb-4">Variant-wise Filter</h5>
+                        <div class="d-flex">
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">-->
+                                    <!--<option value="PL">Private Label</option>-->
+                                    <!--<option value="NPL">Non Private Label</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="global-discounts-brand-name[]" multiple id="global-discounts-brand-name" class="input_field filter-brand-name">
+                                </select>
+                            </div>
+                            <div>
+                                <div class="labe_div">
+                                    <label>Product Variant Id</label>
+                                </div>
+
+                                <!-- <div class="position-relative disabled disabled-block"> -->
+                                <select name="variant-discounts-variant-id[]" multiple id="global-discounts-variant-id" class="input_field filter-variant-id">
+                                </select>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
 
                     <table class="w-100 table" id="global-discounts-table" style="width:100%">
                         <thead>
@@ -354,96 +387,152 @@
                     </table>
                 </div>
 
-                <div id="brand-discounts" class="tab-content">
-                    <h5 class="mb-4">Brand Discounts</h5>
+                <!--<div id="brand-discounts" class="tab-content">-->
+                    <!--<h5 class="mb-4">Brand Discounts</h5>-->
+
+                    <!--<div class="d-inline-block p-4 bg-grey filter">-->
+                        <!--<h5 class="mb-4">Brand - wise Filter</h5>-->
+                        <!--<div class="d-flex">-->
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds">-->
+              <!--<option value="PL">Private Label</option>-->
+              <!--<option value="NPL">Non Private Label</option>-->
+            <!--</select>-->
+                            <!--</div>-->
+
+                            <!--<div>-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label>Brand Name</label>-->
+                                <!--</div>-->
+                                <!--<select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds">-->
+              <!--&lt;!&ndash; <option value="1">HealthKart</option>-->
+              <!--<option value="2">HealthViva</option> &ndash;&gt;-->
+            <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+
+
+                    <!--<div class="d-flex justify-content-end">-->
+                        <!--<input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">-->
+                        <!--<input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">-->
+                    <!--</div>-->
+                    <!--<table class="w-100 table" id="brand-discounts-table" style="width:100%">-->
+                        <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th width="5%"><input type="checkbox" name="brand-discounts_select_all" value="1" id="brand-discounts-select-all"></th>-->
+                                <!--&lt;!&ndash; <th width="5%">Sr.No.</th> &ndash;&gt;-->
+                                <!--<th width="10%">Brand Type</th>-->
+                                <!--<th width="10%">Brand</th>-->
+                                <!--<th width="30%">Expiry Month Range | Discount(%)</th>-->
+                                <!--<th width="25%">Discount Type</th>-->
+                                <!--<th width="15%">Action</th>-->
+                            <!--</tr>-->
+                        <!--</thead>-->
+
+                        <!--<tbody>-->
+
+                        <!--</tbody>-->
+                    <!--</table>-->
+
+                <!--</div>-->
+                <div id="variant-discounts" class="tab-content">
+
+                    <h5 class="mb-4">Zone</h5>
+
+                    <!--<div class="d-inline-block p-4 bg-grey filter">-->
+                        <!--<h5 class="mb-4">Variant-wise Filter</h5>-->
+                        <!--<div class="d-flex">-->
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">-->
+             <!--<option value="PL">Private Label</option>-->
+              <!--<option value="NPL">Non Private Label</option>-->
+            <!--</select>-->
+                            <!--</div>-->
+
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name">-->
+            <!--</select>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label>Product Variant Id</label>-->
+                                <!--</div>-->
+
+                                <!--&lt;!&ndash; <div class="position-relative disabled disabled-block"> &ndash;&gt;-->
+                                <!--<select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id">-->
+            <!--</select>-->
+                                <!--&lt;!&ndash; </div> &ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                     <div class="d-inline-block p-4 bg-grey filter">
-                        <h5 class="mb-4">Brand - wise Filter</h5>
+                        <h5 class="mb-4">Store-wise Filter</h5>
                         <div class="d-flex">
                             <div class="mr-4">
                                 <div class="labe_div">
-                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                    <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="brand-discounts-brand-type[]" multiple id="brand-discounts-brand-type" class="input_field filter-brand-type filter-filelds">
-              <option value="PL">Private Label</option>
-              <option value="NPL">Non Private Label</option>
-            </select>
+                                <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds">
+                                    <!--  <option value="NORTH">NORTH</option>
+                                     <option value="SOUTH">SOUTH</option>
+                                     <option value="EAST">EAST</option>
+                                     <option value="WEST">WEST</option> -->
+                                </select>
                             </div>
 
-                            <div>
-                                <div class="labe_div">
-                                    <label>Brand Name</label>
-                                </div>
-                                <select name="brand-discounts-brand-name[]" multiple id="brand-discounts-brand-name" class="input_field filter-brand-name filter-filelds">
-              <!-- <option value="1">HealthKart</option>
-              <option value="2">HealthViva</option> -->
-            </select>
-                            </div>
+                            <!--<div>-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Store Name</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds">-->
+
+                                <!--</select>-->
+                            <!--</div>-->
                         </div>
                     </div>
-
-
-
-                    <div class="d-flex justify-content-end">
-                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('brand-discounts','brand-discounts-table');" disabled="disabled">
-                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('brand-discounts-table');" disabled="disabled">
-                    </div>
-                    <table class="w-100 table" id="brand-discounts-table" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th width="5%"><input type="checkbox" name="brand-discounts_select_all" value="1" id="brand-discounts-select-all"></th>
-                                <!-- <th width="5%">Sr.No.</th> -->
-                                <th width="10%">Brand Type</th>
-                                <th width="10%">Brand</th>
-                                <th width="30%">Expiry Month Range | Discount(%)</th>
-                                <th width="25%">Discount Type</th>
-                                <th width="15%">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                        </tbody>
-                    </table>
-
-                </div>
-                <div id="variant-discounts" class="tab-content">
-
-                    <h5 class="mb-4">Variant Discounts</h5>
 
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Variant-wise Filter</h5>
                         <div class="d-flex">
-                            <div class="mr-4">
-                                <div class="labe_div">
-                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
-                                </div>
-                                <select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">
-             <option value="PL">Private Label</option>
-              <option value="NPL">Non Private Label</option>
-            </select>
-                            </div>
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">-->
+                                    <!--<option value="PL">Private Label</option>-->
+                                    <!--<option value="NPL">Non Private Label</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
 
                             <div class="mr-4">
                                 <div class="labe_div">
                                     <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name">
-            </select>
+                                <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name">
+                                </select>
                             </div>
+
                             <div>
                                 <div class="labe_div">
                                     <label>Product Variant Id</label>
                                 </div>
-
-                                <!-- <div class="position-relative disabled disabled-block"> -->
-                                <select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id">
-            </select>
-                                <!-- </div> -->
+                                <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id">
+                                </select>
                             </div>
                         </div>
                     </div>
-
 
 
                     <div class="d-flex justify-content-end">
@@ -472,7 +561,7 @@
 
                 </div>
                 <div id="custom-discounts" class="tab-content">
-                    <h5 class="mb-4">Custom Discounts</h5>
+                    <h5 class="mb-4">Custom</h5>
 
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Store-wise Filter</h5>
@@ -503,15 +592,15 @@
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Variant-wise Filter</h5>
                         <div class="d-flex">
-                            <div class="mr-4">
-                                <div class="labe_div">
-                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
-                                </div>
-                                <select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">
-              <option value="PL">Private Label</option>
-              <option value="NPL">Non Private Label</option>
-            </select>
-                            </div>
+                            <!--<div class="mr-4">-->
+                                <!--<div class="labe_div">-->
+                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
+                                <!--</div>-->
+                                <!--<select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">-->
+              <!--<option value="PL">Private Label</option>-->
+              <!--<option value="NPL">Non Private Label</option>-->
+            <!--</select>-->
+                            <!--</div>-->
 
                             <div class="mr-4">
                                 <div class="labe_div">
@@ -719,7 +808,20 @@
             </div>
         </div>
 
+
+        <!-- Commented out js -->
         <script type="text/javascript">
+            /* Variables passed from the controller */
+            var brands = [
+                "Bodygard",
+                "Kibosh",
+                "Garden of Life",
+                "Chicco Pure.Bio",
+                "Physique and Fitness Health Club",
+                "JSB",
+                "MuscleBlaze"
+            ];
+
             var brands_mapping = {
                 "JRI": "PL",
                 "Acu Care": "PL",
@@ -764,7 +866,7 @@
                 $(this).parent("label").toggleClass('highlight');
             });
 
-            $(document).ready(function() {
+            /* $(document).ready(function() {
                 var zones_list = ["north", "south"]
                 zones = zones_list
                 // tabs
@@ -832,8 +934,9 @@
 
 
 
-            });
+            }); */
         </script>
+        <script type="text/javascript" src="resources/index.js"></script>
         <script type="text/javascript" src="resources/admin.js"></script>
 </body>
 

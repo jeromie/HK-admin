@@ -863,25 +863,25 @@ function updateNextExpiryLimit(thisObj) {
 
 }
 
-function CustomFilterValidate(tabelem) {
-    var selectedBrands = tabelem.find('.filter-brand-name').val()
-    var selectedStores = tabelem.find('.filter-store').val()
-    console.log(selectedBrands.length + "====" + selectedStores.length)
-    if (selectedBrands.length > 0 && selectedStores.length > 0) {
-        tabelem.find('.apply-filter').removeClass('disabled')
-        tabelem.find('.apply-filter').removeAttr('disabled');
-        tabelem.find('.clear-filter').removeClass('disabled');
-        tabelem.find('.clear-filter').removeAttr('disabled');
-    } else {
-        if (tabelem.find('.apply-filter').hasClass('disabled') == false)
-            tabelem.find('.apply-filter').addClass('disabled');
-        if (tabelem.find('.clear-filter').hasClass('disabled') == false)
-            tabelem.find('.clear-filter').addClass('disabled');
-        tabelem.find('.apply-filter').attr('disabled', 'disabled');
-        tabelem.find('.clear-filter').attr('disabled', 'disabled');
-    }
-
-}
+//function CustomFilterValidate(tabelem) {
+//    var selectedBrands = tabelem.find('.filter-brand-name').val()
+//    var selectedStores = tabelem.find('.filter-store').val()
+//    console.log(selectedBrands.length + "====" + selectedStores.length)
+//    if (selectedBrands.length > 0 && selectedStores.length > 0) {
+//        tabelem.find('.apply-filter').removeClass('disabled')
+//        tabelem.find('.apply-filter').removeAttr('disabled');
+//        tabelem.find('.clear-filter').removeClass('disabled');
+//        tabelem.find('.clear-filter').removeAttr('disabled');
+//    } else {
+//        if (tabelem.find('.apply-filter').hasClass('disabled') == false)
+//            tabelem.find('.apply-filter').addClass('disabled');
+//        if (tabelem.find('.clear-filter').hasClass('disabled') == false)
+//            tabelem.find('.clear-filter').addClass('disabled');
+//        tabelem.find('.apply-filter').attr('disabled', 'disabled');
+//        tabelem.find('.clear-filter').attr('disabled', 'disabled');
+//    }
+//
+//}
 
 
 function inputValidate(thisObj) {
@@ -975,7 +975,7 @@ $(document).ready(function() {
         global_discounts.generateIPList()
 
         console.log(ditem + "-brand-name")
-        $("#" + ditem + "-brand-name").attr("disabled", "disabled")
+//        $("#" + ditem + "-brand-name").attr("disabled", "disabled")
         $("#" + ditem + "-variant-id").attr("disabled", "disabled")
         $("#" + ditem + "-store").attr("disabled", "disabled")
     }
@@ -1076,7 +1076,7 @@ $(document).ready(function() {
                 tabelem.find('.clear-filter').attr('disabled', 'disabled');
 
             }
-            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
+//            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
         }
     });
 
@@ -1417,5 +1417,17 @@ $(document).ready(function() {
         }, 2000);
 
     });
+
+    /* Populate the brands */
+    var brandOptions = [];
+    $.each(brands, function(index, key) {
+        brandOptions.push({
+            name: key,
+            value: key,
+            checked: false
+        });
+    });
+    console.log(brandOptions);
+    $('.filter-brand-name').multiselect('loadOptions', brandOptions);
 
 });
