@@ -1047,8 +1047,8 @@ function inputValidate(thisObj) {
 }
 
 $(document).ready(function() {
-        var zones_list = ["north", "south"]
-        zones = zones_list
+//        var zones_list = ["north", "south"]
+//        zones = zones_list
 
         /* Tab clicking */
         $('ul.tabs li').click(function() {
