@@ -660,7 +660,7 @@
 
 
 
-                <div class="modal" id="rangeModalPopup">
+                <div class="modal" id="editModal">
                     <div class="modal-overlay modal-toggle"></div>
                     <div class="modal-wrapper modal-transition">
                         <div class="modal-header">
@@ -677,21 +677,21 @@
                                 <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
                                 <div class="fosz14 mb-2">
                                     <label for="" class="font-weight-bold">Brand:</label>
-                                    <span class="rangeModalBrandName"></span>
+                                    <span id="editModalBrand"></span>
                                 </div>
-                                <div class="fosz14 mb-2">
-                                    <label for="" class="font-weight-bold">Variant ID:</label>
-                                    <span class="rangeModalVariantId"></span>
+                                <div class="fosz14 mb-2" hidden>
+                                    <label for="" class="font-weight-bold">Zone:</label>
+                                    <span id="editModalZone"></span>
+                                </div>
+
+                                <div class="fosz14 mb-2" hidden>
+                                    <label for="" class="font-weight-bold">Warehouse:</label>
+                                    <span id="editModalWarehouse"></span>
                                 </div>
 
                                 <div class="fosz14 mb-2">
-                                    <label for="" class="font-weight-bold">Variant Name:</label>
-                                    <span class="rangeModalVariantName"></span>
-                                </div>
-
-                                <div class="fosz14 mb-2">
-                                    <label for="" class="font-weight-bold">Store Name:</label>
-                                    <span class="rangeModalStoreName"></span>
+                                    <label for="" class="font-weight-bold">Config Type:</label>
+                                    <span id="editModalConfigType"></span>
                                 </div>
 
                                 <!-- table -->
@@ -701,12 +701,9 @@
                                     <table class="w-100 rangeTable">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Expiry Month Range From</th>
-                                                <th></th>
-                                                <th>Expiry Month Range To</th>
-                                                <th>Discount (%)</th>
-                                                <th class="text-center">HK.COM Offer Applied</th>
-                                                <th></th>
+                                                <th class="text-center">NUT ID</th>
+                                                <th>Product Variant Name</th>
+                                                <th>Minimum Inventory Quantity</th>
                                             </tr>
                                         </thead>
 
@@ -726,6 +723,11 @@
                   <td><input type="text" class="input_field"></td>
                   <td class="text-center"><input type="checkbox" /></td>
                 </tr> -->
+                                            <tr>
+                                                <td id="editModalNutIdValue"></td>
+                                                <td id="editModalProductVariantNameValue"></td>
+                                                <td><input type="number" min="0" id="editModalMinInventoryQtyValue" /></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

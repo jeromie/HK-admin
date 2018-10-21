@@ -388,7 +388,7 @@ var listDiscounts = function(options) {
             targets: index,
             orderable: false,
             render: function(data, type, row, meta) {
-                var renderStr = '<a href="javascript:void(0);" class="modal-toggle" data-discount-type-id="' + list_vars.discountTypeId + '" data-brand="' + row['brand'] + '" data-variant-id="' + row['productVariantId'] + '" data-row=\'' + JSON.stringify(row) + '\' onclick="showRangePopup(this,\'' + list_vars.type + '\');">View/Edit Range</a>'
+                var renderStr = '<a href="javascript:void(0);" class="modal-toggle" data-discount-type-id="' + list_vars.discountTypeId + '" data-brand="' + row['brand'] + '" data-variant-id="' + row['productVariantId'] + '" data-row=\'' + JSON.stringify(row) + '\' onclick="showEditModal(this,\'' + list_vars.type + '\');">View/Edit Range</a>'
                 return renderStr
 
             }
@@ -626,6 +626,29 @@ function showRangePopup(thisObj, type) {
     generateResetBlocks(type)
 
 
+}
+
+function showEditModal(thisObj, type) {
+    console.log("showEditModal()");
+    console.log($(thisObj).data('row'));
+    var configValues = $(thisObj).data('row');
+    /* Show and populate the modal */
+    $('.modal').toggleClass('is-visible');
+    $('#editModalBrand').text(configValues.brand);
+    /* If Zone level config */
+    if(configValues.configType == "Zone" || configValues.configType == "Custom") {
+        $('#editModalZone').parent().show();
+        $('#editModalZone').text(configValues.zone);
+    }
+    /* If Custom level config */
+    if(configValues.configType == "Custom") {
+        $('#editModalWarehouse').parent().show();
+        $('#editModalWarehouse').text(configValues.warehouse);
+    }
+    $('#editModalConfigType').text(configValues.configType);
+    $('#editModalNutIdValue').text(configValues.productVariantId);
+    $('#editModalProductVariantNameValue').text(configValues.productVariantName);
+    $('#editModalMinInventoryQtyValue').val(configValues.minInventory);
 }
 
 function generateResetBlocks(type) {
