@@ -492,7 +492,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-config-zone[]" multiple id="zone-level-custom-config-zone" class="input_field filter-zone filter-filelds">
+                                <select name="zone-config-zone[]" multiple id="zone-level-custom-config-zone" class="input_field filter-zone filter-filelds">
                                     <!--  <option value="NORTH">NORTH</option>
                                      <option value="SOUTH">SOUTH</option>
                                      <option value="EAST">EAST</option>
@@ -528,7 +528,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-config-brand-name[]" multiple id="custom-config-brand-name" class="input_field filter-brand-name">
+                                <select name="custom-config-brand-name[]" multiple id="zone-config-brand-name" class="input_field filter-brand-name">
                                 </select>
                             </div>
 
@@ -536,7 +536,7 @@
                                 <div class="labe_div">
                                     <label>Product Variant Id</label>
                                 </div>
-                                <select name="custom-config-variant-id[]" multiple id="custom-config-variant-id" class="input_field filter-variant-id">
+                                <select name="custom-config-variant-id[]" multiple id="zone-config-variant-id" class="input_field filter-variant-id">
                                 </select>
                             </div>
                         </div>
@@ -832,16 +832,16 @@
             var store_mapping = [{
                     "id": 1,
                     "name": "DEL Rajouri Bagh",
-                    "zone": "north"
+                    "zone": "North"
                 },
                 {
                     "id": 2,
                     "name": "DEL Rajouri Garden",
-                    "zone": "south"
+                    "zone": "South"
                 }
 
             ]
-            var zones = []
+            var zones = ["North","South"]
             var discounts_id_list = {
                 "global-config": 1,
                 "zone-config": 2,

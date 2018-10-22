@@ -917,8 +917,8 @@ function saveConfig(thisObj) {
         "productVariantId": $('#editModalProductVariantId').text(),
         "productVariantName": $('#editModalProductVariantName').text(),
         "brand": $('#editModalBrand').text(),
-        "zone": $('#editModalZone').text(),
-        "warehouse": $('#editModalWarehouse').text()
+        "zone": $('#editModalZone').text() == "NA" ? "" : $('#editModalZone').text(),
+        "warehouse": $('#editModalWarehouse').text() == "NA" ? "" : $('#editModalWarehouse').text()
     });
     data['minInventory'] = $('#editModalMinInventory').val();
     data['configType'] = $('ul.tabs').find('.current').data('config-type');
@@ -933,7 +933,8 @@ function saveConfig(thisObj) {
         method: "POST",
         data: JSON.stringify(data)
     }).done(function(data) {
-        $('#global-config-table').DataTable().ajax.reload();
+        var currentTab = $('ul.tabs').find('.current').data('tab')
+        $('#' + currentTab + '-table').DataTable().ajax.reload();
         $('.modal').removeClass('is-visible');
     });
 }
