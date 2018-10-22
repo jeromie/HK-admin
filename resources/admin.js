@@ -986,6 +986,13 @@ function loadZonesFilter() {
             checked: false
         });
     }
+    Object.keys(zones).forEach(function(zid) {
+        options.push({
+            name: zones[zid],
+            value: zid,
+            checked: false
+        });
+    });
     console.log(options)
     $('.filter-zone').multiselect('loadOptions', options);
 }
