@@ -312,21 +312,21 @@
 
                 <!-- tabs -->
                 <ul class="tabs clearfix">
-                    <li class="tab-link current" data-tab="global-discounts">
+                    <li class="tab-link current" data-tab="global-config">
                         <div>Global</div>
                     </li>
                     <!--<li class="tab-link" data-tab="brand-discounts">-->
                         <!--<div>Brand Discounts</div>-->
                     <!--</li>-->
-                    <li class="tab-link" data-tab="variant-discounts">
+                    <li class="tab-link" data-tab="zone-config">
                         <div>Zone</div>
                     </li>
-                    <li class="tab-link" data-tab="custom-discounts">
+                    <li class="tab-link" data-tab="custom-config">
                         <div>Custom</div>
                     </li>
                 </ul>
 
-                <div id="global-discounts" class="tab-content current">
+                <div id="global-config" class="tab-content current">
                     <h5 class="mb-4">Global</h5>
                     <p class="pl-0">(Applies to all combination of Product Variants and Stores if discounting not configured)</p>
 
@@ -337,7 +337,7 @@
                                 <!--<div class="labe_div">-->
                                     <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
                                 <!--</div>-->
-                                <!--<select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">-->
+                                <!--<select name="zone-config-brand-type[]" multiple id="zone-config-brand-type" class="input_field filter-brand-type">-->
                                     <!--<option value="PL">Private Label</option>-->
                                     <!--<option value="NPL">Non Private Label</option>-->
                                 <!--</select>-->
@@ -347,7 +347,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="global-discounts-brand-name[]" multiple id="global-discounts-brand-name" class="input_field filter-brand-name">
+                                <select name="global-config-brand-name[]" multiple id="global-config-brand-name" class="input_field filter-brand-name">
                                 </select>
                             </div>
                             <div>
@@ -356,22 +356,22 @@
                                 </div>
 
                                 <!-- <div class="position-relative disabled disabled-block"> -->
-                                <select name="global-discounts-variant-id[]" multiple id="global-discounts-variant-id" class="input_field filter-variant-id">
+                                <select name="global-config-variant-id[]" multiple id="global-config-variant-id" class="input_field filter-variant-id">
                                 </select>
                                 <!-- </div> -->
                             </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('global-discounts','global-discounts-table');">
-                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('global-discounts-table');">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter" onclick="resetFilters('global-config','global-config-table');">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter" onclick="applyFilters('global-config-table');">
                     </div>
 
 
-                    <table class="w-100 table" id="global-discounts-table" style="width:100%">
+                    <table class="w-100 table" id="global-config-table" style="width:100%">
                         <thead>
                             <tr>
-                                <th width="5%"><input type="checkbox" name="global-discounts_select_all" value="1" id="global-discounts-select-all"></th>
+                                <th width="5%"><input type="checkbox" name="global-config_select_all" value="1" id="global-config-select-all"></th>
                                 <th>NUT ID</th>
                                 <th>Product Variant Name</th>
                                 <th>Brand</th>
@@ -448,7 +448,7 @@
                     <!--</table>-->
 
                 <!--</div>-->
-                <div id="variant-discounts" class="tab-content">
+                <div id="zone-config" class="tab-content">
 
                     <h5 class="mb-4">Zone</h5>
 
@@ -459,7 +459,7 @@
                                 <!--<div class="labe_div">-->
                                     <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
                                 <!--</div>-->
-                                <!--<select name="variant-discounts-brand-type[]" multiple id="variant-discounts-brand-type" class="input_field filter-brand-type">-->
+                                <!--<select name="zone-config-brand-type[]" multiple id="zone-config-brand-type" class="input_field filter-brand-type">-->
              <!--<option value="PL">Private Label</option>-->
               <!--<option value="NPL">Non Private Label</option>-->
             <!--</select>-->
@@ -469,7 +469,7 @@
                                 <!--<div class="labe_div">-->
                                     <!--<label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>-->
                                 <!--</div>-->
-                                <!--<select name="variant-discounts-brand-name[]" multiple id="variant-discounts-brand-name" class="input_field filter-brand-name">-->
+                                <!--<select name="zone-config-brand-name[]" multiple id="zone-config-brand-name" class="input_field filter-brand-name">-->
             <!--</select>-->
                             <!--</div>-->
                             <!--<div>-->
@@ -478,7 +478,7 @@
                                 <!--</div>-->
 
                                 <!--&lt;!&ndash; <div class="position-relative disabled disabled-block"> &ndash;&gt;-->
-                                <!--<select name="variant-discounts-variant-id[]" multiple id="variant-discounts-variant-id" class="input_field filter-variant-id">-->
+                                <!--<select name="zone-config-variant-id[]" multiple id="zone-config-variant-id" class="input_field filter-variant-id">-->
             <!--</select>-->
                                 <!--&lt;!&ndash; </div> &ndash;&gt;-->
                             <!--</div>-->
@@ -492,7 +492,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-zone[]" multiple id="zone-level-custom-discounts-zone" class="input_field filter-zone filter-filelds">
+                                <select name="custom-config-zone[]" multiple id="zone-level-custom-config-zone" class="input_field filter-zone filter-filelds">
                                     <!--  <option value="NORTH">NORTH</option>
                                      <option value="SOUTH">SOUTH</option>
                                      <option value="EAST">EAST</option>
@@ -504,7 +504,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Store Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-store[]" multiple id="zone-level-custom-discounts-store" class="input_field filter-store filter-filelds">
+                                <select name="custom-config-store[]" multiple id="zone-level-custom-config-store" class="input_field filter-store filter-filelds">
 
                                 </select>
                             </div>
@@ -518,7 +518,7 @@
                                 <!--<div class="labe_div">-->
                                     <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
                                 <!--</div>-->
-                                <!--<select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">-->
+                                <!--<select name="custom-config-brand-type[]" multiple id="custom-config-brand-type" class="input_field filter-brand-type">-->
                                     <!--<option value="PL">Private Label</option>-->
                                     <!--<option value="NPL">Non Private Label</option>-->
                                 <!--</select>-->
@@ -528,7 +528,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name">
+                                <select name="custom-config-brand-name[]" multiple id="custom-config-brand-name" class="input_field filter-brand-name">
                                 </select>
                             </div>
 
@@ -536,7 +536,7 @@
                                 <div class="labe_div">
                                     <label>Product Variant Id</label>
                                 </div>
-                                <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id">
+                                <select name="custom-config-variant-id[]" multiple id="custom-config-variant-id" class="input_field filter-variant-id">
                                 </select>
                             </div>
                         </div>
@@ -544,13 +544,13 @@
 
 
                     <div class="d-flex justify-content-end">
-                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('variant-discounts','variant-discounts-table');" disabled="disabled">
-                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('variant-discounts-table');" disabled="disabled">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('zone-config','zone-config-table');" disabled="disabled">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('zone-config-table');" disabled="disabled">
                     </div>
-                    <table class="w-100 table" id="variant-discounts-table" style="width:100%">
+                    <table class="w-100 table" id="zone-config-table" style="width:100%">
                         <thead>
                             <tr>
-                                <th width="5%"><input type="checkbox" name="variant-discounts_select_all" value="1" id="variant-discounts-select-all"></th>
+                                <th width="5%"><input type="checkbox" name="zone-config_select_all" value="1" id="zone-config-select-all"></th>
                                 <th>NUT ID</th>
                                 <th>Product Variant Name</th>
                                 <th>Brand</th>
@@ -567,7 +567,7 @@
                     </table>
 
                 </div>
-                <div id="custom-discounts" class="tab-content">
+                <div id="custom-config" class="tab-content">
                     <h5 class="mb-4">Custom</h5>
 
                     <div class="d-inline-block p-4 bg-grey filter">
@@ -577,7 +577,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Zone wise Store</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-zone[]" multiple id="custom-discounts-zone" class="input_field filter-zone filter-filelds">
+                                <select name="custom-config-zone[]" multiple id="custom-config-zone" class="input_field filter-zone filter-filelds">
              <!--  <option value="NORTH">NORTH</option>
               <option value="SOUTH">SOUTH</option>
               <option value="EAST">EAST</option>
@@ -589,7 +589,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Store Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-store[]" multiple id="custom-discounts-store" class="input_field filter-store filter-filelds">
+                                <select name="custom-config-store[]" multiple id="custom-config-store" class="input_field filter-store filter-filelds">
 
             </select>
                             </div>
@@ -603,7 +603,7 @@
                                 <!--<div class="labe_div">-->
                                     <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
                                 <!--</div>-->
-                                <!--<select name="custom-discounts-brand-type[]" multiple id="custom-discounts-brand-type" class="input_field filter-brand-type">-->
+                                <!--<select name="custom-config-brand-type[]" multiple id="custom-config-brand-type" class="input_field filter-brand-type">-->
               <!--<option value="PL">Private Label</option>-->
               <!--<option value="NPL">Non Private Label</option>-->
             <!--</select>-->
@@ -613,7 +613,7 @@
                                 <div class="labe_div">
                                     <label><span style="float:left;">Brand Name</span><span class="error" style="float:left;">*</span></label>
                                 </div>
-                                <select name="custom-discounts-brand-name[]" multiple id="custom-discounts-brand-name" class="input_field filter-brand-name">
+                                <select name="custom-config-brand-name[]" multiple id="custom-config-brand-name" class="input_field filter-brand-name">
             </select>
                             </div>
 
@@ -621,7 +621,7 @@
                                 <div class="labe_div">
                                     <label>Product Variant Id</label>
                                 </div>
-                                <select name="custom-discounts-variant-id[]" multiple id="custom-discounts-variant-id" class="input_field filter-variant-id">
+                                <select name="custom-config-variant-id[]" multiple id="custom-config-variant-id" class="input_field filter-variant-id">
             </select>
                             </div>
                         </div>
@@ -631,13 +631,13 @@
 
 
                     <div class="d-flex justify-content-end">
-                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('custom-discounts','custom-discounts-table');" disabled="disabled">
-                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('custom-discounts-table');" disabled="disabled">
+                        <input type="button" value="Clear Filter" class="fosz14 clear-filter disabled" onclick="resetFilters('custom-config','custom-config-table');" disabled="disabled">
+                        <input type="button" value="Apply Filter" class="fosz14 btn-secondary apply-filter disabled" onclick="applyFilters('custom-config-table');" disabled="disabled">
                     </div>
-                    <table class="w-100 table" id="custom-discounts-table" style="width:100%">
+                    <table class="w-100 table" id="custom-config-table" style="width:100%">
                         <thead>
                             <tr>
-                                <th width="5%"><input type="checkbox" name="custom-discounts_select_all" value="1" id="custom-discounts-select-all"></th>
+                                <th width="5%"><input type="checkbox" name="custom-config_select_all" value="1" id="custom-config-select-all"></th>
                                 <th>NUT ID</th>
                                 <th>Product Variant Name</th>
                                 <th>Brand</th>
@@ -741,7 +741,7 @@
                                 <div class="mt-4 reset-opt-block">
                                     <label for="" class="mb-2 d-block fosz14">Reset to Default Discounts:</label>
                                     <!--               <div class="d-flex">
-                <div class="checkbox mr-4 global-discounts-reset-opt reset-opt" >
+                <div class="checkbox mr-4 global-config-reset-opt reset-opt" >
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Global Discounts
                   </label>
@@ -753,7 +753,7 @@
                   </label>
                 </div>
 
-                <div class="checkbox variant-discounts-reset-opt reset-opt">
+                <div class="checkbox zone-config-reset-opt reset-opt">
                   <label class="fosz12 d-flex align-items-center">
                     <input type="checkbox" class="mr-2"> Variant Discounts
                   </label>
@@ -763,9 +763,9 @@
                                     <form id="resetDiscountsForm">
                                         <div class="d-flex">
 
-                                            <div class="radio mr-4 global-discounts-reset-opt reset-opt">
+                                            <div class="radio mr-4 global-config-reset-opt reset-opt">
                                                 <label class="fosz12 d-flex align-items-center">
-                    <input id="id_radio1" data-block="global-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="1">Global Discounts
+                    <input id="id_radio1" data-block="global-config-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="1">Global Discounts
                   </label>
                                             </div>
 
@@ -775,16 +775,16 @@
                   </label>
                                             </div>
 
-                                            <div class="radio mr-4 variant-discounts-reset-opt reset-opt">
+                                            <div class="radio mr-4 zone-config-reset-opt reset-opt">
                                                 <label class="fosz12 d-flex align-items-center">
-                    <input id="id_radio3" data-block="variant-discounts-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="3" >Variant Discounts
+                    <input id="id_radio3" data-block="zone-config-reset-block" class="reset-select-radio" type="radio" name="reset_discount_radio" value="3" >Variant Discounts
                   </label>
                                             </div>
 
                                         </div>
                                     </form>
 
-                                    <div id="global-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+                                    <div id="global-config-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
                                         <!--  <p class="pl-0">global  1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p> -->
                                     </div>
@@ -792,7 +792,7 @@
                                         <!--  <p class="pl-0">brand 1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p> -->
                                     </div>
-                                    <div id="variant-discounts-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
+                                    <div id="zone-config-reset-block" class="bg-grey p15 mt-2 reset-block" style="display: none;">
                                         <!--  <p class="pl-0">variant 1 - 3 months | 70%</p>
               <p class="pl-0">4 - 6 months | 50%</p> -->
                                     </div>
@@ -843,11 +843,11 @@
             ]
             var zones = []
             var discounts_id_list = {
-                "global-discounts": 1,
-                "variant-discounts": 2,
-                "custom-discounts": 3
+                "global-config": 1,
+                "zone-config": 2,
+                "custom-config": 3
             }
-            var list_initialized_arr = ['global-discounts'];
+            var list_initialized_arr = ['global-config'];
             $('input[type="checkbox"]').click(function() {
                 $(this).parent("label").toggleClass('highlight');
             });
