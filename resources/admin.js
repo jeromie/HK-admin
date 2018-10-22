@@ -628,6 +628,7 @@ function showRangePopup(thisObj, type) {
 
 }
 
+/* Show the edit configuration modal */
 function showEditModal(thisObj, type) {
     console.log("showEditModal()");
     console.log($(thisObj).data('row'));
@@ -646,9 +647,9 @@ function showEditModal(thisObj, type) {
         $('#editModalWarehouse').text(configValues.warehouse);
     }
     $('#editModalConfigType').text(configValues.configType);
-    $('#editModalNutIdValue').text(configValues.productVariantId);
-    $('#editModalProductVariantNameValue').text(configValues.productVariantName);
-    $('#editModalMinInventoryQtyValue').val(configValues.minInventory);
+    $('#editModalProductVariantId').text(configValues.productVariantId);
+    $('#editModalProductVariantName').text(configValues.productVariantName);
+    $('#editModalMinInventory').val(configValues.minInventory);
 }
 
 function generateResetBlocks(type) {
@@ -894,7 +895,7 @@ function saveRangeOptions(thisObj) {
             dataType: 'json',
             contentType: 'application/json',
             method: "POST",
-            data: JSON.stringify(data),
+            data: JSON.stringify(data)
         })
         .done(function(data) {
             $('#' + type + '-table').DataTable().ajax.reload();
@@ -906,9 +907,35 @@ function saveRangeOptions(thisObj) {
             $('.reset-select-radio').data('checked', false)
             //$('.modal-toggle').trigger('click')
         });
+}
 
+function saveConfig(thisObj) {
+    console.log("saveConfig()");
+    var data = {};
+    data['configurations'] = [];
+    data['configurations'].push({
+        "productVariantId": $('#editModalProductVariantId').text(),
+        "productVariantName": $('#editModalProductVariantName').text(),
+        "brand": $('#editModalBrand').text(),
+        "zone": $('#editModalZone').text(),
+        "warehouse": $('#editModalWarehouse').text()
+    });
+    data['minInventory'] = $('#editModalMinInventory').val();
+    data['configType'] = $('#editModalConfigType').text();
+    console.log(data);
+    console.log(JSON.stringify(data));
 
-
+    /* Save the configurations */
+    $.ajax({
+        url: "http://localhost:5050/rest/api/ajax/saveMinimumInventoryConfig",
+        dataType: 'json',
+        contentType: 'application/json',
+        method: "POST",
+        data: JSON.stringify(data)
+    }).done(function(data) {
+        $('#global-discounts-table').DataTable().ajax.reload();
+        $('.modal').removeClass('is-visible');
+    });
 }
 
 function getVariantFilterDetails(tabelem) {
