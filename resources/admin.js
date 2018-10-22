@@ -921,7 +921,7 @@ function saveConfig(thisObj) {
         "warehouse": $('#editModalWarehouse').text()
     });
     data['minInventory'] = $('#editModalMinInventory').val();
-    data['configType'] = $('#editModalConfigType').text();
+    data['configType'] = $('ul.tabs').find('.current').data('config-type');
     console.log(data);
     console.log(JSON.stringify(data));
 
