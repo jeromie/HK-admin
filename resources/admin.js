@@ -98,7 +98,7 @@ var listDiscounts = function(options) {
                     console.log(d)
                     d.productVariantId = ($('#' + list_vars.type + '-variant-id').val() == undefined || $('#' + list_vars.type + '-variant-id').val() == "") ? [] : $('#' + list_vars.type + '-variant-id').val()
                     d.warehouseId = ($('#' + list_vars.type + '-store').val() == undefined || $('#' + list_vars.type + '-store').val() == "") ? [] : $('#' + list_vars.type + '-store').val()
-                    d.zoneId = ($('#' + list_vars.type + '-store').val() == undefined || $('#' + list_vars.type + '-store').val() == "") ? [] : $('#' + list_vars.type + '-store').val()
+                    d.zoneId = ($('#' + list_vars.type + '-zone').val() == undefined || $('#' + list_vars.type + '-zone').val() == "") ? [] : $('#' + list_vars.type + '-zone').val()
                     return JSON.stringify(d)
                 }
             },
@@ -633,16 +633,17 @@ function showEditModal(thisObj, type) {
     console.log("showEditModal()");
     console.log($(thisObj).data('row'));
     var configValues = $(thisObj).data('row');
+    var currentConfigType = $('ul.tabs').find('.current').data('config-type');
     /* Show and populate the modal */
     $('.modal').toggleClass('is-visible');
     $('#editModalBrand').text(configValues.brand);
     /* If Zone level config */
-    if(configValues.configType == "Zone" || configValues.configType == "Custom") {
+    if(currentConfigType == "Zone" || currentConfigType == "Custom") {
         $('#editModalZone').parent().show();
         $('#editModalZone').text(configValues.zone);
     }
     /* If Custom level config */
-    if(configValues.configType == "Custom") {
+    if(currentConfigType == "Custom") {
         $('#editModalWarehouse').parent().show();
         $('#editModalWarehouse').text(configValues.warehouse);
     }
@@ -1422,43 +1423,45 @@ $(document).ready(function() {
         clear: true,
         minHeight: 90,
         onOptionClick: function(element, option) {
-            var thisOpt = $(option);
-            var options = []
-            var tabelem = $(element).parent().parent().parent().parent()
-            console.log($(element).parent().parent().parent().parent())
+            if($('ul.tabs').find('.current').data('tab') == 'custom-config') {
+                var thisOpt = $(option);
+                var options = []
+                var tabelem = $(element).parent().parent().parent().parent()
+                console.log($(element).parent().parent().parent().parent())
 
-            if (thisOpt.prop('checked')) {
-                if (jQuery.inArray(thisOpt.val(), totalStoreFilterOptions) == -1)
-                    totalStoreFilterOptions.push(thisOpt.val())
+                if (thisOpt.prop('checked')) {
+                    if (jQuery.inArray(thisOpt.val(), totalStoreFilterOptions) == -1)
+                        totalStoreFilterOptions.push(thisOpt.val())
 
-            } else {
-                totalStoreFilterOptions.splice(totalStoreFilterOptions.indexOf(thisOpt.val()), 1);
-            }
-
-            for (var i = 0; i < totalStoreFilterOptions.length; i++) {
-                for (store_item in store_mapping) {
-                    console.log(store_mapping[store_item])
-                    console.log(store_mapping[store_item].zone + '==' + totalStoreFilterOptions[i])
-                    if (store_mapping[store_item].zone == totalStoreFilterOptions[i]) {
-                        options.push({
-                            name: store_mapping[store_item].name,
-                            value: store_mapping[store_item].id,
-                            checked: false
-                        });
-                    }
+                } else {
+                    totalStoreFilterOptions.splice(totalStoreFilterOptions.indexOf(thisOpt.val()), 1);
                 }
 
+                for (var i = 0; i < totalStoreFilterOptions.length; i++) {
+                    for (store_item in store_mapping) {
+                        console.log(store_mapping[store_item])
+                        console.log(store_mapping[store_item].zone + '==' + totalStoreFilterOptions[i])
+                        if (store_mapping[store_item].zone == totalStoreFilterOptions[i]) {
+                            options.push({
+                                name: store_mapping[store_item].name,
+                                value: store_mapping[store_item].id,
+                                checked: false
+                            });
+                        }
+                    }
+
+                }
+                console.log(options)
+                if (options.length > 0) {
+                    tabelem.find('.filter-store').removeAttr('disabled');
+                    tabelem.find('.filter-store').multiselect('disable', false);
+                } else {
+                    tabelem.find('.filter-store').attr('disabled', 'disabled');
+                    tabelem.find('.filter-store').multiselect('disable', true);
+                }
+                tabelem.find('.filter-store').multiselect('loadOptions', options);
+                CustomFilterValidate(tabelem)
             }
-            console.log(options)
-            if (options.length > 0) {
-                tabelem.find('.filter-store').removeAttr('disabled');
-                tabelem.find('.filter-store').multiselect('disable', false);
-            } else {
-                tabelem.find('.filter-store').attr('disabled', 'disabled');
-                tabelem.find('.filter-store').multiselect('disable', true);
-            }
-            tabelem.find('.filter-store').multiselect('loadOptions', options);
-            CustomFilterValidate(tabelem)
 
         },
         onSelectAll: function(element, selected) {
