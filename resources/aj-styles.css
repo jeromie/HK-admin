@@ -426,7 +426,7 @@
         }
 
         .tr-highlighter td {
-          background-color: #dc3545;
+          background-color: #edc3c4;
         }
 
         .text-danger {
@@ -449,39 +449,4 @@
         }
 
 
-
-        /*new*/
-        .alert-close {
-          float: right;
-          font-size: 1.5rem;
-          font-weight: 700;
-          line-height: 1;
-          color: #000;
-          text-shadow: 0 1px 0 #fff;
-          opacity: .5;
-        }
-
-        .alert-close:hover, .alert-close:focus {
-          color: #000;
-          text-decoration: none;
-          opacity: .75;
-        }
-
-        .alert-close:not(:disabled):not(.disabled) {
-          cursor: pointer;
-        }
-
-        button.alert-close {
-          padding: 0;
-          background-color: transparent;
-          border: 0;
-          -webkit-appearance: none;
-        }
-
-        .alert-dismissible .alert-close {
-          position: absolute;
-          top: -8px;
-          right: 0;
-          padding: 0.75rem 1.25rem;
-          color: inherit;
-        }
+        
