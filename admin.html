@@ -308,12 +308,6 @@
             <div class="grid_12 mt-4">
 
                 <!-- content -->
-                <!-- <div class="alert-boot alert-info-boot alert-dismissable-boot">
-                Lorem ipsum dolor sit amet, utem est, deleniti laborum omnis, repellendus non! Quasi, eaque, ducimus.
-                <button type="button" class="alert-boot-close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-              </div> -->
 
               <div class="alert-boot alert-info-boot alert-dismissible fade show" role="alert">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde repudiandae quaerat, sapiente aspernatur ducimus praesentium sed ab cupiditate. Asperiores ipsa, rem, recusandae delectus atque quia repudiandae deserunt qui aliquid quam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, cumque quas, nemo fuga, debitis neque enim necessitatibus suscipit, eligendi praesentium unde provident repellendus quaerat similique perferendis consequuntur maiores rem! Mollitia!
@@ -689,6 +683,9 @@
 
                         <div class="modal-body">
                             <div class="modal-content" style="max-height: 500px;overflow-y: scroll;">
+                                <div class="alert-boot alert-info-boot" role="alert">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde repudiandae quaerat, sapiente aspernatur ducimus praesentium sed ab cupiditate. Asperiores ipsa,
+                                </div>
                                 <!-- <h5 class="mb-4">View/Edit Expiry Range</h5> -->
                                 <div class="fosz14 mb-2">
                                     <label for="" class="font-weight-bold">Brand:</label>
@@ -719,6 +716,7 @@
                                                 <th class="text-center">NUT ID</th>
                                                 <th>Product Variant Name</th>
                                                 <th>Minimum Inventory Quantity</th>
+                                                <th></th>
                                             </tr>
                                         </thead>
 
@@ -741,7 +739,10 @@
                                             <tr>
                                                 <td id="editModalProductVariantId"></td>
                                                 <td id="editModalProductVariantName"></td>
-                                                <td><input type="number" min="0" id="editModalMinInventory" /></td>
+                                                <td><input type="number" min="0" id="editModalMinInventory" />
+                                                </td>
+
+                                                <td><label><input type="checkbox"> NA</label></td>
                                             </tr>
                                         </tbody>
                                     </table>
