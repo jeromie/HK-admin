@@ -651,7 +651,7 @@ function showEditModal(thisObj, type) {
     $('#editModalProductVariantId').text(configValues.productVariantId);
     $('#editModalProductVariantName').text(configValues.productVariantName);
     /* If NA check the NA checkbox */
-    if(configValues.minInventory == "") {
+    if(configValues.minInventory == "NA") {
         console.log('--------------');
         $('#editModalNaCheckbox').attr('checked',true);
         $('#editModalMinInventory').attr('disabled','disabled');
