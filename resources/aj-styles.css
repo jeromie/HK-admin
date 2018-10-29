@@ -465,5 +465,13 @@
           margin-bottom: 3rem !important;
         }
 
+        .text-nowrap {
+            white-space: nowrap;
+        }
+
+        .fosz12 {
+            font-size: 12px;
+        }
+
 
         
