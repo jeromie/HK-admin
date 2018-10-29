@@ -653,12 +653,12 @@ function showEditModal(thisObj, type) {
     /* If NA check the NA checkbox */
     if(configValues.minInventory == "NA") {
         console.log('--------------');
-        $('#editModalNaCheckbox').attr('checked',true);
+        $('#editModalNaCheckbox').prop('checked',true);
         $('#editModalMinInventory').attr('disabled','disabled');
         $('#editModalMinInventory').val(null);
     } else {
         console.log("++++++++++++++++++++");
-        $('#editModalNaCheckbox').attr('checked',false);
+        $('#editModalNaCheckbox').prop('checked',false);
         $('#editModalMinInventory').removeAttr('disabled');
         $('#editModalMinInventory').val(configValues.minInventory);
     }
