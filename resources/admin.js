@@ -650,7 +650,18 @@ function showEditModal(thisObj, type) {
     $('#editModalConfigType').text(configValues.configType);
     $('#editModalProductVariantId').text(configValues.productVariantId);
     $('#editModalProductVariantName').text(configValues.productVariantName);
-    $('#editModalMinInventory').val(configValues.minInventory);
+    /* If NA check the NA checkbox */
+    if(configValues.minInventory == "") {
+        console.log('--------------');
+        $('#editModalNaCheckbox').attr('checked',true);
+        $('#editModalMinInventory').attr('disabled','disabled');
+        $('#editModalMinInventory').val(null);
+    } else {
+        console.log("++++++++++++++++++++");
+        $('#editModalNaCheckbox').attr('checked',false);
+        $('#editModalMinInventory').removeAttr('disabled');
+        $('#editModalMinInventory').val(configValues.minInventory);
+    }
 }
 
 function generateResetBlocks(type) {
@@ -921,7 +932,11 @@ function saveConfig(thisObj) {
         "zone": $('#editModalZone').text() == "NA" ? "" : $('#editModalZone').text(),
         "warehouse": $('#editModalWarehouse').text() == "NA" ? "" : $('#editModalWarehouse').text()
     });
-    data['minInventory'] = $('#editModalMinInventory').val();
+    if($('#editModalMinInventory').val() == "") {
+        data['minInventory'] = null;
+    } else {
+        data['minInventory'] = $('#editModalMinInventory').val();
+    }
     data['configType'] = $('ul.tabs').find('.current').data('config-type');
     console.log(data);
     console.log(JSON.stringify(data));
@@ -1437,6 +1452,8 @@ $(document).ready(function() {
                     totalStoreFilterOptions.splice(totalStoreFilterOptions.indexOf(thisOpt.val()), 1);
                 }
 
+                console.log(totalStoreFilterOptions);
+
                 for (var i = 0; i < totalStoreFilterOptions.length; i++) {
                     for (store_item in store_mapping) {
                         console.log(store_mapping[store_item])
@@ -1625,4 +1642,15 @@ $(document).ready(function() {
     console.log(brandOptions);
     $('.filter-brand-name').multiselect('loadOptions', brandOptions);
 
+    /* NA click event */
+    $('#editModalNaCheckbox').click(function() {
+        console.log("na >>>>>>>>>>>>>>> " + $('#editModalNaCheckbox').prop('checked'));
+        if($('#editModalNaCheckbox').prop('checked') == true) {
+            $('#editModalMinInventory').attr('disabled','disabled');
+            $('#editModalMinInventory').val(null);
+        } else {
+            $('#editModalMinInventory').removeAttr('disabled');
+            $('#editModalMinInventory').val(0);
+        }
+    });
 });
