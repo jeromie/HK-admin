@@ -105,7 +105,12 @@ var listDiscounts = function(options) {
 
             "columnDefs": this.generateColumns(),
             "createdRow": function (row, data, index) {
-                if(!data['canEdit']) {
+                /* Disabling has precedence over highlighting */
+                if(data['canEdit']) {
+                    if(data['highlightRecord']) {
+                        $(row).addClass('tr-highlighter');
+                    }
+                } else {
                     $(row).addClass('tr-disabled');
                 }
             }
