@@ -662,6 +662,7 @@ function showEditModal(thisObj, type) {
         $('#editModalMinInventory').removeAttr('disabled');
         $('#editModalMinInventory').val(configValues.minInventory);
     }
+    $('#editModalAverageSales').text(configValues.averageMonthlySales);
 }
 
 function generateResetBlocks(type) {
