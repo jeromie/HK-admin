@@ -398,7 +398,7 @@ var listDiscounts = function(options) {
             targets: index,
             orderable: false,
             render: function(data, type, row, meta) {
-                var renderStr = '<a href="javascript:void(0);" class="modal-toggle text-nowrap" data-discount-type-id="' + list_vars.discountTypeId + '" data-brand="' + row['brand'] + '" data-variant-id="' + row['productVariantId'] + '" data-row=\'' + JSON.stringify(row) + '\' onclick="showEditModal(this,\'' + list_vars.type + '\');">View/Edit Range</a>'
+                var renderStr = '<a href="javascript:void(0);" class="modal-toggle text-nowrap" data-discount-type-id="' + list_vars.discountTypeId + '" data-brand="' + row['brand'] + '" data-variant-id="' + row['productVariantId'] + '" data-row=\'' + JSON.stringify(row) + '\' onclick="showEditModal(this,\'' + list_vars.type + '\');">View/Edit</a>'
                 return renderStr
 
             }
@@ -672,6 +672,9 @@ function showEditModal(thisObj, type) {
         $('#editModalMinInventory').removeAttr('disabled');
         $('#editModalMinInventory').val(configValues.minInventory);
     }
+    /* Populate the average sales alert box */
+    $('#editModalNutId').text(configValues.productVariantId);
+    $('#noOfMonthsConsideredForAverage').text(configValues.noOfMonthsConsideredForAverage);
     $('#editModalAverageSales').text(configValues.averageMonthlySales);
 }
 
