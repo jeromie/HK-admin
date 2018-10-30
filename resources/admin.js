@@ -208,7 +208,7 @@ var listDiscounts = function(options) {
             }
 
             /* Store */
-            if(list_vars.type == "custom_discounts") {
+            if(list_vars.type == "custom-config") {
                 console.log("[ INFO ] store selected");
                 index++;
                 columns.push({
