@@ -104,6 +104,11 @@ var listDiscounts = function(options) {
             },
 
             "columnDefs": this.generateColumns(),
+            "createdRow": function (row, data, index) {
+                if(!data['canEdit']) {
+                    $(row).addClass('tr-disabled');
+                }
+            }
 
             // [
             //    //   {
