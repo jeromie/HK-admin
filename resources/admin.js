@@ -174,7 +174,7 @@ var listDiscounts = function(options) {
                         "variantId": full['productVariantId'],
                         "warehouseId": full['warehouseId']
                     }
-                    return '<input type="checkbox" class="ind-checkbox" onclick="updatedSelectAllCheckbox(\'' + list_vars.type + '\',this)" name="' + list_vars.type + '-id[]" data-brand="' + jsonObj["brand"] + '" data-variant-id="' + jsonObj["variantId"] + '" data-warehouse-id="' + jsonObj["warehouseId"] + '"value="' + jsonObj["brand"] + '">';
+                    return '<input type="checkbox" class="ind-checkbox" onclick="updatedSelectAllCheckbox(\'' + list_vars.type + '\',this)" name="' + list_vars.type + '-id[]" data-brand="' + jsonObj["brand"] + '" data-variant-id="' + jsonObj["variantId"] + '" data-warehouse-id="' + jsonObj["warehouseId"] + '"value="' + jsonObj["brand"] + '" data-row=\'' + JSON.stringify(full) + '\'>';
                 }
             });
 
@@ -934,15 +934,30 @@ function saveRangeOptions(thisObj) {
 
 function saveConfig(thisObj) {
     console.log("saveConfig()");
+    var currentTab = $('ul.tabs').find('.current').data('tab')
     var data = {};
     data['configurations'] = [];
-    data['configurations'].push({
-        "productVariantId": $('#editModalProductVariantId').text(),
-        "productVariantName": $('#editModalProductVariantName').text(),
-        "brand": $('#editModalBrand').text(),
-        "zone": $('#editModalZone').text() == "NA" ? "" : $('#editModalZone').text(),
-        "warehouse": $('#editModalWarehouse').text() == "NA" ? "" : $('#editModalWarehouse').text()
+    $('#' + currentTab + '-table').DataTable().$('input[type="checkbox"]').map(function() {
+        if ($(this).is(":checked")) {
+            var rowDataValues = $(this).data('row');
+            data['configurations'].push({
+                "productVariantId": rowDataValues['productVariantId'],
+                "productVariantName": rowDataValues['productVariantName'],
+                "brand": rowDataValues['brand'],
+                "zone": rowDataValues['zone'],
+                "warehouse": rowDataValues['warehouse']
+            })
+        }
     });
+//    var data = {};
+//    data['configurations'] = [];
+//    data['configurations'].push({
+//        "productVariantId": $('#editModalProductVariantId').text(),
+//        "productVariantName": $('#editModalProductVariantName').text(),
+//        "brand": $('#editModalBrand').text(),
+//        "zone": $('#editModalZone').text() == "NA" ? "" : $('#editModalZone').text(),
+//        "warehouse": $('#editModalWarehouse').text() == "NA" ? "" : $('#editModalWarehouse').text()
+//    });
     if($('#editModalMinInventory').val() == "") {
         data['minInventory'] = null;
     } else {
@@ -960,7 +975,7 @@ function saveConfig(thisObj) {
         method: "POST",
         data: JSON.stringify(data)
     }).done(function(data) {
-        var currentTab = $('ul.tabs').find('.current').data('tab')
+//        var currentTab = $('ul.tabs').find('.current').data('tab')
         $('#' + currentTab + '-table').DataTable().ajax.reload();
         $('.modal').removeClass('is-visible');
     });
