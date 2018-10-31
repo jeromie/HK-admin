@@ -642,6 +642,10 @@ function showRangePopup(thisObj, type) {
 function showEditModal(thisObj, type) {
     console.log("showEditModal()");
     console.log($(thisObj).data('row'));
+    /* Initially hide all the extra fields */
+    $('#editModalZone').parent().hide();
+    $('#editModalWarehouse').parent().hide();
+
     var configValues = $(thisObj).data('row');
     var currentConfigType = $('ul.tabs').find('.current').data('config-type');
     /* Show and populate the modal */
