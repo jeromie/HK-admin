@@ -940,18 +940,30 @@ function saveConfig(thisObj) {
     var currentTab = $('ul.tabs').find('.current').data('tab')
     var data = {};
     data['configurations'] = [];
-    $('#' + currentTab + '-table').DataTable().$('input[type="checkbox"]').map(function() {
-        if ($(this).is(":checked")) {
-            var rowDataValues = $(this).data('row');
-            data['configurations'].push({
-                "productVariantId": rowDataValues['productVariantId'],
-                "productVariantName": rowDataValues['productVariantName'],
-                "brand": rowDataValues['brand'],
-                "zone": rowDataValues['zone'],
-                "warehouse": rowDataValues['warehouse']
-            })
-        }
-    });
+    if($('#' + currentTab + '-table').DataTable().$('input:checked[type="checkbox"]').length == 0) {
+        console.log("This is a single row");
+        data['configurations'].push({
+            "productVariantId": $('#editModalProductVariantId').text(),
+            "productVariantName": $('#editModalProductVariantName').text(),
+            "brand": $('#editModalBrand').text(),
+            "zone": $('#editModalZone').text() == "NA" ? "" : $('#editModalZone').text(),
+            "warehouse": $('#editModalWarehouse').text() == "NA" ? "" : $('#editModalWarehouse').text()
+        });
+    } else {
+    console.log("This is a multiple rows");
+        $('#' + currentTab + '-table').DataTable().$('input:checked[type="checkbox"]').map(function() {
+//            if ($(this).is(":checked")) {
+                var rowDataValues = $(this).data('row');
+                data['configurations'].push({
+                    "productVariantId": rowDataValues['productVariantId'],
+                    "productVariantName": rowDataValues['productVariantName'],
+                    "brand": rowDataValues['brand'],
+                    "zone": rowDataValues['zone'],
+                    "warehouse": rowDataValues['warehouse']
+                })
+//            }
+        });
+    }
 //    var data = {};
 //    data['configurations'] = [];
 //    data['configurations'].push({
