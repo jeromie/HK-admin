@@ -1548,8 +1548,9 @@ $(document).ready(function() {
                 tabelem.find('.filter-store').multiselect('disable', true);
             }
             tabelem.find('.filter-store').multiselect('loadOptions', options);
-            CustomFilterValidate(tabelem)
-
+            if(element.id != "zone-config-zone") {
+                CustomFilterValidate(tabelem);
+            }
         },
         onClear: function(element) {
             var tabelem = $(element).parent().parent().parent().parent()
