@@ -1569,14 +1569,21 @@ $(document).ready(function() {
     loadZonesFilter()
 
     // Handle click on "Select all" control
-    $('#brand-discounts-select-all').on('click', function() {
+    $('#global-config-select-all').on('click', function() {
         // Get all rows with search applied
         console.log("checked==" + this.checked)
-        var rows = $('#brand-discounts-table').DataTable().rows({
+        var rows = $('#global-config-table').DataTable().rows({
             'search': 'applied'
         }).nodes();
         // Check/uncheck checkboxes for all rows in the table
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        for(var i = 0; i < rows.length; i++) {
+            var row = $(rows[i]);
+            if(row.hasClass('tr-disabled')) {
+                continue;
+            } else {
+                row.find('input[type="checkbox"]').prop('checked',this.checked);
+            }
+        }
     });
 
     $('#zone-config-select-all').on('click', function() {
@@ -1586,7 +1593,14 @@ $(document).ready(function() {
             'search': 'applied'
         }).nodes();
         // Check/uncheck checkboxes for all rows in the table
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        for(var i = 0; i < rows.length; i++) {
+            var row = $(rows[i]);
+            if(row.hasClass('tr-disabled')) {
+                continue;
+            } else {
+                row.find('input[type="checkbox"]').prop('checked',this.checked);
+            }
+        }
     });
 
     $('#custom-config-select-all').on('click', function() {
@@ -1596,7 +1610,14 @@ $(document).ready(function() {
             'search': 'applied'
         }).nodes();
         // Check/uncheck checkboxes for all rows in the table
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        for(var i = 0; i < rows.length; i++) {
+            var row = $(rows[i]);
+            if(row.hasClass('tr-disabled')) {
+                continue;
+            } else {
+                row.find('input[type="checkbox"]').prop('checked',this.checked);
+            }
+        }
     });
 
 
