@@ -1720,4 +1720,11 @@ $(document).ready(function() {
             $('#editModalMinInventory').val(0);
         }
     });
+
+    /* Min inventory should be above 1000 */
+    $('#editModalMinInventory').change(function() {
+        if($('#editModalMinInventory').val() > 1000) {
+            $('#editModalMinInventory').val(1000);
+        }
+    });
 });
