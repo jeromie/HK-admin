@@ -336,15 +336,15 @@
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Variant-wise Filter</h5>
                         <div class="d-flex">
-                            <!--<div class="mr-4">-->
-                                <!--<div class="labe_div">-->
-                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
-                                <!--</div>-->
-                                <!--<select name="zone-config-brand-type[]" multiple id="zone-config-brand-type" class="input_field filter-brand-type">-->
-                                    <!--<option value="PL">Private Label</option>-->
-                                    <!--<option value="NPL">Non Private Label</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="global-config-brand-type[]" multiple id="global-config-brand-type" class="input_field filter-brand-type">
+                                    <option value="PL">Private Label</option>
+                                    <option value="NPL">Non Private Label</option>
+                                </select>
+                            </div>
 
                             <div class="mr-4">
                                 <div class="labe_div">
@@ -523,15 +523,15 @@
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Variant-wise Filter</h5>
                         <div class="d-flex">
-                            <!--<div class="mr-4">-->
-                                <!--<div class="labe_div">-->
-                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
-                                <!--</div>-->
-                                <!--<select name="custom-config-brand-type[]" multiple id="custom-config-brand-type" class="input_field filter-brand-type">-->
-                                    <!--<option value="PL">Private Label</option>-->
-                                    <!--<option value="NPL">Non Private Label</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="zone-config-brand-type[]" multiple id="zone-config-brand-type" class="input_field filter-brand-type">
+                                    <option value="PL">Private Label</option>
+                                    <option value="NPL">Non Private Label</option>
+                                </select>
+                            </div>
 
                             <div class="mr-4">
                                 <div class="labe_div">
@@ -616,15 +616,15 @@
                     <div class="d-inline-block p-4 bg-grey filter">
                         <h5 class="mb-4">Variant-wise Filter</h5>
                         <div class="d-flex">
-                            <!--<div class="mr-4">-->
-                                <!--<div class="labe_div">-->
-                                    <!--<label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>-->
-                                <!--</div>-->
-                                <!--<select name="custom-config-brand-type[]" multiple id="custom-config-brand-type" class="input_field filter-brand-type">-->
-              <!--<option value="PL">Private Label</option>-->
-              <!--<option value="NPL">Non Private Label</option>-->
-            <!--</select>-->
-                            <!--</div>-->
+                            <div class="mr-4">
+                                <div class="labe_div">
+                                    <label><span style="float:left;">Brand Type</span><span class="error" style="float:left;">*</span></label>
+                                </div>
+                                <select name="custom-config-brand-type[]" multiple id="custom-config-brand-type" class="input_field filter-brand-type">
+                                    <option value="PL">Private Label</option>
+                                    <option value="NPL">Non Private Label</option>
+                                </select>
+                            </div>
 
                             <div class="mr-4">
                                 <div class="labe_div">
@@ -849,7 +849,7 @@
         <!-- Commented out js -->
         <script type="text/javascript">
             /* Variables passed from the controller */
-            var brands = [
+            var brands_pl = [
                 "Bodygard",
                 "Kibosh",
                 "Garden of Life",
@@ -858,6 +858,16 @@
                 "JSB",
                 "MuscleBlaze"
             ];
+
+            var brands_npl = [
+                "NPL - Bodygard",
+                "NPL - Kibosh",
+                "NPL - Garden of Life",
+                "NPL - Chicco Pure.Bio",
+                "NPL - Physique and Fitness Health Club",
+                "NPL - JSB",
+                "NPL - MuscleBlaze"
+            ]
 
             var store_mapping = [{"id":510,"name":"FDB Sec 16","zone":5},{"id":4037,"name":"MUM Bandra","zone":9},{"id":4038,"name":"MUM Mahavir Nagar","zone":9},{"id":4040,"name":"HYD Himayat Nagar","zone":2},{"id":4041,"name":"GZB RDC Raj Nagar","zone":5},{"id":4043,"name":"BLR JP Nagar","zone":10},{"id":4044,"name":"DEL GK2 (Bright)","zone":6},{"id":4045,"name":"DEL Karkardooma (Bright)","zone":5},{"id":4046,"name":"PUN Ludhiana","zone":1},{"id":4047,"name":"PNE Kalyani Nagar","zone":7},{"id":4049,"name":"DEL Green Park","zone":6},{"id":4051,"name":"JAI Malviya Nagar","zone":1},{"id":4053,"name":"DEL Dwarka Sec-10 (Bright)","zone":6},{"id":4055,"name":"GGN PVK (Bright)","zone":6},{"id":4057,"name":"MUM Mulund","zone":9},{"id":4059,"name":"MUM Seawoods","zone":8},{"id":4061,"name":"CHD Sec-35C (Bright)","zone":1},{"id":4069,"name":"MUM THANE","zone":8},{"id":4071,"name":"DEL Lajpat Nagar","zone":6},{"id":4073,"name":"IND Bhawarkuan","zone":1},{"id":4077,"name":"BLR Koramangala","zone":10},{"id":4079,"name":"BLR RT Nagar","zone":10},{"id":4081,"name":"MUM Thakur Village","zone":9},{"id":4083,"name":"DEL DLF Mall Saket","zone":6},{"id":4085,"name":"HYD Banjara Hills (Bright)","zone":2},{"id":4087,"name":"BLR HRBR (Bright)","zone":10},{"id":4089,"name":"BLR Frazer Town (Bright)","zone":10},{"id":4091,"name":"BLR New Bel Road (Bright)","zone":10},{"id":4093,"name":"BLR Basaveshwar Nagar (Bright)","zone":10},{"id":4095,"name":"HYD Gachibowli (Bright)","zone":2},{"id":4097,"name":"PUN Patiala (Bright)","zone":1},{"id":4099,"name":"PUN Amritsar (Bright)","zone":1},{"id":4101,"name":"PUN Mohali (Bright)","zone":1},{"id":4103,"name":"UK Dehradun (Bright)","zone":1},{"id":4105,"name":"HYD Vikram Puri","zone":2},{"id":4107,"name":"DEL Naraina","zone":6},{"id":4109,"name":"GZB IHC Indirapuram (Bright)","zone":5},{"id":4113,"name":"DEL Dwarka Sec-7 (Bright)","zone":6},{"id":4115,"name":"IND Vijay Nagar (Bright)","zone":1},{"id":4117,"name":"DEL Rohini Sec-9 (Bright)","zone":5},{"id":4119,"name":"DEL Shalimar Bagh (Bright)","zone":5},{"id":4121,"name":"DEL Defence Colony (Bright)","zone":6},{"id":4123,"name":"JAI Vaishali Nagar (Bright)","zone":1},{"id":4125,"name":"DEL East Patel Nagar (Bright)","zone":6},{"id":4127,"name":"GGN Galleria (Bright)","zone":6},{"id":4129,"name":"PNE FC Road","zone":7},{"id":4131,"name":"DEL Mayur Vihar","zone":5},{"id":4133,"name":"HYD Jubilee Hills","zone":2},{"id":4137,"name":"BLR HSR","zone":10},{"id":4139,"name":"GGN Omaxe Mall","zone":6},{"id":4141,"name":"HR Hisar","zone":1},{"id":4143,"name":"DEL Janakpuri","zone":6},{"id":4145,"name":"GUJ Vesu","zone":4},{"id":4147,"name":"AMD CG Road","zone":4},{"id":4149,"name":"AMD Vastrapur","zone":4},{"id":4151,"name":"AMD Judges Bungalow Road","zone":4},{"id":4153,"name":"MP Bittan Market Bhopal","zone":1},{"id":4155,"name":"BLR BTM Layout","zone":10},{"id":4157,"name":"DEL Punjabi Bagh (Bright)","zone":5},{"id":4159,"name":"DEL Rajouri Garden (Bright)","zone":6},{"id":4171,"name":"PUN Jalandhar","zone":1},{"id":4173,"name":"HR Sonipat","zone":1},{"id":4175,"name":"HR Ambala","zone":1},{"id":4177,"name":"UP Noida Sec-110","zone":5},{"id":4179,"name":"LKO Gomti Nagar","zone":1},{"id":4181,"name":"Gold Souk Mall, Gurgaon","zone":6},{"id":4183,"name":"Gold Gym, Andheri (West)","zone":9},{"id":4185,"name":"Gold Gym, Goregaon East","zone":9},{"id":4187,"name":"Gold Gym, Powai","zone":9},{"id":4189,"name":"Gold Gym, Kandivali East","zone":9},{"id":4191,"name":"Gold Gym, Parel West","zone":9},{"id":4193,"name":"Gold Gym, Indirapuram","zone":5},{"id":4195,"name":"Gold Gym, DV","zone":5},{"id":4197,"name":"Gold Gym, Faridabad","zone":5},{"id":4199,"name":"Gold Gym, Rohini","zone":5},{"id":4201,"name":"Gold Gym, JP Nagar","zone":10},{"id":4203,"name":"Gold Gym, HSR Layout","zone":10},{"id":4205,"name":"Gold Gym, Koramangala","zone":10},{"id":4209,"name":"JH Ranchi","zone":3},{"id":4211,"name":"JH Jamshedpur","zone":3},{"id":4215,"name":"CG Shankar Nagar","zone":3},{"id":4217,"name":"Gold\u0027s Gym, Hadapsar","zone":7},{"id":4219,"name":"FDB Sec-16 (Bright)","zone":5},{"id":4221,"name":"GGN Good Earth Mall (Bright)","zone":6},{"id":4223,"name":"DEL Model Town (Bright)","zone":5},{"id":4229,"name":"UP Jagat Farm","zone":5},{"id":4231,"name":"FDB Eros Mall","zone":1},{"id":4233,"name":"AP Siripuram","zone":2},{"id":4235,"name":"Gold\u0027s Gym,Whitefield","zone":10},{"id":4239,"name":"UP Noida Sec-18 (Bright)","zone":5},{"id":4241,"name":"BLR Indira Nagar (Bright)","zone":10},{"id":4243,"name":"KOL VIP Road","zone":3},{"id":4245,"name":"CG Colors Mall","zone":3},{"id":4247,"name":"Talwal Jubilee Hills HYD","zone":2},{"id":4249,"name":"Talwal AS Rao Hyd","zone":2},{"id":4251,"name":"DEL Paschim Vihar","zone":5},{"id":4253,"name":"HR Rohtak","zone":1},{"id":4255,"name":"HR Panipat","zone":1},{"id":4257,"name":"HYD AS RAO Nagar","zone":2},{"id":4259,"name":"HYD Manikonda","zone":2},{"id":612,"name":"HK Aqua WH 3.0","zone":1}];
             var zones = {

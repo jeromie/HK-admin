@@ -1250,16 +1250,44 @@ $(document).ready(function() {
         "zone-config": [],
         "custom-config": [],
     }
-//    $('.filter-brand-type').multiselect({
-//        columns: 1,
-//        placeholder: 'Select',
-//        clear: true,
-//        minHeight: 90,
-//        onOptionClick: function(element, option) {
-//            var thisOpt = $(option);
-//            var tabelem = $(element).parent().parent().parent().parent()
-//            console.log(tabelem.attr('id'))
-//            var options = []
+    $('.filter-brand-type').multiselect({
+        columns: 1,
+        placeholder: 'Select',
+        clear: true,
+        minHeight: 90,
+        onOptionClick: function(element, option) {
+            var thisOpt = $(option);
+            var elementObj = $(element);
+            var tabelem = $(element).parent().parent().parent().parent()
+            console.log(tabelem.attr('id'))
+            console.log($(element).attr('id'))
+            console.log(thisOpt.val());
+            var options = [];
+            var brandOptions = [];
+            /* Get the brand names based on the type */
+            console.log(elementObj.val())
+            elementObj.val().forEach(function(selectedOpt) {
+                console.log(">>>>>> " + selectedOpt);
+                if(selectedOpt == "PL") {
+                    brandOptions.push.apply(brandOptions, brands_pl);
+                } else if(selectedOpt == "NPL") {
+                    brandOptions.push.apply(brandOptions, brands_npl);
+                }
+            });
+
+            console.log(brandOptions);
+
+            /* Populate the options */
+            brandOptions.forEach(function(brandOption) {
+                options.push({
+                    name: brandOption,
+                    value: brandOption,
+                    checked: false
+                });
+            });
+
+
+
 //            if (thisOpt.prop('checked')) {
 //                if (jQuery.inArray(thisOpt.val(), totalFilterOptions[tabelem.attr('id')]) == -1)
 //                    totalFilterOptions[tabelem.attr('id')].push(thisOpt.val())
@@ -1283,54 +1311,54 @@ $(document).ready(function() {
 //            }
 //
 //            console.log("OPTIONS===")
-//            console.log(options)
-//
-//            if (options.length > 0) {
-//                tabelem.find('.filter-brand-name').removeAttr('disabled');
-//                tabelem.find('.filter-brand-name').multiselect('disable', false);
-//            } else {
-//                tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
-//                tabelem.find('.filter-brand-name').multiselect('disable', true);
-//            }
-//            if (tabelem.attr('id') == "brand-discounts") {
-//                if (totalFilterOptions[tabelem.attr('id')].length > 0) {
-//
-//                    tabelem.find('.apply-filter').removeClass('disabled')
-//                    tabelem.find('.apply-filter').removeAttr('disabled');
-//                    tabelem.find('.clear-filter').removeClass('disabled');
-//                    tabelem.find('.clear-filter').removeAttr('disabled');
-//                } else {
-//                    if (tabelem.find('.apply-filter').hasClass('disabled') == false)
-//                        tabelem.find('.apply-filter').addClass('disabled');
-//                    if (tabelem.find('.clear-filter').hasClass('disabled') == false)
-//                        tabelem.find('.clear-filter').addClass('disabled');
-//                    tabelem.find('.apply-filter').attr('disabled', 'disabled');
-//                    tabelem.find('.clear-filter').attr('disabled', 'disabled');
-//                }
-//                console.log(tabelem.find('.filter-brand-name').val())
-//
-//
-//            }
-//            tabelem.find('.filter-brand-name').multiselect('loadOptions', options);
-//        },
-//        onClear: function(element) {
-//
-//            var tabelem = $(element).parent().parent().parent().parent()
-//            tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
-//            tabelem.find('.filter-brand-name').multiselect('disable', true);
-//            totalFilterOptions[tabelem.attr('id')] = []
-//            if (tabelem.attr('id') == "brand-discounts") {
-//                if (tabelem.find('.apply-filter').hasClass('disabled') == false)
-//                    tabelem.find('.apply-filter').addClass('disabled');
-//                if (tabelem.find('.clear-filter').hasClass('disabled') == false)
-//                    tabelem.find('.clear-filter').addClass('disabled');
-//                tabelem.find('.apply-filter').attr('disabled', 'disabled');
-//                tabelem.find('.clear-filter').attr('disabled', 'disabled');
-//
-//            }
-////            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
-//        }
-//    });
+            console.log(options)
+
+            if (options.length > 0) {
+                tabelem.find('.filter-brand-name').removeAttr('disabled');
+                tabelem.find('.filter-brand-name').multiselect('disable', false);
+            } else {
+                tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
+                tabelem.find('.filter-brand-name').multiselect('disable', true);
+            }
+            if (tabelem.attr('id') == "brand-discounts") {
+                if (totalFilterOptions[tabelem.attr('id')].length > 0) {
+
+                    tabelem.find('.apply-filter').removeClass('disabled');
+                    tabelem.find('.apply-filter').removeAttr('disabled');
+                    tabelem.find('.clear-filter').removeClass('disabled');
+                    tabelem.find('.clear-filter').removeAttr('disabled');
+                } else {
+                    if (tabelem.find('.apply-filter').hasClass('disabled') == false)
+                        tabelem.find('.apply-filter').addClass('disabled');
+                    if (tabelem.find('.clear-filter').hasClass('disabled') == false)
+                        tabelem.find('.clear-filter').addClass('disabled');
+                    tabelem.find('.apply-filter').attr('disabled', 'disabled');
+                    tabelem.find('.clear-filter').attr('disabled', 'disabled');
+                }
+                console.log(tabelem.find('.filter-brand-name').val())
+
+
+            }
+            tabelem.find('.filter-brand-name').multiselect('loadOptions', options);
+        },
+        onClear: function(element) {
+
+            var tabelem = $(element).parent().parent().parent().parent()
+            tabelem.find('.filter-brand-name').attr('disabled', 'disabled');
+            tabelem.find('.filter-brand-name').multiselect('disable', true);
+            totalFilterOptions[tabelem.attr('id')] = []
+            if (tabelem.attr('id') == "brand-discounts") {
+                if (tabelem.find('.apply-filter').hasClass('disabled') == false)
+                    tabelem.find('.apply-filter').addClass('disabled');
+                if (tabelem.find('.clear-filter').hasClass('disabled') == false)
+                    tabelem.find('.clear-filter').addClass('disabled');
+                tabelem.find('.apply-filter').attr('disabled', 'disabled');
+                tabelem.find('.clear-filter').attr('disabled', 'disabled');
+
+            }
+//            tabelem.find('.filter-brand-name').multiselect('loadOptions', []);
+        }
+    });
 
 
     var totalBrandFilterOptions = {
@@ -1698,16 +1726,16 @@ $(document).ready(function() {
     });
 
     /* Populate the brands */
-    var brandOptions = [];
-    $.each(brands, function(index, key) {
-        brandOptions.push({
-            name: key,
-            value: key,
-            checked: false
-        });
-    });
-    console.log(brandOptions);
-    $('.filter-brand-name').multiselect('loadOptions', brandOptions);
+//    var brandOptions = [];
+//    $.each(brands, function(index, key) {
+//        brandOptions.push({
+//            name: key,
+//            value: key,
+//            checked: false
+//        });
+//    });
+//    console.log(brandOptions);
+//    $('.filter-brand-name').multiselect('loadOptions', brandOptions);
 
     /* NA click event */
     $('#editModalNaCheckbox').click(function() {
